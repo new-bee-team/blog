@@ -11,16 +11,13 @@ mybatis:
 spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
-    driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://120.24.40.53:3306/db_user_0?characterEncoding=utf-8
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://120.24.40.53:3306/db_user_0?useUnicode=true&characterEncoding=utf8&useSSL=false
     username: user_admin
-    password: kuKQ.rjh23u
+    password: hG7.O0oqws
 
 
 logging:
   level:
-    cn:
-      edu:
-        hqu:
-          cst:
-            dao: debug
+    group1:
+      dao: debug

@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @Mapper
-public interface GetUserInfoDao {
+public interface UserInfoDao {
 }

@@ -1,6 +1,5 @@
-package group2.entity.pojo;
+package group2.entity.vo;
 
-import group2.enums.Sex;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,7 +9,7 @@ import java.io.Serializable;
 
 /**
  * @author: KongKongBaby
- * @create: 2020-05-25 15:39
+ * @create: 2020-05-25 16:56
  * @description:
  **/
 
@@ -18,13 +17,11 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @Accessors(chain = true)
-public class UserAccount implements Serializable {
-    private Integer id;
+public class UserAccountVO implements Serializable {
     private String name;
     private String password;
-    private Sex sex;
+    private String sex;
     private String phone;
     private String email;
     private String wxOpenid;
-    private Long registerTime;
 }
