@@ -1,4 +1,4 @@
-package group1.userprovider7000;
+package group1;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
