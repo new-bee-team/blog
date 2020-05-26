@@ -1,0 +1,23 @@
+server:
+  port: 8000
+
+mybatis:
+  type-aliases-package: group2.entity.pojo
+  mapper-locations: classpath*:mybatis/mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: true
+
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://120.24.40.53:3306/db_article_0?useUnicode=true&characterEncoding=utf8&useSSL=false
+    username: article_admin
+    password: kuKQ.rjh23u
+
+
+logging:
+  level:
+    group1:
+      dao: debug
