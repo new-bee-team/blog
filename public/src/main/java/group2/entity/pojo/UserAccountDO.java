@@ -20,6 +20,7 @@ import java.io.Serializable;
 @Accessors(chain = true)
 public class UserAccountDO implements Serializable {
     private Integer id;
+    private String account;
     private String name;
     private String password;
     private Sex sex;

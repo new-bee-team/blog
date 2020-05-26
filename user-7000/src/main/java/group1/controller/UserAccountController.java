@@ -24,8 +24,8 @@ public class UserAccountController {
         return userAccountService.getUserAccountById(id);
     }
 
-    @PostMapping("/account")
-    public Integer saveUserAccount(@RequestBody UserAccountVO userAccount){
-        return userAccountService.saveUserAccount(userAccount);
+    @PostMapping("/account/{account}/{password}")
+    public Integer saveUserAccount(@PathVariable String account,@PathVariable String password){
+        return userAccountService.saveUserAccount(account,password);
     }
 }

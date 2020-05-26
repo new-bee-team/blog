@@ -7,5 +7,6 @@ public interface IUserAccountService {
 
     UserAccountDO getUserAccountById(Integer id);
 
-    Integer saveUserAccount(UserAccountVO userAccount);
+    // 注册用户
+    Integer saveUserAccount(String account,String password);
 }

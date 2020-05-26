@@ -26,8 +26,8 @@ public class UserAccountServiceImpl implements IUserAccountService {
     }
 
     @Override
-    public Integer saveUserAccount(UserAccountVO userAccountVo) {
-        UserAccountDO userAccount = Convert.voToDo(userAccountVo);
+    public Integer saveUserAccount(String account,String password) {
+        UserAccountDO userAccount = Convert.getDo(account,password);
         return userAccountDao.saveUserAccount(userAccount);
     }
 }
