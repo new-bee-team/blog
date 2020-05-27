@@ -1,7 +1,6 @@
 package group1.controller;
 
 import group1.service.impl.UserAccountServiceImpl;
-import group2.entity.pojo.UserAccountDO;
 import group2.entity.vo.UserAccountVO;
 import group2.returnJson.Result;
 import group2.util.JsonUtil;
