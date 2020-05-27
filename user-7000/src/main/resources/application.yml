@@ -16,7 +16,6 @@ spring:
     username: user_admin
     password: hG7.O0oqws
 
-
 logging:
   level:
     group1:

@@ -9,8 +9,8 @@
     </select>
 
     <insert id="saveUserAccount" parameterType="UserAccountDO">
-        insert into user_account (`name`,password,sex,phone,email,wx_openid,register_time)
+        insert into user_account (`name`,password,sexEnum,phone,email,wx_openid,register_time)
             values
-        (#{name},#{password},#{sex},#{phone},#{email},#{wxOpenid},#{registerTime})
+        (#{name},#{password},#{sexEnum},#{phone},#{email},#{wxOpenid},#{registerTime})
     </insert>
 </mapper>

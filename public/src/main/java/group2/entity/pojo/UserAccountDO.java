@@ -1,6 +1,6 @@
 package group2.entity.pojo;
 
-import group2.enums.Sex;
+import group2.enums.SexEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,7 +23,7 @@ public class UserAccountDO implements Serializable {
     private String account;
     private String name;
     private String password;
-    private Sex sex;
+    private SexEnum sexEnum;
     private String phone;
     private String email;
     private String wxOpenid;

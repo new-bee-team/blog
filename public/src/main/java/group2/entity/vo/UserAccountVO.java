@@ -18,6 +18,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Accessors(chain = true)
 public class UserAccountVO implements Serializable {
+    private Integer id;
     private String name;
     private String password;
     private String sex;

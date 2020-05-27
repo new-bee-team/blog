@@ -1,7 +1,7 @@
 package group2.exception;
 
-import group2.enums.Result;
-import group2.enums.Status;
+import group2.returnJson.Result;
+import group2.returnJson.StatusEnum;
 import org.mybatis.spring.MyBatisSystemException;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
@@ -28,7 +28,7 @@ public class ExceptionCatch {
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     public Result<Object> badRequest(BindException e) {
         System.out.println("参数绑定异常:\t原因：" + e.getCause() + "\t详情:" + e.getCause().getMessage());
-        return Result.fail(Status.BAD_REQUEST);
+        return Result.fail(StatusEnum.BAD_REQUEST);
     }
 
     @ExceptionHandler(value = {IllegalArgumentException.class})
@@ -36,7 +36,7 @@ public class ExceptionCatch {
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     public Result<Object> argumentException(IllegalArgumentException e) {
         System.out.println("参数非法异常: \t原因：" + e.getCause() + "\t详情:" + e.getCause().getMessage());
-        return Result.fail(Status.INTERNAL_SERVER_ERROR);
+        return Result.fail(StatusEnum.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(value = {NoHandlerFoundException.class})
@@ -44,7 +44,7 @@ public class ExceptionCatch {
     @ResponseStatus(value = HttpStatus.NOT_FOUND)
     public Result<Object> notFound(NoHandlerFoundException e) {
         System.out.println("资源未找到:\t原因：" + e.getCause() + "\t详情:" + e.getCause().getMessage());
-        return Result.fail(Status.NOT_FOUND);
+        return Result.fail(StatusEnum.NOT_FOUND);
     }
 
     @ExceptionHandler(value = {MyBatisSystemException.class})
@@ -52,7 +52,7 @@ public class ExceptionCatch {
     @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
     public Result<Object> mybatisException(MyBatisSystemException e) {
         System.out.println("mybatis异常:\t原因：" + e.getCause() + "\t详情:" + e.getCause().getMessage());
-        return Result.fail(Status.MYBATIS_ERROR);
+        return Result.fail(StatusEnum.MYBATIS_ERROR);
     }
 
     @ExceptionHandler(value = {SQLException.class, DataAccessException.class})
@@ -60,7 +60,7 @@ public class ExceptionCatch {
     @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
     public Result<Object> databaseError(Exception e) {
         System.out.println("数据库异常: \t原因：" + e.getCause() + "\t详情:" + e.getCause().getMessage());
-        return Result.fail(Status.DATABASE_ERROR);
+        return Result.fail(StatusEnum.DATABASE_ERROR);
     }
 
     @ExceptionHandler(value = {FileNotFoundException.class, IOException.class})
@@ -68,7 +68,7 @@ public class ExceptionCatch {
     @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
     public Result<Object> fileException(RuntimeException e) {
         System.out.println("文件传输异常: \t原因：" + e.getCause() + "\t详情:" + e.getCause().getMessage());
-        return Result.fail(Status.INTERNAL_SERVER_ERROR);
+        return Result.fail(StatusEnum.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(value = {ClassCastException.class})
@@ -76,7 +76,7 @@ public class ExceptionCatch {
     @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
     public Result<Object> formatException(ClassCastException e) {
         System.out.println("类型转换异常: \t原因：" + e.getCause() + "\t详情:" + e.getCause().getMessage());
-        return Result.fail(Status.INTERNAL_SERVER_ERROR);
+        return Result.fail(StatusEnum.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(value = {NullPointerException.class})
@@ -84,7 +84,7 @@ public class ExceptionCatch {
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     public Result<Object> NullPointerException(NullPointerException e) {
         System.out.println("参数为空异常: \t原因：" + e.getCause() + "\t详情:" + e.getCause().getMessage());
-        return Result.fail(Status.INTERNAL_SERVER_ERROR);
+        return Result.fail(StatusEnum.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(value = {RuntimeException.class})
@@ -92,7 +92,7 @@ public class ExceptionCatch {
     @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
     public Result<Object> otherException(RuntimeException e) {
         System.out.println("服务器异常: \t原因：" + e.getCause() + "\t详情:" + e.getCause().getMessage());
-        return Result.fail(Status.INTERNAL_SERVER_ERROR);
+        return Result.fail(StatusEnum.INTERNAL_SERVER_ERROR);
     }
 }
 

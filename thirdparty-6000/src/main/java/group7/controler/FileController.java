@@ -1,7 +1,7 @@
 package group7.controler;
 
-import group2.enums.Result;
-import group2.enums.Status;
+import group2.returnJson.Result;
+import group2.returnJson.StatusEnum;
 import group7.file.FastDFSClient;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -35,16 +35,16 @@ public class FileController {
         try {
             String path = header + fileDfs.upload(file);
             if (StringUtils.isEmpty(path))
-                return Result.fail(Status.BAD_REQUEST,"文件路径为空");
+                return Result.fail(StatusEnum.BAD_REQUEST,"文件路径为空");
             else {
                 return Result.success(path);
             }
         } catch (FileNotFoundException e) {
-            return Result.fail(Status.NOT_FOUND, "文件未找到");
+            return Result.fail(StatusEnum.NOT_FOUND, "文件未找到");
         } catch (IOException e) {
-            return Result.fail(Status.INTERNAL_SERVER_ERROR, "文件IO异常");
+            return Result.fail(StatusEnum.INTERNAL_SERVER_ERROR, "文件IO异常");
         } catch (Exception e) {
-            return Result.fail(Status.INTERNAL_SERVER_ERROR);
+            return Result.fail(StatusEnum.INTERNAL_SERVER_ERROR);
         }
     }
 }

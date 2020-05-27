@@ -1,4 +1,4 @@
-package group2.enums;
+package group2.returnJson;
 
 import lombok.Getter;
 import lombok.ToString;
@@ -11,7 +11,7 @@ import lombok.ToString;
 
 @ToString
 @Getter
-public enum Status {
+public enum StatusEnum {
     // 请求正常处理并返回
     SUCCESS(200, "请求已正常处理"),
     NO_CONTENT(204, "未查询到内容"),
@@ -39,7 +39,7 @@ public enum Status {
     private final Integer code;
     private final String message;
 
-    Status(Integer code, String message) {
+    StatusEnum(Integer code, String message) {
         this.code = code;
         this.message = message;
     }
