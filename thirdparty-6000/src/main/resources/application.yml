@@ -1,5 +1,5 @@
 server:
-  port: 6001
+  port: 6000
 
 spring:
   datasource:
@@ -8,6 +8,18 @@ spring:
     url: none
     username: none
     password: none
+  mail:
+    host: smtp.qq.com
+    username: 1359862182@qq.com
+    password: wrdrcjqlidrxjcjh
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+
 
 fdfs:
   so-timeout: 1500
