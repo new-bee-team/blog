@@ -1,4 +1,4 @@
-package group7.service.serviceImpl;
+package group7.service.impl;
 
 import group7.service.IEmailService;
 import org.springframework.beans.factory.annotation.Value;

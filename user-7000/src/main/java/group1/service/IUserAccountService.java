@@ -1,12 +1,11 @@
 package group1.service;
 
-import group2.entity.pojo.UserAccountDO;
-import group2.entity.vo.UserAccountVO;
+import group2.returnJson.Result;
 
 public interface IUserAccountService {
 
-    UserAccountDO getUserAccountById(Integer id);
+    Result getUserAccountById(Integer id);
 
     // 注册用户
-    Integer saveUserAccount(String account,String password);
+    Result saveUserAccount(String account, String password);
 }

@@ -1,4 +1,4 @@
-package group7.service.serviceImpl;
+package group7.service.impl;
 
 import group2.returnJson.Result;
 import group2.returnJson.StatusEnum;

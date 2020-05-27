@@ -14,7 +14,6 @@ import lombok.ToString;
 public enum StatusEnum {
     // 请求正常处理并返回
     SUCCESS(200, "请求已正常处理"),
-    NO_CONTENT(204, "未查询到内容"),
 
     // 客户端发送的请求有错误
     BAD_REQUEST(400, "请求参数错误"),

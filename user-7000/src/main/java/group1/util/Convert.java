@@ -13,27 +13,19 @@ import org.springframework.util.StringUtils;
  **/
 
 public class Convert {
-    public static UserAccountDO voToDo(UserAccountVO userAccount) {
-        UserAccountDO userAccountDO = new UserAccountDO();
-        String sex = userAccount.getSex();
-        SexEnum sexEnumDo = SexEnum.外星人;
-        if (null != sex) {
-            if ("男".equals(sex))
-                sexEnumDo = SexEnum.男;
-            if ("女".equals(sex))
-                sexEnumDo = SexEnum.女;
-        }
-        userAccountDO.setId(userAccount.getId())
-                .setName(userAccount.getName())
-                .setPassword(userAccount.getPassword())
-                .setSexEnum(sexEnumDo)
-                .setPhone(StringUtils.isEmpty(userAccount.getPhone()) ? "" : userAccount.getPhone())
-                .setEmail(StringUtils.isEmpty(userAccount.getEmail()) ? "" : userAccount.getEmail())
-                .setWxOpenid(StringUtils.isEmpty(userAccount.getWxOpenid()) ? "" : userAccount.getWxOpenid())
-                .setRegisterTime(System.currentTimeMillis());
-        return userAccountDO;
+
+    public static UserAccountVO doToVo(UserAccountDO userAccountDO) {
+        UserAccountVO userAccount = new UserAccountVO();
+        userAccount.setId(userAccountDO.getId())
+                .setAccount(userAccountDO.getAccount())
+                .setEmail(userAccountDO.getEmail())
+                .setName(userAccountDO.getName())
+                .setPhone(userAccountDO.getPhone())
+                .setSex(StringUtils.isEmpty(userAccountDO.getSexEnum()) ? SexEnum.外星人.toString() : userAccountDO.getSexEnum().toString());
+        return userAccount;
     }
 
+    // 新增用户,只提供账号和密码
     public static UserAccountDO getDo(String account, String password) {
         if (StringUtils.isEmpty(account) || StringUtils.isEmpty(password))
             return null;
@@ -41,7 +33,11 @@ public class Convert {
         userAccountDO.setName("用户" + RandomUtil.randomString(6))
                 .setAccount(account)
                 .setPassword(password)
-                .setRegisterTime(System.currentTimeMillis());
+                .setRegisterTime(System.currentTimeMillis())
+                .setPhone("")
+                .setSexEnum(SexEnum.外星人)
+                .setEmail("")
+                .setWxOpenid("");
         return userAccountDO;
     }
 }
