@@ -1,12 +1,14 @@
 package group7.controler;
 
 import group7.service.IEmailService;
-import io.swagger.annotations.Api;
+import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.annotation.Resource;
 
 /**
  * @author: KongKongBaby
@@ -19,11 +21,15 @@ import org.springframework.web.bind.annotation.RestController;
 @Api(tags = "邮件相关")
 public class EmailController {
 
-    @Autowired
+    @Resource
     private IEmailService emailService;
 
-    @PostMapping("/send/{to}")
-    public Integer sendMail(@PathVariable String to){
-        return emailService.sendSimpleMail(to);
+    @PostMapping("/send/{addr}")
+    @ApiOperation(value = "发送邮件", notes = "发送成功(200)")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "addr", value = "邮箱地址", required = true, dataType = "String", paramType = "query")
+    })
+    public Integer sendMail( @PathVariable String addr) {
+        return emailService.sendSimpleMail(addr);
     }
 }

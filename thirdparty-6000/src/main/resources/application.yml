@@ -5,9 +5,9 @@ spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: none
-    username: none
-    password: none
+    url: jdbc:mysql://120.24.40.53:3306/db_user_0?useUnicode=true&characterEncoding=utf8&useSSL=false
+    username: admin
+    password: aGt7,0;qJ6
   mail:
     host: smtp.qq.com
     username: 1359862182@qq.com

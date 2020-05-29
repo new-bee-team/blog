@@ -1,14 +1,18 @@
 package group7.service.impl;
 
 import group7.service.IEmailService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.mail.MailSendException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author: KongKongBaby
@@ -16,10 +20,13 @@ import java.util.UUID;
  * @description:
  **/
 @Service
+@Slf4j
 public class EmailServiceImpl implements IEmailService {
 
     @Resource
     private JavaMailSender mailSender;
+    @Resource
+    private RedisTemplate redisTemplate;
     @Value("${spring.mail.username}")
     private String from;
 
@@ -43,9 +50,15 @@ public class EmailServiceImpl implements IEmailService {
         return null;
     }
 
+    /**
+     * @author: jiacheng.xing
+     * @Date: 2020.05.29 22:02
+     * @Description:    发送验证码并保存在redis 30分钟
+     */
     @Override
+    @Async
     public Integer sendSimpleMail(String to) throws MailSendException {
-        System.out.println("发送邮件...");
+        log.info("发送邮件...");
         String subject = "验证码";
         String code = UUID.randomUUID().toString().substring(0, 4);
         String content = "你好，您的验证码是:\t" + code;
@@ -61,6 +74,8 @@ public class EmailServiceImpl implements IEmailService {
         } catch (Exception e) {
             throw e;
         }
+        //将code保存在redis30分钟
+        redisTemplate.opsForValue().set(to,code,30L, TimeUnit.MINUTES);
         return 200;
     }
 }
