@@ -1,5 +1,6 @@
 package group2.util;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.StringUtils;
 
 import java.lang.reflect.Field;
@@ -11,7 +12,7 @@ import java.util.Set;
  * @Date: 2020.03.03 19:26
  * @Description: 实体类校验 被校验的vo类不允许含有基本类型,请用包装类代替
  */
-
+@Slf4j
 public class ClassValidatorUtil {
 
     private static Set<String> classSet = new HashSet<>();
@@ -40,17 +41,16 @@ public class ClassValidatorUtil {
                 field.setAccessible(true);
                 String paramName = field.getName();
                 Object paramValue = field.get(object);
-//                System.out.println(paramName + ": " + paramValue);
                 if (StringUtils.isEmpty(paramValue)) {
-                    System.out.println("\"" + paramName + "\"参数位空!");
+                    log.info("\"" + paramName + "\"参数位空!");
                     return false;
                 }
             }
         } catch (IllegalAccessException e) {
-            System.out.println("请求实体类参数异常: " + e);
+            log.info("请求实体类参数异常: " + e);
             throw e;
         } catch (Exception e) {
-            System.out.println("ClassValidatorUtil检查类参数异常: " + e);
+            log.info("ClassValidatorUtil检查类参数异常: " + e);
             throw e;
         }
         return true;
