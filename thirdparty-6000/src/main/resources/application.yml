@@ -2,6 +2,12 @@ server:
   port: 6001
 
 spring:
+  application:
+    name: third-party-provider-6000
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
   mail:
     host: smtp.qq.com
     username: 1359862182@qq.com
@@ -13,7 +19,11 @@ spring:
           starttls:
             enable: true
             required: true
-
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
 
 fdfs:
   so-timeout: 1500
