@@ -1,8 +1,7 @@
 package group7.controler;
 
-import group7.service.IEmailService;
+import group7.email.service.IEmailService;
 import io.swagger.annotations.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +17,7 @@ import javax.annotation.Resource;
 
 @RestController
 @RequestMapping("/email")
-@Api(tags = "邮件相关")
+@Api(tags = "邮件服务")
 public class EmailController {
 
     @Resource

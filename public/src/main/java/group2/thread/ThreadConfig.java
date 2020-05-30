@@ -21,8 +21,8 @@ public class ThreadConfig implements AsyncConfigurer {
     public Executor getAsyncExecutor() {
         int n = Runtime.getRuntime().availableProcessors();
         ThreadPoolExecutor newCachedPoolExecutor = new ThreadPoolExecutor(
-                1,
-                n + 1,
+                n,
+                n<<1,
                 30L,
                 TimeUnit.SECONDS,
                 new LinkedBlockingDeque<>( n << 2),

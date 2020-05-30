@@ -1,6 +1,6 @@
-package group7.service.impl;
+package group7.email.service.impl;
 
-import group7.service.IEmailService;
+import group7.email.service.IEmailService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;

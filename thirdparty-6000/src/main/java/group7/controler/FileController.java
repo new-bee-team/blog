@@ -1,6 +1,6 @@
 package group7.controler;
 
-import group7.service.IFileService;
+import group7.file.service.IFileService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -13,14 +13,13 @@ import javax.annotation.Resource;
 
 @RestController
 @RequestMapping("/file")
-@Api(tags = "静态文件上传")
+@Api(tags = "文件服务")
 public class FileController {
 
     @Resource
     private IFileService fileService;
 
-    //文件上传
-    @ApiOperation(value = "静态文件(图片)上传")
+    @ApiOperation(value = "图片上传",notes = "返回图片地址")
     @PostMapping(value = "/upload", headers = "content-type=multipart/form-data")
     public String upload(@ApiParam(value = "file", required = true) MultipartFile file) {
         return fileService.upload(file);
