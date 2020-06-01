@@ -22,6 +22,10 @@ spring:
     username: user_admin
     password: hG7.O0oqws
 
+ribbon:
+  ReadTimeout: 5000
+  ConnectTimeout: 5000
+
 logging:
   level:
     group1:

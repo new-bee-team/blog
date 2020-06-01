@@ -53,11 +53,12 @@ public class EmailServiceImpl implements IEmailService {
     /**
      * @author: jiacheng.xing
      * @Date: 2020.05.29 22:02
-     * @Description:    发送验证码并保存在redis 30分钟
+     * @Description: 发送验证码并保存在redis 30分钟
      */
     @Override
     @Async
     public Integer sendSimpleMail(String to) throws MailSendException {
+        long startTime = System.currentTimeMillis();
         log.info("发送邮件...");
         String subject = "验证码";
         String code = UUID.randomUUID().toString().substring(0, 4);
@@ -75,7 +76,9 @@ public class EmailServiceImpl implements IEmailService {
             throw e;
         }
         //将code保存在redis30分钟
-        redisTemplate.opsForValue().set(to,code,30L, TimeUnit.MINUTES);
+        redisTemplate.opsForValue().set(to, code, 30L, TimeUnit.MINUTES);
+        long endTime = System.currentTimeMillis();
+        log.info("发送邮件并保存code耗时：" + (endTime - startTime));
         return 200;
     }
 }
