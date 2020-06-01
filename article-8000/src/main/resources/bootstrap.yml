@@ -1,0 +1,13 @@
+server:
+  port: 8000
+
+spring:
+  application:
+    name: article
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 120.24.40.53:8848
+      config:
+        server-addr: 120.24.40.53:8848
+        file-extension: yaml

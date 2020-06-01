@@ -2,10 +2,9 @@ package group7.controler;
 
 import group7.email.service.IEmailService;
 import io.swagger.annotations.*;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
@@ -18,10 +17,14 @@ import javax.annotation.Resource;
 @RestController
 @RequestMapping("/email")
 @Api(tags = "邮件服务")
+@RefreshScope
 public class EmailController {
 
     @Resource
     private IEmailService emailService;
+
+    @Value("${config.info}")
+    private String text;
 
     @PostMapping("/send/{addr}")
     @ApiOperation(value = "发送邮件", notes = "发送成功(200)")
@@ -30,5 +33,10 @@ public class EmailController {
     })
     public Integer sendMail(@PathVariable String addr) {
         return emailService.sendSimpleMail(addr);
+    }
+
+    @GetMapping("/test/config/info")
+    public String testConfig() {
+        return text;
     }
 }
