@@ -28,7 +28,7 @@ public class EmailController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "addr", value = "邮箱地址", required = true, dataType = "String", paramType = "query")
     })
-    public Integer sendMail( @PathVariable String addr) {
+    public Integer sendMail(@PathVariable String addr) {
         return emailService.sendSimpleMail(addr);
     }
 }

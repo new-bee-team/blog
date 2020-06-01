@@ -1,6 +1,7 @@
 package group1.service.impl;
 
 import group1.dao.UserAccountDao;
+import group1.feign.ThirdPartyClient;
 import group1.service.IUserAccountService;
 import group1.util.Convert;
 import group2.entity.pojo.UserAccountDO;
@@ -8,8 +9,9 @@ import group2.entity.vo.UserAccountVO;
 import group2.returnJson.Result;
 import group2.returnJson.StatusEnum;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
 
 /**
  * @author: KongKongBaby
@@ -21,8 +23,11 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class UserAccountServiceImpl implements IUserAccountService {
 
-    @Autowired
+    @Resource
     private UserAccountDao userAccountDao;
+
+    @Resource
+    private ThirdPartyClient thirdPartyClient;
 
     @Override
     public Result getUserAccountById(Integer id) {
@@ -53,5 +58,15 @@ public class UserAccountServiceImpl implements IUserAccountService {
             log.info("插入新用户失败:\t" + userAccount.toString());
             return Result.fail();
         }
+    }
+
+    @Override
+    public Object test1(Object obj) {
+        return thirdPartyClient.sendMail((String) obj);
+    }
+
+    @Override
+    public Object test2(Object obj) {
+        return null;
     }
 }

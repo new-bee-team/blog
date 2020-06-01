@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: third-party-provider-6000
+    name: third-party
   cloud:
     nacos:
       discovery:
@@ -19,11 +19,11 @@ spring:
           starttls:
             enable: true
             required: true
-management:
-  endpoints:
-    web:
-      exposure:
-        include: '*'
+#management:
+#  endpoints:
+#    web:
+#      exposure:
+#        include: '*'
 
 fdfs:
   so-timeout: 1500

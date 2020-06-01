@@ -46,4 +46,9 @@ public class UserAccountController {
         redisTemplate.opsForValue().set("userAccountVO", JsonUtil.objectToJson(userAccountVO),100L,TimeUnit.SECONDS);
         return redisTemplate.opsForValue().get(key)+"\t"+expire;
     }
+
+    @PostMapping("/test/email/send/{addr}")
+    public Integer testEmail(@PathVariable String addr){
+        return (Integer) userAccountService.test1(addr);
+    }
 }

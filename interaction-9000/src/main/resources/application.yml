@@ -12,3 +12,11 @@ logging:
   level:
     group1:
       dao: debug
+
+spring:
+  application:
+    name: interaction
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848

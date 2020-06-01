@@ -11,7 +11,7 @@ import java.util.concurrent.*;
 /**
  * @author: KongKongBaby
  * @Date: 2020.03.06 23:46
- * @Description:  适合开发时候很少访问量
+ * @Description: 适合开发时候很少访问量
  */
 @Configuration
 @EnableAsync
@@ -22,10 +22,10 @@ public class ThreadConfig implements AsyncConfigurer {
         int n = Runtime.getRuntime().availableProcessors();
         ThreadPoolExecutor newCachedPoolExecutor = new ThreadPoolExecutor(
                 n,
-                n<<1,
+                n << 1,
                 30L,
                 TimeUnit.SECONDS,
-                new LinkedBlockingDeque<>( n << 2),
+                new LinkedBlockingDeque<>(n << 2),
                 Executors.defaultThreadFactory(),
                 new ThreadPoolExecutor.AbortPolicy());
         return newCachedPoolExecutor;
