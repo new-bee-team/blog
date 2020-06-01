@@ -7,7 +7,7 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: localhost:8848
+        server-addr: 120.24.40.53:8848
   mail:
     host: smtp.qq.com
     username: 1359862182@qq.com
