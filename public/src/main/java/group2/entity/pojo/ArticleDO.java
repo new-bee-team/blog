@@ -25,5 +25,6 @@ public class ArticleDO implements Serializable {
     private Integer likes; //点赞数
     private Boolean open; //false私密  true公开(暂时不考虑好友系统)
     private Boolean top; //是否置顶
+    private Boolean delete; //删除状态 如果是true 定时任务会将该数据移动到被删除的表中
     private Long lastUpdateTime; //最后一次更新文章的时间
 }

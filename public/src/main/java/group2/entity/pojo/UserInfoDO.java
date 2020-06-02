@@ -19,7 +19,7 @@ import java.io.Serializable;
 @Accessors(chain = true)
 public class UserInfoDO implements Serializable {
     private Integer id;
-    private Integer userId;
+    private Integer userId;  //逻辑外键
     private Integer follower; //粉丝数
     private Integer visitors; //访客数
     private Integer followed; //被关注数
