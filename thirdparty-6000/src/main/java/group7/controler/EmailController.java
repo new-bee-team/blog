@@ -27,7 +27,7 @@ public class EmailController {
     private String text;
 
     @PostMapping("/send/{addr}")
-    @ApiOperation(value = "发送邮件", notes = "发送成功(200)")
+    @ApiOperation(value = "发送邮件(验证码)", notes = "发送成功(200)")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "addr", value = "邮箱地址", required = true, dataType = "String", paramType = "query")
     })

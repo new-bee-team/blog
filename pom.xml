@@ -32,6 +32,7 @@
         <fdfs.version>1.26.6</fdfs.version>
         <fastjson.version>1.2.68</fastjson.version>
         <swagger.version>2.7.0</swagger.version>
+        <kaptcha.version>2.3.2</kaptcha.version>
     </properties>
 
     <dependencyManagement>
@@ -114,6 +115,11 @@
                 <version>2.1.0.RELEASE</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.github.penggle</groupId>
+                <artifactId>kaptcha</artifactId>
+                <version>${kaptcha.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
