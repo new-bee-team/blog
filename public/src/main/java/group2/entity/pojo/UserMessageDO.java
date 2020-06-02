@@ -9,18 +9,18 @@ import java.io.Serializable;
 
 /**
  * @author: KongKongBaby
- * @create: 2020-06-02 14:01
- * @description: 文章收藏
+ * @create: 2020-06-02 15:55
+ * @description: 用户留言表
  **/
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Accessors(chain = true)
-public class ArticleStarDO implements Serializable {
+public class UserMessageDO implements Serializable {
     private Integer id;
     private Integer userId; //逻辑外键 用户id
-    private Integer articleId; //逻辑外键 文章id
-    private Integer status; // 0————取消收藏  1————收藏
-    private Long starTime; //收藏时间
+    private Integer bloggerId; //逻辑外键 用户id
+    private String content; //留言内容 长度限制255
+    private Long time; //留言时间
 }
