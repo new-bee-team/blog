@@ -20,6 +20,7 @@ public class Convert {
                 .setAccount(userAccountDO.getAccount())
                 .setEmail(userAccountDO.getEmail())
                 .setName(userAccountDO.getName())
+                .setPicture(userAccountDO.getPicture())
                 .setPhone(userAccountDO.getPhone())
                 .setSex(StringUtils.isEmpty(userAccountDO.getSexEnum()) ? SexEnum.外星人.toString() : userAccountDO.getSexEnum().toString());
         return userAccount;
@@ -31,6 +32,7 @@ public class Convert {
             return null;
         UserAccountDO userAccountDO = new UserAccountDO();
         userAccountDO.setName("用户" + RandomUtil.randomString(6))
+                .setPicture("")
                 .setAccount(account)
                 .setPassword(password)
                 .setRegisterTime(System.currentTimeMillis())

@@ -4,6 +4,7 @@ import group2.returnJson.Result;
 
 public interface IUserAccountService {
 
+    // 根据id查询用户
     Result getUserAccountById(Integer id);
 
     // 注册用户

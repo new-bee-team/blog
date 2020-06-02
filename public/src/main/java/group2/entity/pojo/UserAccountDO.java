@@ -21,6 +21,7 @@ import java.io.Serializable;
 public class UserAccountDO implements Serializable {
     private Integer id;
     private String account;
+    private String picture;
     private String name;
     private String password;
     private SexEnum sexEnum;

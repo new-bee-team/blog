@@ -21,6 +21,7 @@ public class UserAccountVO implements Serializable {
     private Integer id;
     private String account;
     private String name;
+    private String picture;
     private String sex;
     private String phone;
     private String email;
