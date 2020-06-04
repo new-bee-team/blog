@@ -1,5 +1,6 @@
 package group1.util;
 
+import group2.entity.dto.UserAccountDTO;
 import group2.entity.pojo.UserAccountDO;
 import group2.entity.vo.UserAccountVO;
 import group2.enums.SexEnum;
@@ -14,15 +15,17 @@ import org.springframework.util.StringUtils;
 
 public class Convert {
 
-    public static UserAccountVO doToVo(UserAccountDO userAccountDO) {
-        UserAccountVO userAccount = new UserAccountVO();
+    public static UserAccountDTO doToDto(UserAccountDO userAccountDO) {
+        UserAccountDTO userAccount = new UserAccountDTO();
         userAccount.setId(userAccountDO.getId())
                 .setAccount(userAccountDO.getAccount())
-                .setEmail(userAccountDO.getEmail())
-                .setName(userAccountDO.getName())
                 .setPicture(userAccountDO.getPicture())
+                .setName(userAccountDO.getName())
+                .setSex(StringUtils.isEmpty(userAccountDO.getSexEnum()) ? SexEnum.外星人.toString() : userAccountDO.getSexEnum().toString())
                 .setPhone(userAccountDO.getPhone())
-                .setSex(StringUtils.isEmpty(userAccountDO.getSexEnum()) ? SexEnum.外星人.toString() : userAccountDO.getSexEnum().toString());
+                .setEmail(userAccountDO.getEmail())
+                .setRegisterTime(userAccountDO.getRegisterTime());
+
         return userAccount;
     }
 
@@ -31,15 +34,15 @@ public class Convert {
         if (StringUtils.isEmpty(account) || StringUtils.isEmpty(password))
             return null;
         UserAccountDO userAccountDO = new UserAccountDO();
-        userAccountDO.setName("用户" + RandomUtil.randomString(6))
+        userAccountDO.setAccount(account)
                 .setPicture("")
-                .setAccount(account)
+                .setName("用户" + RandomUtil.randomString(6))
                 .setPassword(password)
-                .setRegisterTime(System.currentTimeMillis())
-                .setPhone("")
                 .setSexEnum(SexEnum.外星人)
+                .setPhone("")
                 .setEmail("")
-                .setWxOpenid("");
+                .setWxOpenid("")
+                .setRegisterTime(System.currentTimeMillis());
         return userAccountDO;
     }
 }

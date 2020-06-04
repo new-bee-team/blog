@@ -58,7 +58,7 @@ public class UserAccountController {
         redisTemplate.expire(key, 200L, TimeUnit.SECONDS);
         Long expire = redisTemplate.getExpire(key, TimeUnit.SECONDS);
 
-        UserAccountVO userAccountVO = new UserAccountVO(1, "1", "1", "1", "1", "1", "1");
+        UserAccountVO userAccountVO = new UserAccountVO("1", "1", "1", "1", "1", "1", "1", "1");
         redisTemplate.opsForValue().set("userAccountVO", JsonUtil.objectToJson(userAccountVO), 100L, TimeUnit.SECONDS);
         return redisTemplate.opsForValue().get(key) + "\t" + expire;
     }

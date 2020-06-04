@@ -4,6 +4,7 @@ import group1.dao.UserAccountDao;
 import group1.feign.ThirdPartyClient;
 import group1.service.IUserAccountService;
 import group1.util.Convert;
+import group2.entity.dto.UserAccountDTO;
 import group2.entity.pojo.UserAccountDO;
 import group2.entity.vo.UserAccountVO;
 import group2.returnJson.Result;
@@ -37,11 +38,11 @@ public class UserAccountServiceImpl implements IUserAccountService {
         UserAccountDO userAccount = userAccountDao.getUserAccountById(id);
         if (null == userAccount)
             return Result.fail(StatusEnum.NO_OPTION);
-        UserAccountVO userAccountVO = Convert.doToVo(userAccount);
-        if (null == userAccountVO)
+        UserAccountDTO userAccountDTO = Convert.doToDto(userAccount);
+        if (null == userAccountDTO)
             return Result.fail(StatusEnum.INTERNAL_SERVER_ERROR);
         log.info("查询用户,id=" + id);
-        return Result.success(userAccountVO);
+        return Result.success(userAccountDTO);
     }
 
     @Override
@@ -142,20 +143,23 @@ public class UserAccountServiceImpl implements IUserAccountService {
 
     @Override
     public Result saveUserAccount(String account, String password) {
+        if (StringUtils.isEmpty(account) || StringUtils.isEmpty(password))
+            return Result.fail(StatusEnum.NO_OPTION);
         // 1、account是否重复？
-
-        // 2、插入account、password返回新增记录的id
+        // ...
         String passwordMD5 = MD5Util.string2MD5(password);
-
+        // 2、插入account、password返回新增记录的id
         // 测试MD5加密
         log.info("原始密码：" + password);
         log.info("MD5加密后：" + passwordMD5);
 
-        if (StringUtils.isEmpty(password) || StringUtils.isEmpty(passwordMD5))
-            return Result.fail(StatusEnum.NO_OPTION);
+        if (StringUtils.isEmpty(passwordMD5))
+            return Result.fail(StatusEnum.INTERNAL_SERVER_ERROR);
+
         UserAccountDO userAccount = Convert.getDo(account, passwordMD5);
         if (null == userAccount)
-            return Result.fail(StatusEnum.BAD_REQUEST);
+            return Result.fail(StatusEnum.INTERNAL_SERVER_ERROR);
+
         Integer i = userAccountDao.saveUserAccount(userAccount);
         Integer id = userAccount.getId();
         if (i == 1 && id > 0) {

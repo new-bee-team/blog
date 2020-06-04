@@ -1,4 +1,4 @@
-package group2.entity.vo;
+package group2.entity.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -8,22 +8,22 @@ import lombok.experimental.Accessors;
 import java.io.Serializable;
 
 /**
- * @author: KongKongBaby
- * @create: 2020-05-25 16:56
- * @description:
- **/
+ * @author: jiacheng.xing
+ * @Date: 2020.06.04 18:04
+ * @Description:
+ */
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Accessors(chain = true)
-public class UserAccountVO implements Serializable {
+public class UserAccountDTO implements Serializable {
+    private Integer id;
     private String account;
-    private String password;
     private String picture;
     private String name;
     private String sex;
     private String phone;
-    private String wxOpenid;
     private String email;
+    private Long registerTime;
 }
