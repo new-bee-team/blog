@@ -20,19 +20,19 @@ public interface IUserAccountService {
     List<Result> ListUserAccountBySex(String sex);
 
     // 根据registerTime模糊查询
-    List<Result> ListUserAccountByTime(String registerTime);
+    List<Result> ListUserAccountByTime(Long registerTime);
 
     // 根据 name + sex 模糊查询
     List<Result> ListUserAccountByNameAndSex(String name, String sex);
 
     // 根据 name + registerTime模糊查询
-    List<Result> ListUserAccountByNameAndTime(String name, String registerTime);
+    List<Result> ListUserAccountByNameAndTime(String name, Long registerTime);
 
     // 根据 sex + registerTime模糊查询
-    List<Result> ListUserAccountBySexAndTime(String sex, String registerTime);
+    List<Result> ListUserAccountBySexAndTime(String sex, Long registerTime);
 
     // 根据 name + sex + registerTime模糊查询
-    List<Result> ListUserAccountByNameAndSexAndTime(String name, String sex, String registerTime);
+    List<Result> ListUserAccountByNameAndSexAndTime(String name, String sex, Long registerTime);
 
     //----------------------改----------------------
     // 绑定手机
@@ -48,10 +48,10 @@ public interface IUserAccountService {
     Result unbindPhone(Integer userId, String code);
 
     // 解绑邮箱
-    Result unbindEmail(Integer email, String code);
+    Result unbindEmail(Integer userId, String code);
 
     // 解绑微信
-    Result unbindWeChat(Integer wechatOpenId, String code);
+    Result unbindWeChat(Integer userId, String code);
 
     // 修改头像
     Result updatePicture(Integer userId, String picture);

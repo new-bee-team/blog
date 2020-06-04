@@ -60,9 +60,10 @@ public class UserAccountServiceImpl implements IUserAccountService {
     }
 
     @Override
-    public List<Result> ListUserAccountByTime(String registerTime) {
+    public List<Result> ListUserAccountByTime(Long registerTime) {
         return null;
     }
+
 
     @Override
     public List<Result> ListUserAccountByNameAndSex(String name, String sex) {
@@ -70,17 +71,17 @@ public class UserAccountServiceImpl implements IUserAccountService {
     }
 
     @Override
-    public List<Result> ListUserAccountByNameAndTime(String name, String registerTime) {
+    public List<Result> ListUserAccountByNameAndTime(String name, Long registerTime) {
         return null;
     }
 
     @Override
-    public List<Result> ListUserAccountBySexAndTime(String sex, String registerTime) {
+    public List<Result> ListUserAccountBySexAndTime(String sex, Long registerTime) {
         return null;
     }
 
     @Override
-    public List<Result> ListUserAccountByNameAndSexAndTime(String name, String sex, String registerTime) {
+    public List<Result> ListUserAccountByNameAndSexAndTime(String name, String sex, Long registerTime) {
         return null;
     }
 
