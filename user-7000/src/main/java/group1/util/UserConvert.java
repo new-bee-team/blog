@@ -2,7 +2,9 @@ package group1.util;
 
 import group2.entity.dto.UserAccountDTO;
 import group2.entity.pojo.UserAccountDO;
+import group2.entity.pojo.UserExperienceDO;
 import group2.entity.vo.UserAccountVO;
+import group2.entity.vo.UserExperienceVO;
 import group2.enums.SexEnum;
 import group2.util.AbstractConvert;
 import group2.util.RandomUtil;
@@ -17,6 +19,34 @@ import org.springframework.util.StringUtils;
 public class UserConvert extends AbstractConvert {
 
     //------------------------VO————>DO------------------------
+    public static UserAccountDO voToDo(UserAccountVO userAccountVO) {
+        UserAccountDO userAccount = new UserAccountDO();
+        userAccount.setAccount(userAccountVO.getAccount())
+                .setPassword(userAccountVO.getPassword())
+                .setPicture(userAccountVO.getPicture())
+                .setName(userAccountVO.getName())
+                .setPhone(userAccountVO.getPhone())
+                .setWxOpenid(userAccountVO.getWxOpenid())
+                .setEmail(userAccountVO.getEmail())
+                .setRegisterTime(System.currentTimeMillis());
+        String sex = userAccountVO.getSex();
+        SexEnum sexEnum =
+                "男".equals(sex) ? SexEnum.男 :
+                        "女".equals(sex) ? SexEnum.女 : SexEnum.外星人;
+        userAccount.setSexEnum(sexEnum);
+        return userAccount;
+    }
+
+    public static UserExperienceDO voToDo(UserExperienceVO userExperienceVO, Integer lastTimeTotalExperience) {
+        UserExperienceDO userExperienceDO = new UserExperienceDO();
+        userExperienceDO.setUserId(userExperienceVO.getUserId())
+                .setExperience(userExperienceVO.getExperience())
+                .setCurrentExperience(userExperienceVO.getExperience() + lastTimeTotalExperience)
+                .setDescription(userExperienceVO.getDescription())
+                .setTime(System.currentTimeMillis());
+        return userExperienceDO;
+    }
+
     //------------------------DO————>DTO------------------------
     public static UserAccountDTO doToDto(UserAccountDO userAccountDO) {
         UserAccountDTO userAccount = new UserAccountDTO();
@@ -31,6 +61,7 @@ public class UserConvert extends AbstractConvert {
 
         return userAccount;
     }
+
     //------------------------other————>DO------------------------
     // 新增用户,只提供账号和密码
     public static UserAccountDO getDo(String account, String password) {
@@ -48,7 +79,4 @@ public class UserConvert extends AbstractConvert {
                 .setRegisterTime(System.currentTimeMillis());
         return userAccountDO;
     }
-
-
-
 }
