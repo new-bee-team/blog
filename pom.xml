@@ -121,6 +121,7 @@
                 <artifactId>kaptcha</artifactId>
                 <version>${kaptcha.version}</version>
             </dependency>
+
         </dependencies>
     </dependencyManagement>
 

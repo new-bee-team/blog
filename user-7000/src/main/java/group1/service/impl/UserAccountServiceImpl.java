@@ -8,8 +8,10 @@ import group2.entity.pojo.UserAccountDO;
 import group2.entity.vo.UserAccountVO;
 import group2.returnJson.Result;
 import group2.returnJson.StatusEnum;
+import group2.util.MD5Util;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 
@@ -46,7 +48,15 @@ public class UserAccountServiceImpl implements IUserAccountService {
         // 1、account是否重复？
 
         // 2、插入account、password返回新增记录的id
-        UserAccountDO userAccount = Convert.getDo(account, password);
+        String passwordMD5 = MD5Util.string2MD5(password);
+
+        // 测试MD5加密
+        log.info("原始密码：" + password);
+        log.info("MD5加密后：" + passwordMD5);
+
+        if (StringUtils.isEmpty(password) || StringUtils.isEmpty(passwordMD5))
+            return Result.fail(StatusEnum.NO_OPTION);
+        UserAccountDO userAccount = Convert.getDo(account, passwordMD5);
         if (null == userAccount)
             return Result.fail(StatusEnum.BAD_REQUEST);
         Integer i = userAccountDao.saveUserAccount(userAccount);

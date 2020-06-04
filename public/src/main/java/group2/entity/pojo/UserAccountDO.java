@@ -20,10 +20,10 @@ import java.io.Serializable;
 @Accessors(chain = true)
 public class UserAccountDO implements Serializable {
     private Integer id;
-    private String account;
-    private String picture;
-    private String name;
-    private String password;
+    private String account; // 最大10位
+    private String picture; // 大小限制？？M
+    private String name;    // 最大10位
+    private String password; //最大18位
     private SexEnum sexEnum;
     private String phone;
     private String email;
