@@ -4,6 +4,7 @@ import group2.entity.dto.UserAccountDTO;
 import group2.entity.pojo.UserAccountDO;
 import group2.entity.vo.UserAccountVO;
 import group2.enums.SexEnum;
+import group2.util.AbstractConvert;
 import group2.util.RandomUtil;
 import org.springframework.util.StringUtils;
 
@@ -13,8 +14,10 @@ import org.springframework.util.StringUtils;
  * @description: 实体类转换
  **/
 
-public class Convert {
+public class UserConvert extends AbstractConvert {
 
+    //------------------------VO————>DO------------------------
+    //------------------------DO————>DTO------------------------
     public static UserAccountDTO doToDto(UserAccountDO userAccountDO) {
         UserAccountDTO userAccount = new UserAccountDTO();
         userAccount.setId(userAccountDO.getId())
@@ -28,7 +31,7 @@ public class Convert {
 
         return userAccount;
     }
-
+    //------------------------other————>DO------------------------
     // 新增用户,只提供账号和密码
     public static UserAccountDO getDo(String account, String password) {
         if (StringUtils.isEmpty(account) || StringUtils.isEmpty(password))
@@ -45,4 +48,7 @@ public class Convert {
                 .setRegisterTime(System.currentTimeMillis());
         return userAccountDO;
     }
+
+
+
 }

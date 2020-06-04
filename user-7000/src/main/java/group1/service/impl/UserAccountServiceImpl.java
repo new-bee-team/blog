@@ -3,10 +3,9 @@ package group1.service.impl;
 import group1.dao.UserAccountDao;
 import group1.feign.ThirdPartyClient;
 import group1.service.IUserAccountService;
-import group1.util.Convert;
+import group1.util.UserConvert;
 import group2.entity.dto.UserAccountDTO;
 import group2.entity.pojo.UserAccountDO;
-import group2.entity.vo.UserAccountVO;
 import group2.returnJson.Result;
 import group2.returnJson.StatusEnum;
 import group2.util.MD5Util;
@@ -38,7 +37,7 @@ public class UserAccountServiceImpl implements IUserAccountService {
         UserAccountDO userAccount = userAccountDao.getUserAccountById(id);
         if (null == userAccount)
             return Result.fail(StatusEnum.NO_OPTION);
-        UserAccountDTO userAccountDTO = Convert.doToDto(userAccount);
+        UserAccountDTO userAccountDTO = UserConvert.doToDto(userAccount);
         if (null == userAccountDTO)
             return Result.fail(StatusEnum.INTERNAL_SERVER_ERROR);
         log.info("查询用户,id=" + id);
@@ -156,7 +155,7 @@ public class UserAccountServiceImpl implements IUserAccountService {
         if (StringUtils.isEmpty(passwordMD5))
             return Result.fail(StatusEnum.INTERNAL_SERVER_ERROR);
 
-        UserAccountDO userAccount = Convert.getDo(account, passwordMD5);
+        UserAccountDO userAccount = UserConvert.getDo(account, passwordMD5);
         if (null == userAccount)
             return Result.fail(StatusEnum.INTERNAL_SERVER_ERROR);
 
