@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @author: KongKongBaby
@@ -41,6 +42,101 @@ public class UserAccountServiceImpl implements IUserAccountService {
             return Result.fail(StatusEnum.INTERNAL_SERVER_ERROR);
         log.info("查询用户,id=" + id);
         return Result.success(userAccountVO);
+    }
+
+    @Override
+    public Result getUserAccountByAccount(String account) {
+        return null;
+    }
+
+    @Override
+    public List<Result> ListUserAccountByName(String name) {
+        return null;
+    }
+
+    @Override
+    public List<Result> ListUserAccountBySex(String sex) {
+        return null;
+    }
+
+    @Override
+    public List<Result> ListUserAccountByTime(String registerTime) {
+        return null;
+    }
+
+    @Override
+    public List<Result> ListUserAccountByNameAndSex(String name, String sex) {
+        return null;
+    }
+
+    @Override
+    public List<Result> ListUserAccountByNameAndTime(String name, String registerTime) {
+        return null;
+    }
+
+    @Override
+    public List<Result> ListUserAccountBySexAndTime(String sex, String registerTime) {
+        return null;
+    }
+
+    @Override
+    public List<Result> ListUserAccountByNameAndSexAndTime(String name, String sex, String registerTime) {
+        return null;
+    }
+
+    @Override
+    public Result bindPhone(Integer userId, String phone, String code) {
+        return null;
+    }
+
+    @Override
+    public Result bindEmail(Integer userId, String email, String code) {
+        return null;
+    }
+
+    @Override
+    public Result bindWeChat(Integer userId, String weChatOpenId, String code) {
+        return null;
+    }
+
+    @Override
+    public Result unbindPhone(Integer userId, String code) {
+        return null;
+    }
+
+    @Override
+    public Result unbindEmail(Integer email, String code) {
+        return null;
+    }
+
+    @Override
+    public Result unbindWeChat(Integer wechatOpenId, String code) {
+        return null;
+    }
+
+    @Override
+    public Result updatePicture(Integer userId, String picture) {
+        return null;
+    }
+
+    @Override
+    public Result updateName(Integer userId, String name) {
+        return null;
+    }
+
+    @Override
+    public Result updatePassword(Integer userId, String oldPassword, String newPassword, String code) {
+        return null;
+    }
+
+    @Override
+    public Result updatePhone(Integer userId, String oldPhone, String newPhone, String oldPhoneCode, String newPhoneCode) {
+        return null;
+    }
+
+    @Override
+    public Result updateEmail(Integer userId, String oldEmail, String newEmail, String oldEmailCode, String newEmailCode) {
+        return null;
     }
 
     @Override
@@ -79,4 +175,5 @@ public class UserAccountServiceImpl implements IUserAccountService {
     public Object test2(Object obj) {
         return null;
     }
+
 }
