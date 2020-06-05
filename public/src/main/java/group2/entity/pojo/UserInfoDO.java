@@ -20,10 +20,9 @@ import java.io.Serializable;
 public class UserInfoDO implements Serializable {
     private Integer id;
     private Integer userId;  //逻辑外键
-    private Integer follower; //粉丝数
-    private Integer visitors; //访客数
-    private Integer followed; //被关注数
-    private Integer comments; //评论数
+    private Integer visitor; //访客数
+    private Integer follower; //被关注数
+    private Integer comment; //评论数
     private Integer score; //积分
     private Integer experience; //经验
     private Long lastLoginTime;

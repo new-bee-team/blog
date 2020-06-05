@@ -21,5 +21,6 @@ public class UserFollowerDO implements Serializable {
     private Integer id;
     private Integer bloggerId; //博主 逻辑外键对应用户id
     private Integer followerId; //粉丝 逻辑外键对应用户id
+    private Boolean followed; //true关注状态  false不关注状态
     private Long time; // 关注时间
 }

@@ -1,6 +1,7 @@
 package group1.util;
 
 import group2.entity.dto.UserAccountDTO;
+import group2.entity.dto.UserAccountFriendDTO;
 import group2.entity.pojo.UserAccountDO;
 import group2.entity.pojo.UserExperienceDO;
 import group2.entity.vo.UserAccountVO;
@@ -60,6 +61,15 @@ public class UserConvert extends AbstractConvert {
                 .setRegisterTime(userAccountDO.getRegisterTime());
 
         return userAccount;
+    }
+
+    public static UserAccountFriendDTO doToFriendDto(UserAccountDO userAccountDO) {
+        UserAccountFriendDTO userAccountFriendDTO = new UserAccountFriendDTO();
+        userAccountFriendDTO.setId(userAccountDO.getId())
+                .setName(userAccountDO.getName())
+                .setPicture(userAccountDO.getPicture())
+                .setSex(userAccountDO.getSexEnum().toString());
+        return userAccountFriendDTO;
     }
 
     //------------------------other————>DO------------------------
