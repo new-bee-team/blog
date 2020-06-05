@@ -1,6 +1,7 @@
 package group1.service.impl;
 
 import group1.dao.UserAccountDao;
+import group1.dao.UserInfoDao;
 import group1.feign.ThirdPartyClient;
 import group1.service.IUserAccountService;
 import group1.util.UserConvert;
@@ -11,6 +12,7 @@ import group2.returnJson.StatusEnum;
 import group2.util.MD5Util;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
@@ -19,7 +21,7 @@ import java.util.List;
 /**
  * @author: KongKongBaby
  * @create: 2020-05-25 15:35
- * @description:
+ * @description: 用户账户服务
  **/
 
 @Service
@@ -31,6 +33,12 @@ public class UserAccountServiceImpl implements IUserAccountService {
 
     @Resource
     private ThirdPartyClient thirdPartyClient;
+
+    @Resource
+    private UserInfoServiceImpl userInfoService;
+
+    @Resource
+    private UserInfoDao userInfoDao;
 
     @Override
     public Result getUserAccountById(Integer id) {
@@ -140,14 +148,23 @@ public class UserAccountServiceImpl implements IUserAccountService {
         return null;
     }
 
+    /**
+     * @author: jiacheng.xing
+     * @Date: 2020.06.05 22:18
+     * @Description:
+     *  1、account是否重复？
+     *  2、用户账户表插入数据
+     *  3、用户信息表插入数据
+     */
+
     @Override
+    @Transactional
     public Result saveUserAccount(String account, String password) {
-        if (StringUtils.isEmpty(account) || StringUtils.isEmpty(password))
-            return Result.fail(StatusEnum.NO_OPTION);
         // 1、account是否重复？
         // ...
-        String passwordMD5 = MD5Util.string2MD5(password);
+
         // 2、插入account、password返回新增记录的id
+        String passwordMD5 = MD5Util.string2MD5(password);
         // 测试MD5加密
         log.info("原始密码：" + password);
         log.info("MD5加密后：" + passwordMD5);
@@ -163,6 +180,9 @@ public class UserAccountServiceImpl implements IUserAccountService {
         Integer id = userAccount.getId();
         if (i == 1 && id > 0) {
             log.info("插入新用户成功:\t" + userAccount.toString());
+            // 插入用户信息表
+            // xxx
+            // if()
             return Result.success(id);
         } else {
             log.info("插入新用户失败:\t" + userAccount.toString());

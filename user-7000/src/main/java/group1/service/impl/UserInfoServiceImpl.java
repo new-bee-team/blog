@@ -2,6 +2,7 @@ package group1.service.impl;
 
 import group1.service.IUserInfoService;
 import group2.returnJson.Result;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 /**
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
  **/
 
 @Service
+@Slf4j
 public class UserInfoServiceImpl implements IUserInfoService {
     @Override
     public Result getUserInfoById(Integer id) {

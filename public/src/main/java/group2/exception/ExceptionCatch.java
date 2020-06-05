@@ -36,7 +36,7 @@ public class ExceptionCatch {
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     public Result<Object> argumentException(IllegalArgumentException e) {
         System.out.println("参数非法异常: \t原因：" + e.getCause() + "\t详情:" + e.getCause().getMessage());
-        return Result.fail(StatusEnum.INTERNAL_SERVER_ERROR);
+        return Result.fail(StatusEnum.BAD_REQUEST);
     }
 
     @ExceptionHandler(value = {NoHandlerFoundException.class})

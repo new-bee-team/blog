@@ -4,6 +4,12 @@ import group2.returnJson.Result;
 
 import java.util.List;
 
+/**
+ * @author: jiacheng.xing
+ * @Date: 2020.06.05 22:15
+ * @Description: 用户账户服务
+ */
+
 public interface IUserAccountService {
 
     //----------------------查----------------------

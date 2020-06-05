@@ -2,6 +2,8 @@ package group1.service.impl;
 
 import group1.service.IUserFollowerService;
 import group2.returnJson.Result;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
 
 /**
  * @author: KongKongBaby
@@ -9,6 +11,8 @@ import group2.returnJson.Result;
  * @description:
  **/
 
+@Service
+@Slf4j
 public class UserFollowerServiceImpl implements IUserFollowerService {
     @Override
     public Result listMyFollow(Integer followerId, Integer startPage, Integer pageSize) {
