@@ -1,6 +1,7 @@
 package group1.controller;
 
 import group1.service.impl.UserAccountServiceImpl;
+import group2.annotation.NotNull;
 import group2.entity.vo.UserAccountVO;
 import group2.returnJson.Result;
 import group2.util.JsonUtil;
@@ -31,6 +32,7 @@ public class UserAccountController {
     @Autowired
     private UserAccountServiceImpl userAccountService;
 
+    @NotNull
     @GetMapping("/id/{id}")
     @ApiOperation(value = "根据id查询用户账号信息", notes = "成功返回200，失败返回500、611或其他")
     @ApiImplicitParams({
@@ -41,6 +43,7 @@ public class UserAccountController {
     }
 
 
+    @NotNull
     @ApiOperation(value = "用户注册，只需要账号密码", notes = "帐号最大10位，密码最大18位；帐号不可修改")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "account", value = "用户帐号", required = true, dataType = "String", paramType = "path"),
@@ -52,6 +55,7 @@ public class UserAccountController {
     }
 
 
+    @NotNull
     @GetMapping("/test/{key}/{value}")
     public String testRedis(@PathVariable String key, @PathVariable String value) {
         redisTemplate.opsForValue().set(key, value);
@@ -63,6 +67,7 @@ public class UserAccountController {
         return redisTemplate.opsForValue().get(key) + "\t" + expire;
     }
 
+    @NotNull
     @PostMapping("/test/email/send/{addr}")
     public Integer testEmail(@PathVariable String addr) {
         return (Integer) userAccountService.test1(addr);

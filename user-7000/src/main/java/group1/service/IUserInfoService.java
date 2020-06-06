@@ -2,6 +2,12 @@ package group1.service;
 
 import group2.returnJson.Result;
 
+/**
+ * @author: jiacheng.xing
+ * @Date: 2020.06.05 22:16
+ * @Description:    用户信息相关，不是账户。
+ */
+
 public interface IUserInfoService {
     //-------------------查-------------------------
     // 查询总的信息

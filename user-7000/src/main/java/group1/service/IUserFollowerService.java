@@ -2,6 +2,12 @@ package group1.service;
 
 import group2.returnJson.Result;
 
+/**
+ * @author: jiacheng.xing
+ * @Date: 2020.06.05 22:16
+ * @Description: 用户关注、被关注相关
+ */
+
 public interface IUserFollowerService {
     //----------------------查----------------------
     // 查询我关注的所有博主
