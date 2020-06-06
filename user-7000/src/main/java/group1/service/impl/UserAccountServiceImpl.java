@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -32,7 +33,7 @@ public class UserAccountServiceImpl implements IUserAccountService {
     @Resource
     private ThirdPartyClient thirdPartyClient;
 
-    @Override
+    // 查询根据  id
     public Result getUserAccountById(Integer id) {
         UserAccountDO userAccount = userAccountDao.getUserAccountById(id);
         if (null == userAccount)
@@ -44,103 +45,226 @@ public class UserAccountServiceImpl implements IUserAccountService {
         return Result.success(userAccountDTO);
     }
 
-    @Override
+    // 查询根据  account
     public Result getUserAccountByAccount(String account) {
-        return null;
+
+        UserAccountDO userAccount = userAccountDao.getUserAccountByAccount(account);
+        if (null == userAccount)
+            return Result.fail(StatusEnum.NO_OPTION);
+        UserAccountDTO userAccountDTO = UserConvert.doToDto(userAccount);
+        if (null == userAccountDTO)
+            return Result.fail(StatusEnum.INTERNAL_SERVER_ERROR);
+        log.info("查询用户,account=" + account);
+        return Result.success(userAccountDTO);
     }
 
-    @Override
-    public List<Result> ListUserAccountByName(String name) {
-        return null;
+    // 模糊查询根据  name
+    public Result<List<UserAccountDTO>> ListUserAccountByName(String name) {
+        List<UserAccountDO> doList = userAccountDao.ListUserAccountByName(name);
+        List<UserAccountDTO> dtoList = new ArrayList<UserAccountDTO>();
+
+        if (null == doList || doList.size() <0)
+            return Result.fail(StatusEnum.NO_OPTION);
+        doList.forEach(userAccountDO->{
+            dtoList.add( UserConvert.doToDto(userAccountDO));
+        });
+        return Result.success(dtoList);
+
     }
 
-    @Override
-    public List<Result> ListUserAccountBySex(String sex) {
-        return null;
+    // 模糊查询根据  sex
+    public  Result<List<UserAccountDTO>> ListUserAccountBySex(String sex) {
+        List<UserAccountDO> doList = userAccountDao.ListUserAccountBySex(sex);
+        List<UserAccountDTO> dtoList = new ArrayList<UserAccountDTO>();
+        if (null == doList || doList.size() <0)
+            return Result.fail(StatusEnum.NO_OPTION);
+        doList.forEach(userAccountDO->{
+            dtoList.add( UserConvert.doToDto(userAccountDO));
+        });
+        return Result.success(dtoList);
+
     }
 
-    @Override
-    public List<Result> ListUserAccountByTime(Long registerTime) {
-        return null;
+    // 模糊查询根据  registerTime
+    public  Result<List<UserAccountDTO>>  ListUserAccountByTime(Long registerTime) {
+        List<UserAccountDO> doList = userAccountDao.ListUserAccountByTime(registerTime);
+        List<UserAccountDTO> dtoList = new ArrayList<UserAccountDTO>();
+        if (null == doList || doList.size() <0)
+            return Result.fail(StatusEnum.NO_OPTION);
+        doList.forEach(userAccountDO->{
+            dtoList.add( UserConvert.doToDto(userAccountDO));
+        });
+        return Result.success(dtoList);
     }
 
-
-    @Override
-    public List<Result> ListUserAccountByNameAndSex(String name, String sex) {
-        return null;
+    // 模糊查询根据  name sex
+    public  Result<List<UserAccountDTO>>  ListUserAccountByNameAndSex(String name, String sex) {
+        List<UserAccountDO> doList = userAccountDao.ListUserAccountByNameAndSex(name,sex);
+        List<UserAccountDTO> dtoList = new ArrayList<UserAccountDTO>();
+        if (null == doList || doList.size() <0)
+            return Result.fail(StatusEnum.NO_OPTION);
+        doList.forEach(useraccountDO->{
+            dtoList.add( UserConvert.doToDto(useraccountDO));
+        });
+        return Result.success(dtoList);
     }
 
-    @Override
-    public List<Result> ListUserAccountByNameAndTime(String name, Long registerTime) {
-        return null;
+    // 模糊查询根据  name registerTime
+    public  Result<List<UserAccountDTO>> ListUserAccountByNameAndTime(String name, Long registerTime) {
+        List<UserAccountDO> doList = userAccountDao.ListUserAccountByNameAndTime(name,registerTime);
+        List<UserAccountDTO> dtoList = new ArrayList<UserAccountDTO>();
+        if (null == doList || doList.size() <0)
+            return Result.fail(StatusEnum.NO_OPTION);
+        doList.forEach(userAccountDO->{
+            dtoList.add( UserConvert.doToDto(userAccountDO));
+        });
+        return Result.success(dtoList);
     }
 
-    @Override
-    public List<Result> ListUserAccountBySexAndTime(String sex, Long registerTime) {
-        return null;
+    // 模糊查询根据  sex registerTime
+    public  Result<List<UserAccountDTO>>  ListUserAccountBySexAndTime(String sex, Long registerTime) {
+        List<UserAccountDO> dolist = userAccountDao.ListUserAccountBySex(sex);
+        List<UserAccountDTO> dtosList = new ArrayList<UserAccountDTO>();
+        if (null != dolist && dolist.size() > 0)
+            return Result.fail(StatusEnum.NO_OPTION);
+        dolist.forEach(userAccountDO->{
+            dtosList.add( UserConvert.doToDto(userAccountDO));
+        });
+        return Result.success(dtosList);
     }
 
-    @Override
-    public List<Result> ListUserAccountByNameAndSexAndTime(String name, String sex, Long registerTime) {
-        return null;
+    // 模糊查询根据   name  sex registerTime
+    public  Result<List<UserAccountDTO>>  ListUserAccountByNameAndSexAndTime(String name, String sex, Long registerTime) {
+        List<UserAccountDO> doList = userAccountDao.ListUserAccountBySex(sex);
+        List<UserAccountDTO> dtosList = new ArrayList<UserAccountDTO>();
+        if (null == doList || doList.size() <0)
+            return Result.fail(StatusEnum.NO_OPTION);
+        doList.forEach(userAccountDO->{
+            dtosList.add( UserConvert.doToDto(userAccountDO));
+        });
+        return Result.success(dtosList);
     }
 
-    @Override
+    // 绑定phone
     public Result bindPhone(Integer userId, String phone, String code) {
-        return null;
+        Integer size = userAccountDao.bindPhone(userId, phone);
+        if (size <0)
+
+            return Result.fail(StatusEnum.NO_OPTION);
+        return Result.success(size);
     }
 
-    @Override
+    //  绑定Email
     public Result bindEmail(Integer userId, String email, String code) {
-        return null;
+        Integer size = userAccountDao.bindPhone(userId, email);
+        if (size < 0)
+
+            return Result.fail(StatusEnum.NO_OPTION);
+        return Result.success(size);
     }
 
-    @Override
+    //  绑定Wechat
     public Result bindWeChat(Integer userId, String weChatOpenId, String code) {
-        return null;
+        Integer size = userAccountDao.bindPhone(userId, weChatOpenId);
+        if (size < 0)
+
+            return Result.fail(StatusEnum.NO_OPTION);
+        return Result.success(size);
     }
 
-    @Override
+    //  解绑Phone
     public Result unbindPhone(Integer userId, String code) {
-        return null;
+        Integer size = userAccountDao.unbindPhone(userId);
+        if (size <0)
+
+            return Result.fail(StatusEnum.NO_OPTION);
+        return Result.success(size);
     }
 
-    @Override
-    public Result unbindEmail(Integer email, String code) {
-        return null;
+    //  解绑Emall
+    public Result unbindEmail(Integer userId, String code) {
+        Integer size = userAccountDao.unbindPhone(userId);
+        if (size < 0)
+
+            return Result.fail(StatusEnum.NO_OPTION);
+        return Result.success(size);
     }
 
-    @Override
-    public Result unbindWeChat(Integer wechatOpenId, String code) {
-        return null;
+    //  解绑微信
+    public Result unbindWeChat(Integer userId, String code) {
+        Integer size = userAccountDao.unbindPhone(userId);
+        if (size < 0)
+
+            return Result.fail(StatusEnum.NO_OPTION);
+        return Result.success(size);
     }
 
-    @Override
+    //更新头像
     public Result updatePicture(Integer userId, String picture) {
-        return null;
+        Integer size = userAccountDao.updateName(userId, picture);  //更新头像
+        if (size < 0)
+            return Result.success(size);
+
+        return Result.fail(StatusEnum.NO_OPTION);
     }
 
-    @Override
+    //更新name
     public Result updateName(Integer userId, String name) {
-        return null;
+        UserAccountDO userAccount = userAccountDao.getUserAccountById(userId);
+        if (userAccount == null)
+            return Result.fail(StatusEnum.NO_OPTION);  //查无此人
+
+        //  新旧用户
+        if (userAccount.getName() != name)
+            return Result.fail(StatusEnum.NOT_FOUND);  //name 不一致
+
+        Integer size = userAccountDao.updateName(userId, name);  //更新name
+        if (size > 0)
+            return Result.success(size);
+
+        return Result.fail(StatusEnum.INTERNAL_SERVER_ERROR);
     }
 
-    @Override
+    //更新密码
     public Result updatePassword(Integer userId, String oldPassword, String newPassword, String code) {
-        return null;
-    }
 
-    @Override
+        UserAccountDO userAccount = userAccountDao.getUserAccountById(userId);
+        if (userAccount == null)
+            return Result.fail(StatusEnum.NO_OPTION);  //查无此人
+
+        //  新旧密码不一致
+        if (userAccount.getPassword() != oldPassword)
+            return Result.fail(StatusEnum.NOT_FOUND); //密码不一致
+
+        Integer size = userAccountDao.updatePassword(userId, newPassword);
+        if (size > 0)
+            return Result.success(size);
+
+        return Result.fail(StatusEnum.INTERNAL_SERVER_ERROR);
+    }
+    //更新电话
     public Result updatePhone(Integer userId, String oldPhone, String newPhone, String oldPhoneCode, String newPhoneCode) {
-        return null;
+
+        UserAccountDO userAccount = userAccountDao.getUserAccountById(userId);
+        if (userAccount == null)
+            return Result.fail(StatusEnum.INTERNAL_SERVER_ERROR);  //查无此人
+
+        //  新旧电话不一致
+        if (userAccount.getPhone() != oldPhone)
+            return Result.fail(StatusEnum.INTERNAL_SERVER_ERROR);
+
+        Integer size = userAccountDao.updatePassword(userId, newPhone);
+        if (size > 0)
+            return Result.success(size);
+
+        return Result.fail(StatusEnum.INTERNAL_SERVER_ERROR);
     }
 
-    @Override
     public Result updateEmail(Integer userId, String oldEmail, String newEmail, String oldEmailCode, String newEmailCode) {
         return null;
     }
 
-    @Override
+
     public Result saveUserAccount(String account, String password) {
         if (StringUtils.isEmpty(account) || StringUtils.isEmpty(password))
             return Result.fail(StatusEnum.NO_OPTION);
@@ -170,12 +294,12 @@ public class UserAccountServiceImpl implements IUserAccountService {
         }
     }
 
-    @Override
+
     public Object test1(Object obj) {
         return thirdPartyClient.sendMail((String) obj);
     }
 
-    @Override
+
     public Object test2(Object obj) {
         return null;
     }

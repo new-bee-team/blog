@@ -1,5 +1,7 @@
 package group1.service;
 
+import group2.entity.dto.UserAccountDTO;
+import group2.entity.pojo.UserAccountDO;
 import group2.returnJson.Result;
 
 import java.util.List;
@@ -13,26 +15,25 @@ public interface IUserAccountService {
     // 根据account精确查询用户
     Result getUserAccountByAccount(String account);
 
-    // 根据name模糊查询
-    List<Result> ListUserAccountByName(String name);
+    Result<List<UserAccountDTO>>  ListUserAccountByName(String name);
 
     // 根据sex模糊查询
-    List<Result> ListUserAccountBySex(String sex);
+    Result<List<UserAccountDTO>> ListUserAccountBySex(String sex);
 
     // 根据registerTime模糊查询
-    List<Result> ListUserAccountByTime(Long registerTime);
+    Result<List<UserAccountDTO>>  ListUserAccountByTime(Long registerTime);
 
     // 根据 name + sex 模糊查询
-    List<Result> ListUserAccountByNameAndSex(String name, String sex);
+    Result<List<UserAccountDTO>>  ListUserAccountByNameAndSex(String name, String sex);
 
     // 根据 name + registerTime模糊查询
-    List<Result> ListUserAccountByNameAndTime(String name, Long registerTime);
+    Result<List<UserAccountDTO>>  ListUserAccountByNameAndTime(String name, Long registerTime);
 
     // 根据 sex + registerTime模糊查询
-    List<Result> ListUserAccountBySexAndTime(String sex, Long registerTime);
+    Result<List<UserAccountDTO>>  ListUserAccountBySexAndTime(String sex, Long registerTime);
 
     // 根据 name + sex + registerTime模糊查询
-    List<Result> ListUserAccountByNameAndSexAndTime(String name, String sex, Long registerTime);
+    Result<List<UserAccountDTO>> ListUserAccountByNameAndSexAndTime(String name, String sex, Long registerTime);
 
     //----------------------改----------------------
     // 绑定手机

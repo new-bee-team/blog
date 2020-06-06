@@ -3,14 +3,151 @@
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="group1.dao.UserAccountDao">
+    <sql id="userTable">
+        select * from user_account
+    </sql>
+    <sql id="queryListInfoSql">
+
+        <if test="null != account and '' != account">
+            and account like concat(concat('%',#{account}),'%')
+
+        </if>
+        <if test="null != name and '' != name">
+            and name like concat(concat('%',#{name}),'%')
+        </if>
+        <if test="null != account and '' != account">
+
+            and registerTime like concat(concat('%',#{account}),'%')
+        </if>
+    </sql>
+    <!--<sql id="bindInfoSql">-->
+
+        <!--<if test="null != bindQueryParms.phone and '' != bindQueryParms.phone">-->
+            <!--and bindQueryParms.phone = #{account}-->
+
+        <!--</if>-->
+        <!--<if test="null != bindQueryParms.email and '' != bindQueryParms.email">-->
+            <!--and bindQueryParms.email = #{email}-->
+        <!--</if>-->
+        <!--<if test="null != bindQueryParms.weChatOpenId and '' != bindQueryParms.weChatOpenId">-->
+
+            <!--and bindQueryParms.weChatOpenId= #{bindQueryParms.weChatOpenId }-->
+        <!--</if>-->
+    <!--</sql>-->
+    <!--<sql id="unbandInfosql">-->
+
+        <!--<if test="null != account and '' != account">-->
+            <!--and account like concat(concat('%',#{account}),'%')-->
+
+        <!--</if>-->
+        <!--<if test="null != name and '' != name">-->
+            <!--and name like concat(concat('%',#{name}),'%')-->
+        <!--</if>-->
+        <!--<if test="null != account and '' != account">-->
+
+            <!--and registerTime like concat(concat('%',#{account}),'%')-->
+        <!--</if>-->
+    <!--</sql>-->
+
 
     <select id="getUserAccountById" resultType="UserAccountDO">
-        select * from user_account where id = #{id}
+       select * from user_account
+        where id = #{id}
+    </select>
+    <select id="getUserAccountByAccount" resultType="UserAccountDO">
+         select * from user_account
+        where account = #{account}
     </select>
 
+
+    <select id="ListUserAccountByName" resultType="list">
+        select * from user_account where 1=1
+        <include refid="queryListInfoSql"></include>
+    </select>
+    <select id="ListUserAccountBySex" resultType="list">
+        select * from user_account where 1=1
+        <include refid="queryListInfoSql"></include>
+    </select>
+    <select id="ListUserAccountByTime" resultType="list">
+        select * from user_account where 1=1
+        <include refid="queryListInfoSql"></include>
+    </select>
+    <select id="ListUserAccountByNameAndSex" resultType="list">
+        select * from user_account where 1=1
+        <include refid="queryListInfoSql"></include>
+    </select>
+    <select id="ListUserAccountByNameAndTime" resultType="list">
+        select * from user_account where 1=1
+        <include refid="queryListInfoSql"></include>
+    </select>
+    <select id="ListUserAccountBySexAndTime" resultType="list">
+        select * from user_account where 1=1
+        <include refid="queryListInfoSql"></include>
+    </select>
+    <select id="ListUserAccountByNameAndSexAndTime" resultType="list">
+        select * from user_account where 1=1
+        <include refid="queryListInfoSql"></include>
+    </select>
+    <update id="bindPhone">
+       update  user_account set phone =#{phone}   where userId=#{userId}
+    </update>
+
+
+    <update id="bindEmail">
+        update user_account  set email=#{email} where userId=#{userId}
+    </update>
+    <update id="bindWeChat">
+        update user_account  set wx_openid=#{weChatOpenId} where userId=#{userId}
+    </update>
+    <update id="unbindPhone">
+        update user_account  set phone=null where userId=#{userId}
+    </update>
+    <update id="unbindEmail">
+        update user_account  set email=null  where userId=#{userId}
+    </update>
+    <update id="unbindWeChat">
+        update user_account  set wx_openid=null where userId=#{userId}
+    </update>
+    <update id="updatePicture">
+        update user_account  set picture=#{picture} where userId=#{userId}
+    </update>
+    <update id="updateName">
+        update user_account  set name=#{name} where userId=#{userId}
+    </update>
+    <update id="updatePassword">
+        update user_account  set password=#{newPassword} where userId=#{userId}
+    </update>
+    <update id="updatePhone">
+       update user_account  set phone=#{newPhone} where userId=#{userId}
+    </update>
+    <update id="updateEmail">
+        update user_account  set email=#{newEmail} where userId=#{userId}
+    </update>
     <insert id="saveUserAccount" parameterType="UserAccountDO" useGeneratedKeys="true" keyProperty="id">
         insert into user_account (account,`name`,picture,password,sex,phone,email,wx_openid,register_time)
             values
         (#{account},#{name},#{picture},#{password},#{sexEnum},#{phone},#{email},#{wxOpenid},#{registerTime})
     </insert>
+
+
+    <!--<select id="ListUserAccountByInfo">-->
+        <!--select * from user_account-->
+        <!--where 1=1-->
+        <!--<include refid="queryListInfoSql"></include>-->
+    <!--</select>-->
+    <!--<update id="bindInfo">-->
+        <!--update user_account-->
+        <!--<trim prefix="set" suffixOverrides=",">-->
+            <!--<include refid="bindInfoSql"></include>-->
+        <!--</trim>-->
+        <!--WHERE userId=#{userId}-->
+    <!--</update>-->
+    <!--<update id="unbindInfo">-->
+        <!--update user_account-->
+        <!--<trim prefix="set" suffixOverrides=",">-->
+            <!--<include refid="unbandInfosql"></include>-->
+        <!--</trim>-->
+        <!--WHERE userId=#{userId}-->
+    <!--</update>-->
+
 </mapper>

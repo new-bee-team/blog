@@ -1,6 +1,8 @@
 package group1.dao;
 
 import group2.entity.pojo.UserAccountDO;
+import group2.queryparms.BindQueryParms;
+import group2.queryparms.UserAccountQueryParms;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -55,7 +57,7 @@ public interface UserAccountDao {
 
     // 解绑微信
     Integer unbindWeChat(@Param("userId") Integer userId);
-
+////////////////////////////////
     // 修改头像
     Integer updatePicture(@Param("userId") Integer userId, @Param("picture") String picture);
 
@@ -68,12 +70,21 @@ public interface UserAccountDao {
     // 修改手机 code必须是手机验证码
     Integer updatePhone(@Param("userId") Integer userId, @Param("newPhone") String newPhone);
 
-    // 修改邮箱
-    Integer updateEmail(@Param("userId") Integer userId, @Param("newEmail") String newEmail);
+//    // 修改邮箱
+   Integer updateEmail(@Param("userId") Integer userId, @Param("newEmail") String newEmail);
 
     //----------------------增----------------------
     // 注册用户
     Integer saveUserAccount(UserAccountDO userAccountDO);
 
+
+
     //----------------------删----------------------
+
+    //模糊查询
+//    List<UserAccountDO> ListUserAccountByInfo(@Param("name") String name, UserAccountQueryParms UserAccountQueryParms);
+//    //绑定相关
+//    Integer bindInfo(Integer userId, BindQueryParms bindQueryParms);
+//    // 解绑相关
+//    Integer unbindInfo(Integer userId, BindQueryParms bindQueryParms);
 }
