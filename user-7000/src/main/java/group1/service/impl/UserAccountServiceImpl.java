@@ -61,95 +61,78 @@ public class UserAccountServiceImpl implements IUserAccountService {
     // 模糊查询根据  name
     public Result<List<UserAccountDTO>> ListUserAccountByName(String name) {
         List<UserAccountDO> doList = userAccountDao.ListUserAccountByName(name);
-        List<UserAccountDTO> dtoList = new ArrayList<UserAccountDTO>();
+        List<UserAccountDTO> dtoList = new ArrayList<>();
 
-        if (null == doList || doList.size() <0)
+        if (null == doList || doList.size() < 1)
             return Result.fail(StatusEnum.NO_OPTION);
-        doList.forEach(userAccountDO->{
-            dtoList.add( UserConvert.doToDto(userAccountDO));
-        });
+        doList.forEach(userAccountDO -> dtoList.add(UserConvert.doToDto(userAccountDO)));
         return Result.success(dtoList);
-
     }
 
     // 模糊查询根据  sex
-    public  Result<List<UserAccountDTO>> ListUserAccountBySex(String sex) {
+    public Result<List<UserAccountDTO>> ListUserAccountBySex(String sex) {
         List<UserAccountDO> doList = userAccountDao.ListUserAccountBySex(sex);
-        List<UserAccountDTO> dtoList = new ArrayList<UserAccountDTO>();
-        if (null == doList || doList.size() <0)
+        List<UserAccountDTO> dtoList = new ArrayList<>();
+        if (null == doList || doList.size() < 1)
             return Result.fail(StatusEnum.NO_OPTION);
-        doList.forEach(userAccountDO->{
-            dtoList.add( UserConvert.doToDto(userAccountDO));
-        });
+        doList.forEach(userAccountDO -> dtoList.add(UserConvert.doToDto(userAccountDO)));
         return Result.success(dtoList);
-
     }
 
     // 模糊查询根据  registerTime
-    public  Result<List<UserAccountDTO>>  ListUserAccountByTime(Long registerTime) {
+    public Result<List<UserAccountDTO>> ListUserAccountByTime(Long registerTime) {
         List<UserAccountDO> doList = userAccountDao.ListUserAccountByTime(registerTime);
-        List<UserAccountDTO> dtoList = new ArrayList<UserAccountDTO>();
-        if (null == doList || doList.size() <0)
+        List<UserAccountDTO> dtoList = new ArrayList<>();
+        if (null == doList || doList.size() < 1)
             return Result.fail(StatusEnum.NO_OPTION);
-        doList.forEach(userAccountDO->{
-            dtoList.add( UserConvert.doToDto(userAccountDO));
-        });
+        doList.forEach(userAccountDO -> dtoList.add(UserConvert.doToDto(userAccountDO)));
         return Result.success(dtoList);
     }
 
     // 模糊查询根据  name sex
-    public  Result<List<UserAccountDTO>>  ListUserAccountByNameAndSex(String name, String sex) {
-        List<UserAccountDO> doList = userAccountDao.ListUserAccountByNameAndSex(name,sex);
-        List<UserAccountDTO> dtoList = new ArrayList<UserAccountDTO>();
-        if (null == doList || doList.size() <0)
+    public Result<List<UserAccountDTO>> ListUserAccountByNameAndSex(String name, String sex) {
+        List<UserAccountDO> doList = userAccountDao.ListUserAccountByNameAndSex(name, sex);
+        List<UserAccountDTO> dtoList = new ArrayList<>();
+        if (null == doList || doList.size() < 1)
             return Result.fail(StatusEnum.NO_OPTION);
-        doList.forEach(useraccountDO->{
-            dtoList.add( UserConvert.doToDto(useraccountDO));
-        });
+        doList.forEach(useraccountDO -> dtoList.add(UserConvert.doToDto(useraccountDO)));
         return Result.success(dtoList);
     }
 
     // 模糊查询根据  name registerTime
-    public  Result<List<UserAccountDTO>> ListUserAccountByNameAndTime(String name, Long registerTime) {
-        List<UserAccountDO> doList = userAccountDao.ListUserAccountByNameAndTime(name,registerTime);
-        List<UserAccountDTO> dtoList = new ArrayList<UserAccountDTO>();
-        if (null == doList || doList.size() <0)
+    public Result<List<UserAccountDTO>> ListUserAccountByNameAndTime(String name, Long registerTime) {
+        List<UserAccountDO> doList = userAccountDao.ListUserAccountByNameAndTime(name, registerTime);
+        List<UserAccountDTO> dtoList = new ArrayList<>();
+        if (null == doList || doList.size() < 0)
             return Result.fail(StatusEnum.NO_OPTION);
-        doList.forEach(userAccountDO->{
-            dtoList.add( UserConvert.doToDto(userAccountDO));
-        });
+        doList.forEach(userAccountDO -> dtoList.add(UserConvert.doToDto(userAccountDO)));
         return Result.success(dtoList);
     }
 
     // 模糊查询根据  sex registerTime
-    public  Result<List<UserAccountDTO>>  ListUserAccountBySexAndTime(String sex, Long registerTime) {
+    public Result<List<UserAccountDTO>> ListUserAccountBySexAndTime(String sex, Long registerTime) {
         List<UserAccountDO> dolist = userAccountDao.ListUserAccountBySex(sex);
         List<UserAccountDTO> dtosList = new ArrayList<UserAccountDTO>();
         if (null != dolist && dolist.size() > 0)
             return Result.fail(StatusEnum.NO_OPTION);
-        dolist.forEach(userAccountDO->{
-            dtosList.add( UserConvert.doToDto(userAccountDO));
-        });
+        dolist.forEach(userAccountDO -> dtosList.add(UserConvert.doToDto(userAccountDO)));
         return Result.success(dtosList);
     }
 
     // 模糊查询根据   name  sex registerTime
-    public  Result<List<UserAccountDTO>>  ListUserAccountByNameAndSexAndTime(String name, String sex, Long registerTime) {
+    public Result<List<UserAccountDTO>> ListUserAccountByNameAndSexAndTime(String name, String sex, Long registerTime) {
         List<UserAccountDO> doList = userAccountDao.ListUserAccountBySex(sex);
-        List<UserAccountDTO> dtosList = new ArrayList<UserAccountDTO>();
-        if (null == doList || doList.size() <0)
+        List<UserAccountDTO> dtosList = new ArrayList<>();
+        if (null == doList || doList.size() < 0)
             return Result.fail(StatusEnum.NO_OPTION);
-        doList.forEach(userAccountDO->{
-            dtosList.add( UserConvert.doToDto(userAccountDO));
-        });
+        doList.forEach(userAccountDO -> dtosList.add(UserConvert.doToDto(userAccountDO)));
         return Result.success(dtosList);
     }
 
     // 绑定phone
     public Result bindPhone(Integer userId, String phone, String code) {
         Integer size = userAccountDao.bindPhone(userId, phone);
-        if (size <0)
-
+        if (size < 1)
             return Result.fail(StatusEnum.NO_OPTION);
         return Result.success(size);
     }
@@ -157,7 +140,7 @@ public class UserAccountServiceImpl implements IUserAccountService {
     //  绑定Email
     public Result bindEmail(Integer userId, String email, String code) {
         Integer size = userAccountDao.bindPhone(userId, email);
-        if (size < 0)
+        if (size < 1)
 
             return Result.fail(StatusEnum.NO_OPTION);
         return Result.success(size);
@@ -166,8 +149,7 @@ public class UserAccountServiceImpl implements IUserAccountService {
     //  绑定Wechat
     public Result bindWeChat(Integer userId, String weChatOpenId, String code) {
         Integer size = userAccountDao.bindPhone(userId, weChatOpenId);
-        if (size < 0)
-
+        if (size < 1)
             return Result.fail(StatusEnum.NO_OPTION);
         return Result.success(size);
     }
@@ -175,7 +157,7 @@ public class UserAccountServiceImpl implements IUserAccountService {
     //  解绑Phone
     public Result unbindPhone(Integer userId, String code) {
         Integer size = userAccountDao.unbindPhone(userId);
-        if (size <0)
+        if (size < 1)
 
             return Result.fail(StatusEnum.NO_OPTION);
         return Result.success(size);
@@ -184,7 +166,7 @@ public class UserAccountServiceImpl implements IUserAccountService {
     //  解绑Emall
     public Result unbindEmail(Integer userId, String code) {
         Integer size = userAccountDao.unbindPhone(userId);
-        if (size < 0)
+        if (size < 1)
 
             return Result.fail(StatusEnum.NO_OPTION);
         return Result.success(size);
@@ -193,7 +175,7 @@ public class UserAccountServiceImpl implements IUserAccountService {
     //  解绑微信
     public Result unbindWeChat(Integer userId, String code) {
         Integer size = userAccountDao.unbindPhone(userId);
-        if (size < 0)
+        if (size < 1)
 
             return Result.fail(StatusEnum.NO_OPTION);
         return Result.success(size);
@@ -202,7 +184,7 @@ public class UserAccountServiceImpl implements IUserAccountService {
     //更新头像
     public Result updatePicture(Integer userId, String picture) {
         Integer size = userAccountDao.updateName(userId, picture);  //更新头像
-        if (size < 0)
+        if (size < 1)
             return Result.success(size);
 
         return Result.fail(StatusEnum.NO_OPTION);
@@ -219,7 +201,7 @@ public class UserAccountServiceImpl implements IUserAccountService {
             return Result.fail(StatusEnum.NOT_FOUND);  //name 不一致
 
         Integer size = userAccountDao.updateName(userId, name);  //更新name
-        if (size > 0)
+        if (size == 1)
             return Result.success(size);
 
         return Result.fail(StatusEnum.INTERNAL_SERVER_ERROR);
@@ -242,6 +224,7 @@ public class UserAccountServiceImpl implements IUserAccountService {
 
         return Result.fail(StatusEnum.INTERNAL_SERVER_ERROR);
     }
+
     //更新电话
     public Result updatePhone(Integer userId, String oldPhone, String newPhone, String oldPhoneCode, String newPhoneCode) {
 
