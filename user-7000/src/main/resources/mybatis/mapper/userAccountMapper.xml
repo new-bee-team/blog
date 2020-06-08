@@ -9,15 +9,15 @@
     <sql id="queryListInfoSql">
 
         <if test="null != account and '' != account">
-            and account like concat(concat('%',#{account}),'%')
+            and account like "%"#{account}"%
 
         </if>
         <if test="null != name and '' != name">
-            and name like concat(concat('%',#{name}),'%')
+            and name like "%"#{name}"%"
         </if>
         <if test="null != account and '' != account">
 
-            and registerTime like concat(concat('%',#{account}),'%')
+            and registerTime &lt; #{registerTime}
         </if>
     </sql>
     <!--<sql id="bindInfoSql">-->
