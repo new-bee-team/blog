@@ -22,6 +22,7 @@ public enum StatusEnum {
     NOT_FOUND(404, "未找到资源"),
     BAD_METHOD(405, "不允许使用方法"),
     TIMEOUT(408, "请求超时"),
+    CODEERROR(409, "验证码错误"),
 
     // 服务器端有错误
     INTERNAL_SERVER_ERROR(500, "服务器异常"),
