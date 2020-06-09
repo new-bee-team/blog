@@ -19,6 +19,7 @@ import java.io.Serializable;
 @Accessors(chain = true)
 public class ArticleDO implements Serializable {
     private Integer id;
+    private Integer authorId; // 逻辑外键 冗余字段
     private Integer stars; //收藏数
     private Integer comments; //评论数
     private Integer visitors; //浏览量（一个用户多次浏览不算，不包括自己）

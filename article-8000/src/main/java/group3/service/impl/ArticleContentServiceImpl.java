@@ -1,6 +1,7 @@
 package group3.service.impl;
 
 import group3.service.IArticleContentService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 /**
@@ -10,5 +11,6 @@ import org.springframework.stereotype.Service;
  **/
 
 @Service
+@Slf4j
 public class ArticleContentServiceImpl implements IArticleContentService {
 }
