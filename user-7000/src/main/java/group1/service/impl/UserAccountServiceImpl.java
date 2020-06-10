@@ -6,10 +6,13 @@ import group1.service.IUserAccountService;
 import group1.util.UserConvert;
 import group2.entity.dto.UserAccountDTO;
 import group2.entity.pojo.UserAccountDO;
+import group2.enums.BindPerfix;
+import group2.redis.Cache;
 import group2.returnJson.Result;
 import group2.returnJson.StatusEnum;
 import group2.util.MD5Util;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -26,12 +29,15 @@ import java.util.List;
 @Service
 @Slf4j
 public class UserAccountServiceImpl implements IUserAccountService {
-
+    @Resource
+    Cache cache;//封装cache
     @Resource
     private UserAccountDao userAccountDao;
 
     @Resource
     private ThirdPartyClient thirdPartyClient;
+    @Resource
+    private RedisTemplate redisTemplate;
 
     // 查询根据  id
     public Result getUserAccountById(Integer id) {
@@ -131,6 +137,10 @@ public class UserAccountServiceImpl implements IUserAccountService {
 
     // 绑定phone
     public Result bindPhone(Integer userId, String phone, String code) {
+
+        Boolean isPass = this.valid(BindPerfix.PHONE.getBindPerfix()+phone, code);
+
+        if (!isPass) return Result.fail(StatusEnum.NO_OPTION);
         Integer size = userAccountDao.bindPhone(userId, phone);
         if (size < 1)
             return Result.fail(StatusEnum.NO_OPTION);
@@ -139,6 +149,8 @@ public class UserAccountServiceImpl implements IUserAccountService {
 
     //  绑定Email
     public Result bindEmail(Integer userId, String email, String code) {
+        Boolean isPass = this.valid(BindPerfix.EMAIL.getBindPerfix()+email, code);
+        if (!isPass) return Result.fail(StatusEnum.NO_OPTION);
         Integer size = userAccountDao.bindPhone(userId, email);
         if (size < 1)
 
@@ -148,6 +160,8 @@ public class UserAccountServiceImpl implements IUserAccountService {
 
     //  绑定Wechat
     public Result bindWeChat(Integer userId, String weChatOpenId, String code) {
+        Boolean isPass = this.valid(BindPerfix.WECHAT.getBindPerfix()+weChatOpenId, code);
+        if (!isPass) return Result.fail(StatusEnum.NO_OPTION);
         Integer size = userAccountDao.bindPhone(userId, weChatOpenId);
         if (size < 1)
             return Result.fail(StatusEnum.NO_OPTION);
@@ -156,6 +170,8 @@ public class UserAccountServiceImpl implements IUserAccountService {
 
     //  解绑Phone
     public Result unbindPhone(Integer userId, String code) {
+        Boolean isPass = this.valid(BindPerfix.UNPHONE.getBindPerfix()+userId, code);
+        if (!isPass) return Result.fail(StatusEnum.NO_OPTION);
         Integer size = userAccountDao.unbindPhone(userId);
         if (size < 1)
 
@@ -165,6 +181,8 @@ public class UserAccountServiceImpl implements IUserAccountService {
 
     //  解绑Emall
     public Result unbindEmail(Integer userId, String code) {
+        Boolean isPass = this.valid(BindPerfix.UNEMAIL.getBindPerfix()+userId, code);
+        if (!isPass) return Result.fail(StatusEnum.NO_OPTION);
         Integer size = userAccountDao.unbindPhone(userId);
         if (size < 1)
 
@@ -174,6 +192,9 @@ public class UserAccountServiceImpl implements IUserAccountService {
 
     //  解绑微信
     public Result unbindWeChat(Integer userId, String code) {
+
+        Boolean isPass = this.valid(BindPerfix.UNWECHAT.getBindPerfix()+userId, code);
+        if (!isPass) return Result.fail(StatusEnum.NO_OPTION);
         Integer size = userAccountDao.unbindPhone(userId);
         if (size < 1)
 
@@ -209,6 +230,8 @@ public class UserAccountServiceImpl implements IUserAccountService {
 
     //更新密码
     public Result updatePassword(Integer userId, String oldPassword, String newPassword, String code) {
+        Boolean isPass = this.valid(BindPerfix.PASSWORD.getBindPerfix()+userId, code);
+        if (!isPass) return Result.fail(StatusEnum.NO_OPTION);
 
         UserAccountDO userAccount = userAccountDao.getUserAccountById(userId);
         if (userAccount == null)
@@ -285,6 +308,23 @@ public class UserAccountServiceImpl implements IUserAccountService {
 
     public Object test2(Object obj) {
         return null;
+    }
+
+    //  生成code[可用于手机，邮箱]
+    public String createCode(String obj) {
+        String valCode = String.valueOf((int) ((Math.random() * 9 + 1) * 1000));  // 默认随机四位小数
+        cache.put(obj, valCode, 200);
+        return valCode;
+    }
+
+    // 基于redis 取数据返回值true和false
+     Boolean valid(String obj, String code) {
+        Object valcode = cache.get(obj);
+        if (null != valcode && valcode.toString().equals(valcode)) {
+            cache.remove(obj);
+            return true;
+        }
+        return false;
     }
 
 }
