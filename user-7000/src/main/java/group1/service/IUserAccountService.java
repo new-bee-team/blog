@@ -1,10 +1,6 @@
 package group1.service;
 
-import group2.entity.dto.UserAccountDTO;
-import group2.entity.pojo.UserAccountDO;
 import group2.returnJson.Result;
-
-import java.util.List;
 
 /**
  * @author: jiacheng.xing
@@ -21,25 +17,25 @@ public interface IUserAccountService {
     // 根据account精确查询用户
     Result getUserAccountByAccount(String account);
 
-    Result<List<UserAccountDTO>> ListUserAccountByName(String name, Integer startPage, Integer pageSize);
+    Result ListUserAccountByName(String name, Integer startPage, Integer pageSize);
 
     // 根据sex模糊查询
-    Result<List<UserAccountDTO>> ListUserAccountBySex(String sex, Integer startPage, Integer pageSize);
+    Result ListUserAccountBySex(String sex, Integer startPage, Integer pageSize);
 
     // 根据registerTime模糊查询
-    Result<List<UserAccountDTO>> ListUserAccountByTime(Long startTime, Long endTime, Integer startPage, Integer pageSize);
+    Result ListUserAccountByTime(Long startTime, Long endTime, Integer startPage, Integer pageSize);
 
     // 根据 name + sex 模糊查询
-    Result<List<UserAccountDTO>> ListUserAccountByNameAndSex(String name, String sex, Integer startPage, Integer pageSize);
+    Result ListUserAccountByNameAndSex(String name, String sex, Integer startPage, Integer pageSize);
 
     // 根据 name + registerTime模糊查询
-    Result<List<UserAccountDTO>> ListUserAccountByNameAndTime(String name, Long startTime, Long endTime, Integer startPage, Integer pageSize);
+    Result ListUserAccountByNameAndTime(String name, Long startTime, Long endTime, Integer startPage, Integer pageSize);
 
     // 根据 sex + registerTime模糊查询
-    Result<List<UserAccountDTO>> ListUserAccountBySexAndTime(String sex, Long startTime, Long endTime, Integer startPage, Integer pageSize);
+    Result ListUserAccountBySexAndTime(String sex, Long startTime, Long endTime, Integer startPage, Integer pageSize);
 
     // 根据 name + sex + registerTime模糊查询
-    Result<List<UserAccountDTO>> ListUserAccountByNameAndSexAndTime(String name, String sex, Long startTime, Long endTime, Integer startPage, Integer pageSize);
+    Result ListUserAccountByNameAndSexAndTime(String name, String sex, Long startTime, Long endTime, Integer startPage, Integer pageSize);
 
     //----------------------改----------------------
     // 绑定手机

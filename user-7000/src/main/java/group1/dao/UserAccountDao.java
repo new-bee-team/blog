@@ -78,6 +78,21 @@ public interface UserAccountDao {
     // 注册用户
     Integer saveUserAccount(UserAccountDO userAccountDO);
 
+    // 查询所有符合的个数
+    Integer countUserAccountByName(String name);
+
+    Integer countUserAccountBySex(String sex);
+
+    Integer countUserAccountByTime(Long startTime, Long endTime);
+
+    Integer countUserAccountByNameAndSex(String name, String sex);
+
+    Integer countUserAccountByNameAndTime(String name, Long startTime, Long endTime);
+
+    Integer countUserAccountBySexAndTime(String sex, Long startTime, Long endTime);
+
+    Integer countUserAccountByNameAndSexAndTime(String name, String sex, Long startTime, Long endTime);
+
 
     //----------------------删----------------------
 

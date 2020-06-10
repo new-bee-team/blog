@@ -7,6 +7,7 @@ import group1.util.UserConvert;
 import group2.entity.dto.UserAccountDTO;
 import group2.entity.pojo.UserAccountDO;
 import group2.enums.BindPerfix;
+import group2.page.PageBean;
 import group2.redis.Cache;
 import group2.returnJson.Result;
 import group2.returnJson.StatusEnum;
@@ -67,7 +68,7 @@ public class UserAccountServiceImpl implements IUserAccountService {
     }
 
     // 模糊查询根据  name
-    public Result<List<UserAccountDTO>> ListUserAccountByName(String name, Integer startPage, Integer pageSize) {
+    public Result ListUserAccountByName(String name, Integer startPage, Integer pageSize) {
         int start = startPage <= 1 ? 1 : startPage;
         int startRow = (start - 1) * pageSize;
         List<UserAccountDO> doList = userAccountDao.ListUserAccountByName(name, startRow, pageSize);
@@ -76,11 +77,12 @@ public class UserAccountServiceImpl implements IUserAccountService {
         if (null == doList || doList.size() < 1)
             return Result.fail(StatusEnum.NO_OPTION);
         doList.forEach(userAccountDO -> dtoList.add(UserConvert.doToDto(userAccountDO)));
-        return Result.success(dtoList);
+        Integer totalPages = userAccountDao.countUserAccountByName(name);
+        return Result.success(new PageBean<>(startPage, pageSize, totalPages, dtoList));
     }
 
     // 模糊查询根据  sex
-    public Result<List<UserAccountDTO>> ListUserAccountBySex(String sex, Integer startPage, Integer pageSize) {
+    public Result ListUserAccountBySex(String sex, Integer startPage, Integer pageSize) {
         int start = startPage <= 1 ? 1 : startPage;
         int startRow = (start - 1) * pageSize;
         List<UserAccountDO> doList = userAccountDao.ListUserAccountBySex(sex, startRow, pageSize);
@@ -88,11 +90,12 @@ public class UserAccountServiceImpl implements IUserAccountService {
         if (null == doList || doList.size() < 1)
             return Result.fail(StatusEnum.NO_OPTION);
         doList.forEach(userAccountDO -> dtoList.add(UserConvert.doToDto(userAccountDO)));
-        return Result.success(dtoList);
+        Integer totalPages = userAccountDao.countUserAccountBySex(sex);
+        return Result.success(new PageBean<>(startPage, pageSize, totalPages, dtoList));
     }
 
     // 模糊查询根据  registerTime
-    public Result<List<UserAccountDTO>> ListUserAccountByTime(Long startTime, Long endTime, Integer startPage, Integer pageSize) {
+    public Result ListUserAccountByTime(Long startTime, Long endTime, Integer startPage, Integer pageSize) {
         int start = startPage <= 1 ? 1 : startPage;
         int startRow = (start - 1) * pageSize;
         List<UserAccountDO> doList = userAccountDao.ListUserAccountByTime(startTime, endTime, startRow, pageSize);
@@ -100,11 +103,12 @@ public class UserAccountServiceImpl implements IUserAccountService {
         if (null == doList || doList.size() < 1)
             return Result.fail(StatusEnum.NO_OPTION);
         doList.forEach(userAccountDO -> dtoList.add(UserConvert.doToDto(userAccountDO)));
-        return Result.success(dtoList);
+        Integer totalPages = userAccountDao.countUserAccountByTime(startTime, endTime);
+        return Result.success(new PageBean<>(startPage, pageSize, totalPages, dtoList));
     }
 
     // 模糊查询根据  name sex
-    public Result<List<UserAccountDTO>> ListUserAccountByNameAndSex(String name, String sex, Integer startPage, Integer pageSize) {
+    public Result ListUserAccountByNameAndSex(String name, String sex, Integer startPage, Integer pageSize) {
         int start = startPage <= 1 ? 1 : startPage;
         int startRow = (start - 1) * pageSize;
         List<UserAccountDO> doList = userAccountDao.ListUserAccountByNameAndSex(name, sex, startRow, pageSize);
@@ -112,11 +116,12 @@ public class UserAccountServiceImpl implements IUserAccountService {
         if (null == doList || doList.size() < 1)
             return Result.fail(StatusEnum.NO_OPTION);
         doList.forEach(useraccountDO -> dtoList.add(UserConvert.doToDto(useraccountDO)));
-        return Result.success(dtoList);
+        Integer totalPages = userAccountDao.countUserAccountByNameAndSex(name, sex);
+        return Result.success(new PageBean<>(startPage, pageSize, totalPages, dtoList));
     }
 
     // 模糊查询根据  name registerTime
-    public Result<List<UserAccountDTO>> ListUserAccountByNameAndTime(String name, Long startTime, Long endTime, Integer startPage, Integer pageSize) {
+    public Result ListUserAccountByNameAndTime(String name, Long startTime, Long endTime, Integer startPage, Integer pageSize) {
         int start = startPage <= 1 ? 1 : startPage;
         int startRow = (start - 1) * pageSize;
         List<UserAccountDO> doList = userAccountDao.ListUserAccountByNameAndTime(name, startTime, endTime, startRow, pageSize);
@@ -124,31 +129,34 @@ public class UserAccountServiceImpl implements IUserAccountService {
         if (null == doList || doList.size() < 0)
             return Result.fail(StatusEnum.NO_OPTION);
         doList.forEach(userAccountDO -> dtoList.add(UserConvert.doToDto(userAccountDO)));
-        return Result.success(dtoList);
+        Integer totalPages = userAccountDao.countUserAccountByNameAndTime(name, startTime, endTime);
+        return Result.success(new PageBean<>(startPage, pageSize, totalPages, dtoList));
     }
 
     // 模糊查询根据  sex registerTime
-    public Result<List<UserAccountDTO>> ListUserAccountBySexAndTime(String sex, Long startTime, Long endTime, Integer startPage, Integer pageSize) {
+    public Result ListUserAccountBySexAndTime(String sex, Long startTime, Long endTime, Integer startPage, Integer pageSize) {
         int start = startPage <= 1 ? 1 : startPage;
         int startRow = (start - 1) * pageSize;
         List<UserAccountDO> dolist = userAccountDao.ListUserAccountBySexAndTime(sex, startTime, endTime, startRow, pageSize);
-        List<UserAccountDTO> dtosList = new ArrayList<>();
+        List<UserAccountDTO> dtoList = new ArrayList<>();
         if (null != dolist && dolist.size() > 0)
             return Result.fail(StatusEnum.NO_OPTION);
-        dolist.forEach(userAccountDO -> dtosList.add(UserConvert.doToDto(userAccountDO)));
-        return Result.success(dtosList);
+        dolist.forEach(userAccountDO -> dtoList.add(UserConvert.doToDto(userAccountDO)));
+        Integer totalPages = userAccountDao.countUserAccountBySexAndTime(sex, startTime, endTime);
+        return Result.success(new PageBean<>(startPage, pageSize, totalPages, dtoList));
     }
 
     // 模糊查询根据   name  sex registerTime
-    public Result<List<UserAccountDTO>> ListUserAccountByNameAndSexAndTime(String name, String sex, Long startTime, Long endTime, Integer startPage, Integer pageSize) {
+    public Result ListUserAccountByNameAndSexAndTime(String name, String sex, Long startTime, Long endTime, Integer startPage, Integer pageSize) {
         int start = startPage <= 1 ? 1 : startPage;
         int startRow = (start - 1) * pageSize;
         List<UserAccountDO> doList = userAccountDao.ListUserAccountByNameAndSexAndTime(name, sex, startTime, endTime, startRow, pageSize);
-        List<UserAccountDTO> dtosList = new ArrayList<>();
+        List<UserAccountDTO> dtoList = new ArrayList<>();
         if (null == doList || doList.size() < 0)
             return Result.fail(StatusEnum.NO_OPTION);
-        doList.forEach(userAccountDO -> dtosList.add(UserConvert.doToDto(userAccountDO)));
-        return Result.success(dtosList);
+        doList.forEach(userAccountDO -> dtoList.add(UserConvert.doToDto(userAccountDO)));
+        Integer totalPages = userAccountDao.countUserAccountByNameAndSexAndTime(name, sex, startTime, endTime);
+        return Result.success(new PageBean<>(startPage, pageSize, totalPages, dtoList));
     }
 
     // 绑定phone

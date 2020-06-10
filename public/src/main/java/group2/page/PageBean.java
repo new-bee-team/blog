@@ -17,4 +17,12 @@ public class PageBean<T> implements Serializable {
     private Integer pageSize; // 每页多少个
     private Integer totalPages; // 总页数
     private List<T> data;
+
+
+    public PageBean(Integer startPage, Integer pageSize, Integer totalPages, T data) {
+        this.currentPage = startPage;
+        this.pageSize = pageSize;
+        this.totalPages = totalPages;
+        this.data = (List<T>) data;
+    }
 }
