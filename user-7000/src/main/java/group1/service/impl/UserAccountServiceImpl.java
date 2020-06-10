@@ -29,13 +29,16 @@ import java.util.List;
 @Service
 @Slf4j
 public class UserAccountServiceImpl implements IUserAccountService {
+
     @Resource
-    Cache cache;//封装cache
+    private Cache cache;//封装cache
+
     @Resource
     private UserAccountDao userAccountDao;
 
     @Resource
     private ThirdPartyClient thirdPartyClient;
+
     @Resource
     private RedisTemplate redisTemplate;
 
@@ -53,7 +56,6 @@ public class UserAccountServiceImpl implements IUserAccountService {
 
     // 查询根据  account
     public Result getUserAccountByAccount(String account) {
-
         UserAccountDO userAccount = userAccountDao.getUserAccountByAccount(account);
         if (null == userAccount)
             return Result.fail(StatusEnum.NO_OPTION);
@@ -65,8 +67,10 @@ public class UserAccountServiceImpl implements IUserAccountService {
     }
 
     // 模糊查询根据  name
-    public Result<List<UserAccountDTO>> ListUserAccountByName(String name) {
-        List<UserAccountDO> doList = userAccountDao.ListUserAccountByName(name);
+    public Result<List<UserAccountDTO>> ListUserAccountByName(String name, Integer startPage, Integer pageSize) {
+        int start = startPage <= 1 ? 1 : startPage;
+        int startRow = (start - 1) * pageSize;
+        List<UserAccountDO> doList = userAccountDao.ListUserAccountByName(name, startRow, pageSize);
         List<UserAccountDTO> dtoList = new ArrayList<>();
 
         if (null == doList || doList.size() < 1)
@@ -76,8 +80,10 @@ public class UserAccountServiceImpl implements IUserAccountService {
     }
 
     // 模糊查询根据  sex
-    public Result<List<UserAccountDTO>> ListUserAccountBySex(String sex) {
-        List<UserAccountDO> doList = userAccountDao.ListUserAccountBySex(sex);
+    public Result<List<UserAccountDTO>> ListUserAccountBySex(String sex, Integer startPage, Integer pageSize) {
+        int start = startPage <= 1 ? 1 : startPage;
+        int startRow = (start - 1) * pageSize;
+        List<UserAccountDO> doList = userAccountDao.ListUserAccountBySex(sex, startRow, pageSize);
         List<UserAccountDTO> dtoList = new ArrayList<>();
         if (null == doList || doList.size() < 1)
             return Result.fail(StatusEnum.NO_OPTION);
@@ -86,8 +92,10 @@ public class UserAccountServiceImpl implements IUserAccountService {
     }
 
     // 模糊查询根据  registerTime
-    public Result<List<UserAccountDTO>> ListUserAccountByTime(Long registerTime) {
-        List<UserAccountDO> doList = userAccountDao.ListUserAccountByTime(registerTime);
+    public Result<List<UserAccountDTO>> ListUserAccountByTime(Long startTime, Long endTime, Integer startPage, Integer pageSize) {
+        int start = startPage <= 1 ? 1 : startPage;
+        int startRow = (start - 1) * pageSize;
+        List<UserAccountDO> doList = userAccountDao.ListUserAccountByTime(startTime, endTime, startRow, pageSize);
         List<UserAccountDTO> dtoList = new ArrayList<>();
         if (null == doList || doList.size() < 1)
             return Result.fail(StatusEnum.NO_OPTION);
@@ -96,8 +104,10 @@ public class UserAccountServiceImpl implements IUserAccountService {
     }
 
     // 模糊查询根据  name sex
-    public Result<List<UserAccountDTO>> ListUserAccountByNameAndSex(String name, String sex) {
-        List<UserAccountDO> doList = userAccountDao.ListUserAccountByNameAndSex(name, sex);
+    public Result<List<UserAccountDTO>> ListUserAccountByNameAndSex(String name, String sex, Integer startPage, Integer pageSize) {
+        int start = startPage <= 1 ? 1 : startPage;
+        int startRow = (start - 1) * pageSize;
+        List<UserAccountDO> doList = userAccountDao.ListUserAccountByNameAndSex(name, sex, startRow, pageSize);
         List<UserAccountDTO> dtoList = new ArrayList<>();
         if (null == doList || doList.size() < 1)
             return Result.fail(StatusEnum.NO_OPTION);
@@ -106,8 +116,10 @@ public class UserAccountServiceImpl implements IUserAccountService {
     }
 
     // 模糊查询根据  name registerTime
-    public Result<List<UserAccountDTO>> ListUserAccountByNameAndTime(String name, Long registerTime) {
-        List<UserAccountDO> doList = userAccountDao.ListUserAccountByNameAndTime(name, registerTime);
+    public Result<List<UserAccountDTO>> ListUserAccountByNameAndTime(String name, Long startTime, Long endTime, Integer startPage, Integer pageSize) {
+        int start = startPage <= 1 ? 1 : startPage;
+        int startRow = (start - 1) * pageSize;
+        List<UserAccountDO> doList = userAccountDao.ListUserAccountByNameAndTime(name, startTime, endTime, startRow, pageSize);
         List<UserAccountDTO> dtoList = new ArrayList<>();
         if (null == doList || doList.size() < 0)
             return Result.fail(StatusEnum.NO_OPTION);
@@ -116,9 +128,11 @@ public class UserAccountServiceImpl implements IUserAccountService {
     }
 
     // 模糊查询根据  sex registerTime
-    public Result<List<UserAccountDTO>> ListUserAccountBySexAndTime(String sex, Long registerTime) {
-        List<UserAccountDO> dolist = userAccountDao.ListUserAccountBySex(sex);
-        List<UserAccountDTO> dtosList = new ArrayList<UserAccountDTO>();
+    public Result<List<UserAccountDTO>> ListUserAccountBySexAndTime(String sex, Long startTime, Long endTime, Integer startPage, Integer pageSize) {
+        int start = startPage <= 1 ? 1 : startPage;
+        int startRow = (start - 1) * pageSize;
+        List<UserAccountDO> dolist = userAccountDao.ListUserAccountBySexAndTime(sex, startTime, endTime, startRow, pageSize);
+        List<UserAccountDTO> dtosList = new ArrayList<>();
         if (null != dolist && dolist.size() > 0)
             return Result.fail(StatusEnum.NO_OPTION);
         dolist.forEach(userAccountDO -> dtosList.add(UserConvert.doToDto(userAccountDO)));
@@ -126,8 +140,10 @@ public class UserAccountServiceImpl implements IUserAccountService {
     }
 
     // 模糊查询根据   name  sex registerTime
-    public Result<List<UserAccountDTO>> ListUserAccountByNameAndSexAndTime(String name, String sex, Long registerTime) {
-        List<UserAccountDO> doList = userAccountDao.ListUserAccountBySex(sex);
+    public Result<List<UserAccountDTO>> ListUserAccountByNameAndSexAndTime(String name, String sex, Long startTime, Long endTime, Integer startPage, Integer pageSize) {
+        int start = startPage <= 1 ? 1 : startPage;
+        int startRow = (start - 1) * pageSize;
+        List<UserAccountDO> doList = userAccountDao.ListUserAccountByNameAndSexAndTime(name, sex, startTime, endTime, startRow, pageSize);
         List<UserAccountDTO> dtosList = new ArrayList<>();
         if (null == doList || doList.size() < 0)
             return Result.fail(StatusEnum.NO_OPTION);
@@ -138,7 +154,7 @@ public class UserAccountServiceImpl implements IUserAccountService {
     // 绑定phone
     public Result bindPhone(Integer userId, String phone, String code) {
 
-        Boolean isPass = this.valid(BindPerfix.PHONE.getBindPerfix()+phone, code);
+        Boolean isPass = this.valid(BindPerfix.PHONE.getBindPerfix() + phone, code);
 
         if (!isPass) return Result.fail(StatusEnum.NO_OPTION);
         Integer size = userAccountDao.bindPhone(userId, phone);
@@ -149,7 +165,7 @@ public class UserAccountServiceImpl implements IUserAccountService {
 
     //  绑定Email
     public Result bindEmail(Integer userId, String email, String code) {
-        Boolean isPass = this.valid(BindPerfix.EMAIL.getBindPerfix()+email, code);
+        Boolean isPass = this.valid(BindPerfix.EMAIL.getBindPerfix() + email, code);
         if (!isPass) return Result.fail(StatusEnum.NO_OPTION);
         Integer size = userAccountDao.bindPhone(userId, email);
         if (size < 1)
@@ -160,7 +176,7 @@ public class UserAccountServiceImpl implements IUserAccountService {
 
     //  绑定Wechat
     public Result bindWeChat(Integer userId, String weChatOpenId, String code) {
-        Boolean isPass = this.valid(BindPerfix.WECHAT.getBindPerfix()+weChatOpenId, code);
+        Boolean isPass = this.valid(BindPerfix.WECHAT.getBindPerfix() + weChatOpenId, code);
         if (!isPass) return Result.fail(StatusEnum.NO_OPTION);
         Integer size = userAccountDao.bindPhone(userId, weChatOpenId);
         if (size < 1)
@@ -170,7 +186,7 @@ public class UserAccountServiceImpl implements IUserAccountService {
 
     //  解绑Phone
     public Result unbindPhone(Integer userId, String code) {
-        Boolean isPass = this.valid(BindPerfix.UNPHONE.getBindPerfix()+userId, code);
+        Boolean isPass = this.valid(BindPerfix.UNPHONE.getBindPerfix() + userId, code);
         if (!isPass) return Result.fail(StatusEnum.NO_OPTION);
         Integer size = userAccountDao.unbindPhone(userId);
         if (size < 1)
@@ -181,7 +197,7 @@ public class UserAccountServiceImpl implements IUserAccountService {
 
     //  解绑Emall
     public Result unbindEmail(Integer userId, String code) {
-        Boolean isPass = this.valid(BindPerfix.UNEMAIL.getBindPerfix()+userId, code);
+        Boolean isPass = this.valid(BindPerfix.UNEMAIL.getBindPerfix() + userId, code);
         if (!isPass) return Result.fail(StatusEnum.NO_OPTION);
         Integer size = userAccountDao.unbindPhone(userId);
         if (size < 1)
@@ -193,7 +209,7 @@ public class UserAccountServiceImpl implements IUserAccountService {
     //  解绑微信
     public Result unbindWeChat(Integer userId, String code) {
 
-        Boolean isPass = this.valid(BindPerfix.UNWECHAT.getBindPerfix()+userId, code);
+        Boolean isPass = this.valid(BindPerfix.UNWECHAT.getBindPerfix() + userId, code);
         if (!isPass) return Result.fail(StatusEnum.NO_OPTION);
         Integer size = userAccountDao.unbindPhone(userId);
         if (size < 1)
@@ -230,7 +246,7 @@ public class UserAccountServiceImpl implements IUserAccountService {
 
     //更新密码
     public Result updatePassword(Integer userId, String oldPassword, String newPassword, String code) {
-        Boolean isPass = this.valid(BindPerfix.PASSWORD.getBindPerfix()+userId, code);
+        Boolean isPass = this.valid(BindPerfix.PASSWORD.getBindPerfix() + userId, code);
         if (!isPass) return Result.fail(StatusEnum.NO_OPTION);
 
         UserAccountDO userAccount = userAccountDao.getUserAccountById(userId);
@@ -300,25 +316,15 @@ public class UserAccountServiceImpl implements IUserAccountService {
         }
     }
 
-
-    public Object test1(Object obj) {
-        return thirdPartyClient.sendMail((String) obj);
-    }
-
-
-    public Object test2(Object obj) {
-        return null;
-    }
-
     //  生成code[可用于手机，邮箱]
-    public String createCode(String obj) {
+    private String createCode(String obj) {
         String valCode = String.valueOf((int) ((Math.random() * 9 + 1) * 1000));  // 默认随机四位小数
         cache.put(obj, valCode, 200);
         return valCode;
     }
 
     // 基于redis 取数据返回值true和false
-     Boolean valid(String obj, String code) {
+    private Boolean valid(String obj, String code) {
         Object valcode = cache.get(obj);
         if (null != valcode && valcode.toString().equals(valcode)) {
             cache.remove(obj);

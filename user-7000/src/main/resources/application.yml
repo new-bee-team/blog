@@ -2,3 +2,14 @@ logging:
   level:
     group1:
       dao: debug
+user:
+  experience:
+    login: 5
+    publish: 10
+    like: 1
+    star: 2
+  score:
+    login: 1
+    publish: 2
+    like: 1
+    star: 1

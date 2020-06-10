@@ -55,21 +55,21 @@ public class UserAccountController {
     }
 
 
-    @NotNull
-    @GetMapping("/test/{key}/{value}")
-    public String testRedis(@PathVariable String key, @PathVariable String value) {
-        redisTemplate.opsForValue().set(key, value);
-        redisTemplate.expire(key, 200L, TimeUnit.SECONDS);
-        Long expire = redisTemplate.getExpire(key, TimeUnit.SECONDS);
-
-        UserAccountVO userAccountVO = new UserAccountVO("1", "1", "1", "1", "1", "1", "1", "1");
-        redisTemplate.opsForValue().set("userAccountVO", JsonUtil.objectToJson(userAccountVO), 100L, TimeUnit.SECONDS);
-        return redisTemplate.opsForValue().get(key) + "\t" + expire;
-    }
-
-    @NotNull
-    @PostMapping("/test/email/send/{addr}")
-    public Integer testEmail(@PathVariable String addr) {
-        return (Integer) userAccountService.test1(addr);
-    }
+//    @NotNull
+//    @GetMapping("/test/{key}/{value}")
+//    public String testRedis(@PathVariable String key, @PathVariable String value) {
+//        redisTemplate.opsForValue().set(key, value);
+//        redisTemplate.expire(key, 200L, TimeUnit.SECONDS);
+//        Long expire = redisTemplate.getExpire(key, TimeUnit.SECONDS);
+//
+//        UserAccountVO userAccountVO = new UserAccountVO("1", "1", "1", "1", "1", "1", "1", "1");
+//        redisTemplate.opsForValue().set("userAccountVO", JsonUtil.objectToJson(userAccountVO), 100L, TimeUnit.SECONDS);
+//        return redisTemplate.opsForValue().get(key) + "\t" + expire;
+//    }
+//
+//    @NotNull
+//    @PostMapping("/test/email/send/{addr}")
+//    public Integer testEmail(@PathVariable String addr) {
+//        return (Integer) userAccountService.test1(addr);
+//    }
 }

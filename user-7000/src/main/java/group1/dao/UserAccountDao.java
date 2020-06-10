@@ -19,25 +19,25 @@ public interface UserAccountDao {
     UserAccountDO getUserAccountByAccount(@Param("account") String account);
 
     // 根据name模糊查询
-    List<UserAccountDO> ListUserAccountByName(@Param("name") String name);
+    List<UserAccountDO> ListUserAccountByName(@Param("name") String name, @Param("start") Integer start, @Param("pageSize") Integer pageSize);
 
     // 根据sex模糊查询
-    List<UserAccountDO> ListUserAccountBySex(@Param("sex") String sex);
+    List<UserAccountDO> ListUserAccountBySex(@Param("sex") String sex, @Param("start") Integer start, @Param("pageSize") Integer pageSize);
 
     // 根据registerTime模糊查询
-    List<UserAccountDO> ListUserAccountByTime(@Param("registerTime") Long registerTime);
+    List<UserAccountDO> ListUserAccountByTime(@Param("startTime") Long startTime, @Param("endTime") Long endTime, @Param("start") Integer start, @Param("pageSize") Integer pageSize);
 
     // 根据 name + sex 模糊查询
-    List<UserAccountDO> ListUserAccountByNameAndSex(@Param("name") String name, @Param("sex") String sex);
+    List<UserAccountDO> ListUserAccountByNameAndSex(@Param("name") String name, @Param("sex") String sex, @Param("start") Integer start, @Param("pageSize") Integer pageSize);
 
     // 根据 name + registerTime模糊查询
-    List<UserAccountDO> ListUserAccountByNameAndTime(@Param("name") String name, @Param("registerTime") Long registerTime);
+    List<UserAccountDO> ListUserAccountByNameAndTime(@Param("name") String name, @Param("startTime") Long startTime, @Param("endTime") Long endTime, @Param("start") Integer start, @Param("pageSize") Integer pageSize);
 
     // 根据 sex + registerTime模糊查询
-    List<UserAccountDO> ListUserAccountBySexAndTime(@Param("sex") String sex, @Param("registerTime") Long registerTime);
+    List<UserAccountDO> ListUserAccountBySexAndTime(@Param("sex") String sex, @Param("startTime") Long startTime, @Param("endTime") Long endTime, @Param("start") Integer start, @Param("pageSize") Integer pageSize);
 
     // 根据 name + sex + registerTime模糊查询
-    List<UserAccountDO> ListUserAccountByNameAndSexAndTime(@Param("name") String name, @Param("sex") String sex, @Param("registerTime") Long registerTime);
+    List<UserAccountDO> ListUserAccountByNameAndSexAndTime(@Param("name") String name, @Param("sex") String sex, @Param("startTime") Long startTime, @Param("endTime") Long endTime, @Param("start") Integer start, @Param("pageSize") Integer pageSize);
 
     //----------------------改----------------------
     // 绑定手机
@@ -57,7 +57,8 @@ public interface UserAccountDao {
 
     // 解绑微信
     Integer unbindWeChat(@Param("userId") Integer userId);
-////////////////////////////////
+
+    ////////////////////////////////
     // 修改头像
     Integer updatePicture(@Param("userId") Integer userId, @Param("picture") String picture);
 
@@ -70,13 +71,12 @@ public interface UserAccountDao {
     // 修改手机 code必须是手机验证码
     Integer updatePhone(@Param("userId") Integer userId, @Param("newPhone") String newPhone);
 
-//    // 修改邮箱
-   Integer updateEmail(@Param("userId") Integer userId, @Param("newEmail") String newEmail);
+    //    // 修改邮箱
+    Integer updateEmail(@Param("userId") Integer userId, @Param("newEmail") String newEmail);
 
     //----------------------增----------------------
     // 注册用户
     Integer saveUserAccount(UserAccountDO userAccountDO);
-
 
 
     //----------------------删----------------------
