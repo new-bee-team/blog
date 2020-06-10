@@ -1,11 +1,13 @@
 package group1.service.impl;
 
 import group1.dao.UserAccountDao;
+import group1.dao.UserInfoDao;
 import group1.feign.ThirdPartyClient;
 import group1.service.IUserAccountService;
 import group1.util.UserConvert;
 import group2.entity.dto.UserAccountDTO;
 import group2.entity.pojo.UserAccountDO;
+import group2.entity.pojo.UserInfoDO;
 import group2.enums.BindPerfix;
 import group2.page.PageBean;
 import group2.redis.Cache;
@@ -15,6 +17,7 @@ import group2.util.MD5Util;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
@@ -36,6 +39,9 @@ public class UserAccountServiceImpl implements IUserAccountService {
 
     @Resource
     private UserAccountDao userAccountDao;
+
+    @Resource
+    private UserInfoDao userInfoDao;
 
     @Resource
     private ThirdPartyClient thirdPartyClient;
@@ -295,13 +301,13 @@ public class UserAccountServiceImpl implements IUserAccountService {
     }
 
 
+    @Transactional
     public Result saveUserAccount(String account, String password) {
-        if (StringUtils.isEmpty(account) || StringUtils.isEmpty(password))
-            return Result.fail(StatusEnum.NO_OPTION);
         // 1、account是否重复？
         // ...
-        String passwordMD5 = MD5Util.string2MD5(password);
+
         // 2、插入account、password返回新增记录的id
+        String passwordMD5 = MD5Util.string2MD5(password);
         // 测试MD5加密
         log.info("原始密码：" + password);
         log.info("MD5加密后：" + passwordMD5);
@@ -313,15 +319,25 @@ public class UserAccountServiceImpl implements IUserAccountService {
         if (null == userAccount)
             return Result.fail(StatusEnum.INTERNAL_SERVER_ERROR);
 
-        Integer i = userAccountDao.saveUserAccount(userAccount);
-        Integer id = userAccount.getId();
-        if (i == 1 && id > 0) {
-            log.info("插入新用户成功:\t" + userAccount.toString());
-            return Result.success(id);
-        } else {
-            log.info("插入新用户失败:\t" + userAccount.toString());
-            return Result.fail();
+        Integer userAccountChangeRow = userAccountDao.saveUserAccount(userAccount);
+        Integer userAccountId = userAccount.getId();
+
+        if (userAccountChangeRow != 1 || userAccountId < 1) {
+            log.info("插入用户账户失败:\t" + userAccount.toString());
+            return Result.fail(StatusEnum.DATABASE_ERROR);
         }
+
+        // user_account插入成功后 再插入user_info
+        UserInfoDO userInfoDO = new UserInfoDO(null, userAccountId, 0, 0, 0, 0, 0, System.currentTimeMillis());
+        Integer userInfoChangeRow = userInfoDao.saveUserInfo(userInfoDO);
+
+        if (userInfoChangeRow != 1) {
+            log.info("插入用户信息失败:\t" + userInfoDO.toString());
+            return Result.fail(StatusEnum.DATABASE_ERROR);
+        }
+
+        log.info("用户注册成功");
+        return Result.success(userAccountId);
     }
 
     //  生成code[可用于手机，邮箱]
