@@ -4,16 +4,12 @@ import group1.service.impl.UserAccountServiceImpl;
 import group2.annotation.NotNull;
 import group2.entity.vo.UserAccountVO;
 import group2.returnJson.Result;
-import group2.util.JsonUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.concurrent.TimeUnit;
 
 /**
  * @author: KongKongBaby
@@ -26,8 +22,6 @@ import java.util.concurrent.TimeUnit;
 @Api(tags = "用户账户服务")
 public class UserAccountController {
 
-    @Autowired
-    private RedisTemplate<String, String> redisTemplate;
 
     @Autowired
     private UserAccountServiceImpl userAccountService;
@@ -53,23 +47,4 @@ public class UserAccountController {
     public Result saveUserAccount(@PathVariable String account, @PathVariable String password) {
         return userAccountService.saveUserAccount(account, password);
     }
-
-
-//    @NotNull
-//    @GetMapping("/test/{key}/{value}")
-//    public String testRedis(@PathVariable String key, @PathVariable String value) {
-//        redisTemplate.opsForValue().set(key, value);
-//        redisTemplate.expire(key, 200L, TimeUnit.SECONDS);
-//        Long expire = redisTemplate.getExpire(key, TimeUnit.SECONDS);
-//
-//        UserAccountVO userAccountVO = new UserAccountVO("1", "1", "1", "1", "1", "1", "1", "1");
-//        redisTemplate.opsForValue().set("userAccountVO", JsonUtil.objectToJson(userAccountVO), 100L, TimeUnit.SECONDS);
-//        return redisTemplate.opsForValue().get(key) + "\t" + expire;
-//    }
-//
-//    @NotNull
-//    @PostMapping("/test/email/send/{addr}")
-//    public Integer testEmail(@PathVariable String addr) {
-//        return (Integer) userAccountService.test1(addr);
-//    }
 }
