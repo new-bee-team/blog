@@ -39,8 +39,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers("/**").permitAll();
     }
 
-    // 配置
-
     // 密码
     @Bean
     public PasswordEncoder passwordEncoder(){

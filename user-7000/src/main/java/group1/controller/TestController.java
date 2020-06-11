@@ -73,9 +73,7 @@ public class TestController {
     }
 
     @GetMapping("/role/account/{account}")
-    //{"password":"cc9fad4350e3673c965cfe06d668d368"
-    // ,"username":"PigPigBoy","authorities":[{"authority":"ROLE_USER"}],"accountNonExpired":true
-    // ,"accountNonLocked":true,"credentialsNonExpired":true,"enabled":true}
+    //{"password":"cc9fad4350e3673c965cfe06d668d368","username":"PigPigBoy","authorities":[{"authority":"ROLE_USER"}],"accountNonExpired":true,"accountNonLocked":true,"credentialsNonExpired":true,"enabled":true}
     public Object role2(@PathVariable String account){
         UserDetails userDetails = userDetailService.loadUserByUsername(account);
         return userDetails;
