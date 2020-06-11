@@ -2,9 +2,11 @@ package group2.exception;
 
 import group2.returnJson.Result;
 import group2.returnJson.StatusEnum;
+import lombok.extern.slf4j.Slf4j;
 import org.mybatis.spring.MyBatisSystemException;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +22,7 @@ import java.sql.SQLException;
  * @Description: 全局异常拦截处理
  */
 @RestControllerAdvice(annotations = {RestController.class, Controller.class})
+@Slf4j
 public class ExceptionCatch {
 
     //----------------以下是系统预设异常--------------------
@@ -27,7 +30,7 @@ public class ExceptionCatch {
     @ResponseBody
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     public Result<Object> badRequest(BindException e) {
-        System.out.println("参数绑定异常:\t原因：" + e.getCause() + "\t详情:" + e.getCause().getMessage());
+        log.error("参数绑定异常:\t原因：" + e.getCause() + "\t详情:" + e.getCause().getMessage());
         return Result.fail(StatusEnum.BAD_REQUEST);
     }
 
@@ -35,7 +38,7 @@ public class ExceptionCatch {
     @ResponseBody
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     public Result<Object> argumentException(IllegalArgumentException e) {
-        System.out.println("参数非法异常: \t原因：" + e.getCause() + "\t详情:" + e.getCause().getMessage());
+        log.error("参数非法异常: \t原因：" + e.getCause() + "\t详情:" + e.getCause().getMessage());
         return Result.fail(StatusEnum.BAD_REQUEST);
     }
 
@@ -43,7 +46,7 @@ public class ExceptionCatch {
     @ResponseBody
     @ResponseStatus(value = HttpStatus.NOT_FOUND)
     public Result<Object> notFound(NoHandlerFoundException e) {
-        System.out.println("资源未找到:\t原因：" + e.getCause() + "\t详情:" + e.getCause().getMessage());
+        log.error("资源未找到:\t原因：" + e.getCause() + "\t详情:" + e.getCause().getMessage());
         return Result.fail(StatusEnum.NOT_FOUND);
     }
 
@@ -51,7 +54,7 @@ public class ExceptionCatch {
     @ResponseBody
     @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
     public Result<Object> mybatisException(MyBatisSystemException e) {
-        System.out.println("mybatis异常:\t原因：" + e.getCause() + "\t详情:" + e.getCause().getMessage());
+        log.error("mybatis异常:\t原因：" + e.getCause() + "\t详情:" + e.getCause().getMessage());
         return Result.fail(StatusEnum.MYBATIS_ERROR);
     }
 
@@ -59,7 +62,7 @@ public class ExceptionCatch {
     @ResponseBody
     @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
     public Result<Object> databaseError(Exception e) {
-        System.out.println("数据库异常: \t原因：" + e.getCause() + "\t详情:" + e.getCause().getMessage());
+        log.error("数据库异常: \t原因：" + e.getCause() + "\t详情:" + e.getCause().getMessage());
         return Result.fail(StatusEnum.DATABASE_ERROR);
     }
 
@@ -67,7 +70,7 @@ public class ExceptionCatch {
     @ResponseBody
     @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
     public Result<Object> fileException(RuntimeException e) {
-        System.out.println("文件传输异常: \t原因：" + e.getCause() + "\t详情:" + e.getCause().getMessage());
+        log.error("文件传输异常: \t原因：" + e.getCause() + "\t详情:" + e.getCause().getMessage());
         return Result.fail(StatusEnum.INTERNAL_SERVER_ERROR);
     }
 
@@ -83,15 +86,23 @@ public class ExceptionCatch {
     @ResponseBody
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     public Result<Object> NullPointerException(NullPointerException e) {
-        System.out.println("参数为空异常: \t原因：" + e.getCause() + "\t详情:" + e.getCause().getMessage());
+        log.error("参数为空异常: \t原因：" + e.getCause() + "\t详情:" + e.getCause().getMessage());
         return Result.fail(StatusEnum.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(value = {UsernameNotFoundException.class})
+    @ResponseBody
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+    public Result<Object> UsernameNotFoundException(UsernameNotFoundException e) {
+        log.error("用户认证异常: \t原因：" + e.getCause() + "\t详情:" + e.getCause().getMessage());
+        return Result.fail(StatusEnum.UNAUTHORIZED);
     }
 
     @ExceptionHandler(value = {RuntimeException.class})
     @ResponseBody
     @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
     public Result<Object> otherException(RuntimeException e) {
-        System.out.println("服务器异常: \t原因：" + e.getCause() + "\t详情:" + e.getCause().getMessage());
+        log.error("服务器异常: \t原因：" + e.getCause() + "\t详情:" + e.getCause().getMessage());
         return Result.fail(StatusEnum.INTERNAL_SERVER_ERROR);
     }
 }
