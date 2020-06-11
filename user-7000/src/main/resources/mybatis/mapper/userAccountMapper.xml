@@ -17,9 +17,11 @@
         </if>
         <if test="null != account and '' != account">
 
-            and registerTime &lt; #{registerTime}
+            and registerTime between  #{startTime} and #{endTime}
         </if>
+        limit #{start},#{pageSize}
     </sql>
+
     <!--<sql id="bindInfoSql">-->
 
         <!--<if test="null != bindQueryParms.phone and '' != bindQueryParms.phone">-->
@@ -63,6 +65,7 @@
     <select id="ListUserAccountByName" resultType="list">
         select * from user_account where 1=1
         <include refid="queryListInfoSql"></include>
+
     </select>
     <select id="ListUserAccountBySex" resultType="list">
         select * from user_account where 1=1

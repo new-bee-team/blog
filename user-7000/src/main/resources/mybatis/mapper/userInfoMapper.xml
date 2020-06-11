@@ -4,4 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="group1.dao.UserInfoDao">
 
+    <update id="updateUserInfo">
+  update user_info set score=score+1,last_login_time=#{lastLoginTime} where user_id =#{userId}
+</update>
 </mapper>
