@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 
 @RestController
 @RequestMapping("/code")
-@Api(tags = "图片验证码服务")
+@Api(tags = "验证码服务")
 public class CodeController {
 
     @Resource
@@ -35,11 +35,11 @@ public class CodeController {
     }
 
     @PostMapping("/check/{code}")
-    @ApiOperation(value = "验证验证码", notes = "true/false表示是否正确")
+    @ApiOperation(value = "验证图片验证码", notes = "true/false表示是否正确")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "code", value = "验证码", required = true, dataType = "String", paramType = "path")
     })
-    public Boolean checkCode(@PathVariable String code, HttpServletRequest request){
+    public Boolean checkPictureCode(@PathVariable String code, HttpServletRequest request){
         return codeService.checkCode(code,request);
     }
 }

@@ -15,6 +15,7 @@ public interface ThirdPartyClient {
 
     @PostMapping("/get")
     void getCode(HttpServletRequest request, HttpServletResponse response);
+
     @PostMapping("eck/{code}")
     Boolean checkCode(@PathVariable String code, HttpServletRequest request);
 }
