@@ -1,4 +1,4 @@
-package group1.security;
+package group2.security;
 
 import group2.util.MD5Util;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +24,8 @@ import javax.sql.DataSource;
 @EnableGlobalMethodSecurity(prePostEnabled = true) //拦截@PreAuthrize
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private DataSource dataSource;
+//    @Autowired
+//    private DataSource dataSource;
 
     // 认证用户来源————数据库
     @Override

@@ -6,6 +6,7 @@ import group1.feign.ThirdPartyClient;
 import group1.service.IUserAccountService;
 import group1.util.UserConvert;
 import group2.entity.dto.UserAccountDTO;
+import group2.entity.dto.UserDTO;
 import group2.entity.pojo.UserAccountDO;
 import group2.entity.pojo.UserInfoDO;
 import group2.enums.BindPerfix;
@@ -15,6 +16,7 @@ import group2.returnJson.Result;
 import group2.returnJson.StatusEnum;
 import group2.util.MD5Util;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -45,6 +47,12 @@ public class UserAccountServiceImpl implements IUserAccountService {
 
     @Resource
     private ThirdPartyClient thirdPartyClient;
+
+    @Value("${user.experience.login}")
+    private Integer experienceLogin;
+
+    @Value("${user.score.login}")
+    private Integer scoreLogin;
 
 
     // 查询根据  id
@@ -165,12 +173,12 @@ public class UserAccountServiceImpl implements IUserAccountService {
     }
 
     // 绑定phone
-    public Result bindPhone(Integer userId, String phone, String code,HttpServletRequest request) {
+    public Result bindPhone(Integer userId, String phone, String code, HttpServletRequest request) {
         Boolean isPass = this.thirdPartyClient.checkCode(code, request);
 
 //        Boolean isPass = this.valid(BindPerfix.PHONE.getBindPerfix() + phone, code);
 //
-       if (!isPass) return Result.fail(StatusEnum.NO_OPTION);
+        if (!isPass) return Result.fail(StatusEnum.NO_OPTION);
         Integer size = userAccountDao.bindPhone(userId, phone);
         if (size < 1)
             return Result.fail(StatusEnum.NO_OPTION);
@@ -178,10 +186,10 @@ public class UserAccountServiceImpl implements IUserAccountService {
     }
 
     //  绑定Email
-    public Result bindEmail(Integer userId, String email, String code,HttpServletRequest request) {
+    public Result bindEmail(Integer userId, String email, String code, HttpServletRequest request) {
         Boolean isPass = this.thirdPartyClient.checkCode(code, request);
 //        Boolean isPass = this.valid(BindPerfix.EMAIL.getBindPerfix() + email, code);
-     if (!isPass) return Result.fail(StatusEnum.NO_OPTION);
+        if (!isPass) return Result.fail(StatusEnum.NO_OPTION);
         Integer size = userAccountDao.bindPhone(userId, email);
         if (size < 1)
 
@@ -190,10 +198,10 @@ public class UserAccountServiceImpl implements IUserAccountService {
     }
 
     //  绑定Wechat
-    public Result bindWeChat(Integer userId, String weChatOpenId, String code,HttpServletRequest request) {
+    public Result bindWeChat(Integer userId, String weChatOpenId, String code, HttpServletRequest request) {
         Boolean isPass = this.thirdPartyClient.checkCode(code, request);
 //        Boolean isPass = this.valid(BindPerfix.WECHAT.getBindPerfix() + weChatOpenId, code);
-      if (!isPass) return Result.fail(StatusEnum.NO_OPTION);
+        if (!isPass) return Result.fail(StatusEnum.NO_OPTION);
         Integer size = userAccountDao.bindPhone(userId, weChatOpenId);
         if (size < 1)
             return Result.fail(StatusEnum.NO_OPTION);
@@ -201,12 +209,11 @@ public class UserAccountServiceImpl implements IUserAccountService {
     }
 
 
-
     //  解绑Phone
-    public Result unbindPhone(Integer userId, String code,HttpServletRequest request) {
+    public Result unbindPhone(Integer userId, String code, HttpServletRequest request) {
         Boolean isPass = this.thirdPartyClient.checkCode(code, request);
 //        Boolean isPass = this.valid(BindPerfix.UNPHONE.getBindPerfix() + userId, code);
-       if (!isPass) return Result.fail(StatusEnum.NO_OPTION);
+        if (!isPass) return Result.fail(StatusEnum.NO_OPTION);
         Integer size = userAccountDao.unbindPhone(userId);
         if (size < 1)
 
@@ -215,10 +222,10 @@ public class UserAccountServiceImpl implements IUserAccountService {
     }
 
     //  解绑Emall
-    public Result unbindEmail(Integer userId, String code,HttpServletRequest request) {
+    public Result unbindEmail(Integer userId, String code, HttpServletRequest request) {
         Boolean isPass = this.thirdPartyClient.checkCode(code, request);
 // Boolean isPass = this.valid(BindPerfix.UNEMAIL.getBindPerfix() + userId, code);
-   if (!isPass) return Result.fail(StatusEnum.NO_OPTION);
+        if (!isPass) return Result.fail(StatusEnum.NO_OPTION);
         Integer size = userAccountDao.unbindPhone(userId);
         if (size < 1)
 
@@ -227,10 +234,10 @@ public class UserAccountServiceImpl implements IUserAccountService {
     }
 
     //  解绑微信
-    public Result unbindWeChat(Integer userId, String code,HttpServletRequest request) {
+    public Result unbindWeChat(Integer userId, String code, HttpServletRequest request) {
         Boolean isPass = this.thirdPartyClient.checkCode(code, request);
 //        Boolean isPass = this.valid(BindPerfix.UNWECHAT.getBindPerfix() + userId, code);
-     if (!isPass) return Result.fail(StatusEnum.NO_OPTION);
+        if (!isPass) return Result.fail(StatusEnum.NO_OPTION);
         Integer size = userAccountDao.unbindPhone(userId);
         if (size < 1)
 
@@ -270,10 +277,10 @@ public class UserAccountServiceImpl implements IUserAccountService {
 //    }
 
     //更新密码
-    public Result updatePassword(Integer userId, String oldPassword, String newPassword, String code,HttpServletRequest request) {
+    public Result updatePassword(Integer userId, String oldPassword, String newPassword, String code, HttpServletRequest request) {
         Boolean isPass = this.thirdPartyClient.checkCode(code, request);
 //      Boolean isPass = this.valid(BindPerfix.PASSWORD.getBindPerfix() + userId, code);
-      if (!isPass) return Result.fail(StatusEnum.NO_OPTION);
+        if (!isPass) return Result.fail(StatusEnum.NO_OPTION);
 
         UserAccountDO userAccount = userAccountDao.getUserAccountById(userId);
         if (userAccount == null)
@@ -316,14 +323,11 @@ public class UserAccountServiceImpl implements IUserAccountService {
     @Transactional
     public Result saveUserAccount(String account, String password) {
         // 1、account是否重复？
-        // ...
-        //用户名重复
         UserAccountDO userAccountDo = userAccountDao.getUserAccountByAccount(account);
         if (null != userAccountDo)
-            return Result.fail(StatusEnum.USERNAMEREPEAT);
+            return Result.fail(StatusEnum.EXISTED_RECORD);
 
         // 2、插入account、password返回新增记录的id
-
         String passwordMD5 = MD5Util.string2MD5(password);
         // 测试MD5加密
         log.info("原始密码：" + password);
@@ -340,7 +344,7 @@ public class UserAccountServiceImpl implements IUserAccountService {
         Integer userAccountId = userAccount.getId();
 
         if (userAccountChangeRow != 1 || userAccountId < 1) {
-            log.info("插入用户账户失败:\t" + userAccount.toString());
+            log.error("插入用户账户失败:\t" + userAccount.toString());
             return Result.fail(StatusEnum.DATABASE_ERROR);
         }
 
@@ -350,7 +354,7 @@ public class UserAccountServiceImpl implements IUserAccountService {
         Integer userInfoChangeRow = userInfoDao.saveUserInfo(userInfoDO);
 
         if (userInfoChangeRow != 1) {
-            log.info("插入用户信息失败:\t" + userInfoDO.toString());
+            log.error("插入用户信息失败:\t" + userInfoDO.toString());
             return Result.fail(StatusEnum.DATABASE_ERROR);
         }
 
@@ -362,19 +366,25 @@ public class UserAccountServiceImpl implements IUserAccountService {
     @Transactional
     public Result Login(String account, String password) {
         UserAccountDO userAccountDO = userAccountDao.getUserAccountByAccount(account);
-        if (userAccountDO == null)
-
-            return null;
-
-        if (userAccountDO.getPassword().equals(MD5Util.string2MD5(password))) {
-            //登录成功
-            // 更新积分  积分＋1
-            userInfoDao.updateUserInfo(userAccountDO.getId(),System.currentTimeMillis());
-         //   cache.put(userAccountDO.getId());
-            return null;
+        if (userAccountDO == null || !userAccountDO.getPassword().equals(MD5Util.string2MD5(password))) {
+            log.error(account + "用户登录失败");
+            return Result.fail(StatusEnum.UNAUTHORIZED);
         }
-        return null;
-
+        //登录成功
+        //更新积分和经验(增加)
+        Integer userId = userAccountDO.getId();
+        Integer changeRow = userInfoDao.updateUserEarnings(userId, scoreLogin, experienceLogin, System.currentTimeMillis());
+        if (changeRow != 1) {
+            log.error("更新用户登录经验、积分和最后登录时间失败，user=" + userAccountDO);
+            return Result.fail(StatusEnum.DATABASE_ERROR);
+        }
+        // 查询用户信息
+        UserInfoDO userInfoDO = userInfoDao.getUserInfo(userId);
+        UserDTO user = UserConvert.doToDto(userAccountDO, userInfoDO);
+        if (null == user)
+            return Result.fail();
+        log.info(account + "登录成功");
+        return Result.success(user);
     }
 
 //    //  生成code[可用于手机，邮箱]

@@ -2,8 +2,10 @@ package group1.util;
 
 import group2.entity.dto.UserAccountDTO;
 import group2.entity.dto.UserAccountFriendDTO;
+import group2.entity.dto.UserDTO;
 import group2.entity.pojo.UserAccountDO;
 import group2.entity.pojo.UserExperienceDO;
+import group2.entity.pojo.UserInfoDO;
 import group2.entity.vo.UserAccountVO;
 import group2.entity.vo.UserExperienceVO;
 import group2.enums.SexEnum;
@@ -70,6 +72,25 @@ public class UserConvert extends AbstractConvert {
                 .setPicture(userAccountDO.getPicture())
                 .setSex(userAccountDO.getSexEnum().toString());
         return userAccountFriendDTO;
+    }
+
+    public static UserDTO doToDto(UserAccountDO userAccountDO, UserInfoDO userInfoDO) {
+        UserDTO userDTO = new UserDTO();
+        userDTO.setId(userAccountDO.getId())
+                .setAccount(userAccountDO.getAccount())
+                .setPicture(userAccountDO.getPicture())
+                .setName(userAccountDO.getName())
+                .setSex(userAccountDO.getSexEnum().toString())
+                .setPhone(userAccountDO.getPhone())
+                .setEmail(userAccountDO.getEmail())
+                .setVisitor(userInfoDO.getVisitor())
+                .setFollower(userInfoDO.getFollower())
+                .setComment(userInfoDO.getComment())
+                .setScore(userInfoDO.getScore())
+                .setExperience(userInfoDO.getExperience())
+                .setRegisterTime(userAccountDO.getRegisterTime())
+                .setLastLoginTime(userInfoDO.getLastLoginTime());
+        return userDTO;
     }
 
     //------------------------other————>DO------------------------

@@ -20,37 +20,37 @@ public class Result<T> implements Serializable {
 
     //成功(状态码)
     public static Result<Void> success() {
-        return new Result<Void>(StatusEnum.SUCCESS, null);
+        return new Result<>(StatusEnum.SUCCESS, null);
     }
 
     //成功(状态码+数据)
     public static <T> Result<T> success(T data) {
-        return new Result<T>(StatusEnum.SUCCESS, data);
+        return new Result<>(StatusEnum.SUCCESS, data);
     }
 
     //自定义(状态码+数据)
     public static <T> Result<T> execute(StatusEnum statusEnum, T data) {
         if (statusEnum == null) {
-            return new Result<T>(StatusEnum.SUCCESS, null);
+            return new Result<>(StatusEnum.SUCCESS, null);
         }
-        return new Result<T>(statusEnum, data);
+        return new Result<>(statusEnum, data);
     }
 
     //异常(状态码)
     public static <T> Result<T> fail() {
-        return new Result<T>(StatusEnum.INTERNAL_SERVER_ERROR, null);
+        return new Result<>(StatusEnum.INTERNAL_SERVER_ERROR, null);
     }
 
     //异常(自定义状态码)
     public static <T> Result<T> fail(StatusEnum statusEnum) {
-        return new Result<T>(statusEnum, null);
+        return new Result<>(statusEnum, null);
     }
 
     //异常(自定义状态码+数据)
     public static <T> Result<T> fail(StatusEnum statusEnum, T data) {
         if (statusEnum == null) {
-            return new Result<T>(StatusEnum.INTERNAL_SERVER_ERROR, null);
+            return new Result<>(StatusEnum.INTERNAL_SERVER_ERROR, null);
         }
-        return new Result<T>(statusEnum, data);
+        return new Result<>(statusEnum, data);
     }
 }

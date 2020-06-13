@@ -23,7 +23,7 @@ public enum StatusEnum {
     BAD_METHOD(405, "不允许使用方法"),
     TIMEOUT(408, "请求超时"),
     CODEERROR(409, "验证码错误"),
-    USERNAMEREPEAT(410, "用户名重复"),
+//    USERNAMEREPEAT(410, "用户名重复"),
 
 
     // 服务器端有错误
@@ -35,7 +35,7 @@ public enum StatusEnum {
     // 数据库
     DATABASE_ERROR(600, "数据库异常"),
     MYBATIS_ERROR(601, "MyBatis异常"),
-    REPEAT_REGISTER(610, "已存在该数据"),
+    EXISTED_RECORD(610, "已存在该数据"),
     NO_OPTION(611, "没有查到相关记录");
 
     private final Integer code;
