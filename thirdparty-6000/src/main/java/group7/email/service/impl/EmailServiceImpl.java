@@ -1,5 +1,6 @@
 package group7.email.service.impl;
 
+import group2.util.CodeUtil;
 import group7.email.service.IEmailService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -76,7 +77,7 @@ public class EmailServiceImpl implements IEmailService {
             throw e;
         }
         //将code保存在redis30分钟
-        redisTemplate.opsForValue().set(to, code, 30L, TimeUnit.MINUTES);
+        CodeUtil.setCode(to,code);
         long endTime = System.currentTimeMillis();
         log.info("发送邮件并保存code耗时：" + (endTime - startTime));
         return 200;

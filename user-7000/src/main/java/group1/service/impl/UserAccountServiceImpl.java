@@ -198,8 +198,8 @@ public class UserAccountServiceImpl implements IUserAccountService {
 
     //  绑定Email
     @Override
-    public Result bindEmail(Integer userId, String email, String codeKey, String code) {
-        Boolean isPass = thirdPartyClient.checkCode(codeKey, code);
+    public Result bindEmail(Integer userId, String email, String code) {
+        Boolean isPass = thirdPartyClient.checkCode(email, code);
 
         if (!isPass) {
             return Result.fail(StatusEnum.CODEERROR);

@@ -41,22 +41,22 @@ public interface IUserAccountService {
 
     //----------------------改----------------------
     // 绑定手机
-    Result bindPhone(Integer userId, String phone,String codeKey, String code);
+    Result bindPhone(Integer userId, String phone, String codeKey, String code);
 
     // 绑定邮箱
-    Result bindEmail(Integer userId, String email,String codeKey, String code);
+    Result bindEmail(Integer userId, String email, String code);
 
     // 绑定微信
-    Result bindWeChat(Integer userId, String weChatOpenId,String codeKey, String code);
+    Result bindWeChat(Integer userId, String weChatOpenId, String codeKey, String code);
 
     // 解绑手机
-    Result unbindPhone(Integer userId,String codeKey, String code);
+    Result unbindPhone(Integer userId, String codeKey, String code);
 
     // 解绑邮箱
-    Result unbindEmail(Integer userId,String codeKey, String code);
+    Result unbindEmail(Integer userId, String codeKey, String code);
 
     // 解绑微信
-    Result unbindWeChat(Integer userId,String codeKey, String code);
+    Result unbindWeChat(Integer userId, String codeKey, String code);
 
     // 修改头像
     Result updatePicture(Integer userId, String picture);
@@ -65,13 +65,13 @@ public interface IUserAccountService {
     Result updateName(Integer userId, String name);
 
     // 修改密码 code包括手机或邮箱都可以
-    Result updatePassword(Integer userId, String oldPassword, String newPassword,String codeKey, String code);
+    Result updatePassword(Integer userId, String oldPassword, String newPassword, String codeKey, String code);
 
     // 修改手机 code必须是手机验证码
-    Result updatePhone(Integer userId, String oldPhone, String newPhone,String codeKey, String code);
+    Result updatePhone(Integer userId, String oldPhone, String newPhone, String codeKey, String code);
 
     // 修改邮箱
-    Result updateEmail(Integer userId, String oldEmail, String newEmail,String codeKey, String code);
+    Result updateEmail(Integer userId, String oldEmail, String newEmail, String codeKey, String code);
 
     //----------------------增----------------------
     // 注册用户

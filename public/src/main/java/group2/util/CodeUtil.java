@@ -39,4 +39,8 @@ public class CodeUtil {
         redisTemplate.opsForValue().set(k, v, 30L, TimeUnit.MINUTES);
         return k;
     }
+
+    public static void setCode(String k,String v) {
+        redisTemplate.opsForValue().set(k, v, 30L, TimeUnit.MINUTES);
+    }
 }

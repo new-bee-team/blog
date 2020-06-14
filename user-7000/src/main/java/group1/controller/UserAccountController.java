@@ -4,6 +4,7 @@ import group1.service.impl.UserAccountServiceImpl;
 import group2.annotation.NotNull;
 import group2.entity.vo.UserAccountVO;
 import group2.returnJson.Result;
+import group2.util.CodeUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -18,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
  **/
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/user/account")
 @Api(tags = "用户账户服务")
 public class UserAccountController {
 
@@ -43,8 +44,27 @@ public class UserAccountController {
             @ApiImplicitParam(name = "account", value = "用户帐号", required = true, dataType = "String", paramType = "path"),
             @ApiImplicitParam(name = "password", value = "用户密码", required = true, dataType = "String", paramType = "path")
     })
-    @PostMapping("/account/{account}/{password}")
+    @PostMapping("/{account}/{password}")
     public Result saveUserAccount(@PathVariable String account, @PathVariable String password) {
         return userAccountService.saveUserAccount(account, password);
+    }
+
+    @PostMapping("/codeKey")
+    @ApiOperation(value = "用户点击获取验证码调用的接口，返回该code的键k，无参")
+    public Result setUpdateAccountCodeKey() {
+        String k = CodeUtil.setCode();
+        return Result.success(k);
+    }
+
+    @NotNull
+    @ApiOperation(value = "绑定邮箱")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "userId", value = "用户id", required = true, dataType = "int", paramType = "path"),
+            @ApiImplicitParam(name = "email", value = "用户邮箱", required = true, dataType = "String", paramType = "path"),
+            @ApiImplicitParam(name = "code", value = "用户验证码", required = true, dataType = "String", paramType = "path")
+    })
+    @PostMapping("/{userId}/{email}/{code}")
+    public Result bindEmail(@PathVariable Integer userId, @PathVariable String email, @PathVariable String code) {
+        return userAccountService.bindEmail(userId, email, code);
     }
 }
