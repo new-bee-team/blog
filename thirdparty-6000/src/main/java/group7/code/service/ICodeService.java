@@ -10,5 +10,9 @@ public interface ICodeService {
     //定义response输出类型为image/jpeg类型，使用response输出流输出图片的byte数组
     void getImgCode(HttpServletRequest request, HttpServletResponse response) throws Exception;
 
-    Boolean checkCode(String code,HttpServletRequest request);
+    Boolean checkImgCode(String code,HttpServletRequest request);
+
+    String getStringCode(String k);
+
+    Boolean checkStringCode(String k,String v);
 }

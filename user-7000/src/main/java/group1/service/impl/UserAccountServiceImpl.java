@@ -56,6 +56,7 @@ public class UserAccountServiceImpl implements IUserAccountService {
 
 
     // 查询根据  id
+    @Override
     public Result getUserAccountById(Integer id) {
         UserAccountDO userAccount = userAccountDao.getUserAccountById(id);
         if (null == userAccount)
@@ -68,6 +69,7 @@ public class UserAccountServiceImpl implements IUserAccountService {
     }
 
     // 查询根据  account
+    @Override
     public Result getUserAccountByAccount(String account) {
         UserAccountDO userAccount = userAccountDao.getUserAccountByAccount(account);
         if (null == userAccount)
@@ -80,6 +82,7 @@ public class UserAccountServiceImpl implements IUserAccountService {
     }
 
     // 模糊查询根据  name
+    @Override
     public Result ListUserAccountByName(String name, Integer startPage, Integer pageSize) {
         int start = startPage <= 1 ? 1 : startPage;
         int startRow = (start - 1) * pageSize;
@@ -95,6 +98,7 @@ public class UserAccountServiceImpl implements IUserAccountService {
     }
 
     // 模糊查询根据  sex
+    @Override
     public Result ListUserAccountBySex(String sex, Integer startPage, Integer pageSize) {
         int start = startPage <= 1 ? 1 : startPage;
         int startRow = (start - 1) * pageSize;
@@ -108,6 +112,7 @@ public class UserAccountServiceImpl implements IUserAccountService {
     }
 
     // 模糊查询根据  registerTime
+    @Override
     public Result ListUserAccountByTime(Long startTime, Long endTime, Integer startPage, Integer pageSize) {
         int start = startPage <= 1 ? 1 : startPage;
         int startRow = (start - 1) * pageSize;
@@ -121,6 +126,7 @@ public class UserAccountServiceImpl implements IUserAccountService {
     }
 
     // 模糊查询根据  name sex
+    @Override
     public Result ListUserAccountByNameAndSex(String name, String sex, Integer startPage, Integer pageSize) {
         int start = startPage <= 1 ? 1 : startPage;
         int startRow = (start - 1) * pageSize;
@@ -134,6 +140,7 @@ public class UserAccountServiceImpl implements IUserAccountService {
     }
 
     // 模糊查询根据  name registerTime
+    @Override
     public Result ListUserAccountByNameAndTime(String name, Long startTime, Long endTime, Integer startPage, Integer pageSize) {
         int start = startPage <= 1 ? 1 : startPage;
         int startRow = (start - 1) * pageSize;
@@ -147,6 +154,7 @@ public class UserAccountServiceImpl implements IUserAccountService {
     }
 
     // 模糊查询根据  sex registerTime
+    @Override
     public Result ListUserAccountBySexAndTime(String sex, Long startTime, Long endTime, Integer startPage, Integer pageSize) {
         int start = startPage <= 1 ? 1 : startPage;
         int startRow = (start - 1) * pageSize;
@@ -160,6 +168,7 @@ public class UserAccountServiceImpl implements IUserAccountService {
     }
 
     // 模糊查询根据   name  sex registerTime
+    @Override
     public Result ListUserAccountByNameAndSexAndTime(String name, String sex, Long startTime, Long endTime, Integer startPage, Integer pageSize) {
         int start = startPage <= 1 ? 1 : startPage;
         int startRow = (start - 1) * pageSize;
@@ -173,85 +182,99 @@ public class UserAccountServiceImpl implements IUserAccountService {
     }
 
     // 绑定phone
-    public Result bindPhone(Integer userId, String phone, String code, HttpServletRequest request) {
-        Boolean isPass = this.thirdPartyClient.checkCode(code, request);
+    // 暂时略过
+    @Override
+    public Result bindPhone(Integer userId, String phone, String codeKey, String code) {
+        Boolean isPass = thirdPartyClient.checkCode(codeKey, code);
 
-//        Boolean isPass = this.valid(BindPerfix.PHONE.getBindPerfix() + phone, code);
-//
-        if (!isPass) return Result.fail(StatusEnum.NO_OPTION);
-        Integer size = userAccountDao.bindPhone(userId, phone);
-        if (size < 1)
-            return Result.fail(StatusEnum.NO_OPTION);
-        return Result.success(size);
+        if (!isPass) {
+            return Result.fail(StatusEnum.CODEERROR);
+        }
+        int i = userAccountDao.bindPhone(userId, phone);
+        if (i != 1)
+            return Result.fail(StatusEnum.DATABASE_ERROR);
+        return Result.success("绑定手机成功");
     }
 
     //  绑定Email
-    public Result bindEmail(Integer userId, String email, String code, HttpServletRequest request) {
-        Boolean isPass = this.thirdPartyClient.checkCode(code, request);
-//        Boolean isPass = this.valid(BindPerfix.EMAIL.getBindPerfix() + email, code);
-        if (!isPass) return Result.fail(StatusEnum.NO_OPTION);
-        Integer size = userAccountDao.bindPhone(userId, email);
-        if (size < 1)
+    @Override
+    public Result bindEmail(Integer userId, String email, String codeKey, String code) {
+        Boolean isPass = thirdPartyClient.checkCode(codeKey, code);
 
-            return Result.fail(StatusEnum.NO_OPTION);
-        return Result.success(size);
+        if (!isPass) {
+            return Result.fail(StatusEnum.CODEERROR);
+        }
+        int i = userAccountDao.bindEmail(userId, email);
+        if (i != 1) {
+            return Result.fail(StatusEnum.DATABASE_ERROR);
+        }
+        return Result.success("绑定邮箱成功");
     }
 
     //  绑定Wechat
-    public Result bindWeChat(Integer userId, String weChatOpenId, String code, HttpServletRequest request) {
-        Boolean isPass = this.thirdPartyClient.checkCode(code, request);
-//        Boolean isPass = this.valid(BindPerfix.WECHAT.getBindPerfix() + weChatOpenId, code);
-        if (!isPass) return Result.fail(StatusEnum.NO_OPTION);
-        Integer size = userAccountDao.bindPhone(userId, weChatOpenId);
-        if (size < 1)
-            return Result.fail(StatusEnum.NO_OPTION);
-        return Result.success(size);
+    @Override
+    public Result bindWeChat(Integer userId, String weChatOpenId, String codeKey, String code) {
+        Boolean isPass = thirdPartyClient.checkCode(codeKey, code);
+
+        if (!isPass) return Result.fail(StatusEnum.CODEERROR);
+        int i = userAccountDao.bindWeChat(userId, weChatOpenId);
+        if (i != 1) {
+            return Result.fail(StatusEnum.DATABASE_ERROR);
+        }
+        return Result.success("绑定微信成功");
     }
 
 
     //  解绑Phone
-    public Result unbindPhone(Integer userId, String code, HttpServletRequest request) {
-        Boolean isPass = this.thirdPartyClient.checkCode(code, request);
-//        Boolean isPass = this.valid(BindPerfix.UNPHONE.getBindPerfix() + userId, code);
-        if (!isPass) return Result.fail(StatusEnum.NO_OPTION);
-        Integer size = userAccountDao.unbindPhone(userId);
-        if (size < 1)
+    @Override
+    public Result unbindPhone(Integer userId, String codeKey, String code) {
+        Boolean isPass = thirdPartyClient.checkCode(codeKey, code);
 
-            return Result.fail(StatusEnum.NO_OPTION);
-        return Result.success(size);
+        if (!isPass) {
+            return Result.fail(StatusEnum.CODEERROR);
+        }
+        int i = userAccountDao.unbindPhone(userId);
+        if (i != 1)
+            return Result.fail(StatusEnum.DATABASE_ERROR);
+        return Result.success("解绑手机成功");
     }
 
     //  解绑Emall
-    public Result unbindEmail(Integer userId, String code, HttpServletRequest request) {
-        Boolean isPass = this.thirdPartyClient.checkCode(code, request);
-// Boolean isPass = this.valid(BindPerfix.UNEMAIL.getBindPerfix() + userId, code);
-        if (!isPass) return Result.fail(StatusEnum.NO_OPTION);
-        Integer size = userAccountDao.unbindPhone(userId);
-        if (size < 1)
+    @Override
+    public Result unbindEmail(Integer userId, String codeKey, String code) {
+        Boolean isPass = thirdPartyClient.checkCode(codeKey, code);
 
-            return Result.fail(StatusEnum.NO_OPTION);
-        return Result.success(size);
+        if (!isPass) {
+            return Result.fail(StatusEnum.CODEERROR);
+        }
+        int i = userAccountDao.unbindEmail(userId);
+        if (i != 1)
+            return Result.fail(StatusEnum.DATABASE_ERROR);
+        return Result.success("解绑邮箱成功");
     }
 
     //  解绑微信
-    public Result unbindWeChat(Integer userId, String code, HttpServletRequest request) {
-        Boolean isPass = this.thirdPartyClient.checkCode(code, request);
-//        Boolean isPass = this.valid(BindPerfix.UNWECHAT.getBindPerfix() + userId, code);
-        if (!isPass) return Result.fail(StatusEnum.NO_OPTION);
-        Integer size = userAccountDao.unbindPhone(userId);
-        if (size < 1)
+    @Override
+    public Result unbindWeChat(Integer userId, String codeKey, String code) {
+        Boolean isPass = thirdPartyClient.checkCode(codeKey, code);
 
-            return Result.fail(StatusEnum.NO_OPTION);
-        return Result.success(size);
+        if (!isPass) {
+            return Result.fail(StatusEnum.CODEERROR);
+        }
+        int i = userAccountDao.unbindWeChat(userId);
+        if (i != 1)
+            return Result.fail(StatusEnum.DATABASE_ERROR);
+        return Result.success("解绑微信成功");
     }
 
     //更新头像
+    @Override
     public Result updatePicture(Integer userId, String picture) {
-        Integer size = userAccountDao.updateName(userId, picture);  //更新头像
-        if (size < 1)
-            return Result.success(size);
+        Integer size = userAccountDao.updatePicture(userId, picture);
+        if (size != 1)
+            return Result.fail(StatusEnum.DATABASE_ERROR);
 
-        return Result.fail(StatusEnum.NO_OPTION);
+        return Result.success("更新头像成功");
     }
 
     //更新name
@@ -271,33 +294,31 @@ public class UserAccountServiceImpl implements IUserAccountService {
         return Result.fail(StatusEnum.INTERNAL_SERVER_ERROR);
     }
 
-//    @Override
-//    public Result updatePassword(Integer userId, String oldPassword, String newPassword, String code,) {
-//        return null;
-//    }
 
     //更新密码
-    public Result updatePassword(Integer userId, String oldPassword, String newPassword, String code, HttpServletRequest request) {
-        Boolean isPass = this.thirdPartyClient.checkCode(code, request);
-//      Boolean isPass = this.valid(BindPerfix.PASSWORD.getBindPerfix() + userId, code);
-        if (!isPass) return Result.fail(StatusEnum.NO_OPTION);
+    // 需要记录历史
+    @Override
+    public Result updatePassword(Integer userId, String oldPassword, String newPassword, String codeKey, String code) {
+        Boolean isPass = thirdPartyClient.checkCode(codeKey, code);
+        if (!isPass) return Result.fail(StatusEnum.CODEERROR);
 
         UserAccountDO userAccount = userAccountDao.getUserAccountById(userId);
         if (userAccount == null)
-            return Result.fail(StatusEnum.NO_OPTION);  //查无此人
+            return Result.fail(StatusEnum.NO_OPTION,"用户不存在！");  //查无此人
 
         //  新旧密码不一致
         if (userAccount.getPassword() != oldPassword)
-            return Result.fail(StatusEnum.NOT_FOUND); //密码不一致
+            return Result.fail(StatusEnum.UNAUTHORIZED,"密码错误！"); //密码不一致
 
         Integer size = userAccountDao.updatePassword(userId, newPassword);
-        if (size > 0)
-            return Result.success(size);
+        if (size != 1)
+            return Result.fail(StatusEnum.DATABASE_ERROR);
 
-        return Result.fail(StatusEnum.INTERNAL_SERVER_ERROR);
+        return Result.success("更新密码成功！");
     }
 
     //更新电话
+    @Override
     public Result updatePhone(Integer userId, String oldPhone, String newPhone, String oldPhoneCode, String newPhoneCode) {
 
         UserAccountDO userAccount = userAccountDao.getUserAccountById(userId);
@@ -315,12 +336,14 @@ public class UserAccountServiceImpl implements IUserAccountService {
         return Result.fail(StatusEnum.INTERNAL_SERVER_ERROR);
     }
 
+    @Override
     public Result updateEmail(Integer userId, String oldEmail, String newEmail, String oldEmailCode, String newEmailCode) {
         return null;
     }
 
 
     @Transactional
+    @Override
     public Result saveUserAccount(String account, String password) {
         // 1、account是否重复？
         UserAccountDO userAccountDo = userAccountDao.getUserAccountByAccount(account);

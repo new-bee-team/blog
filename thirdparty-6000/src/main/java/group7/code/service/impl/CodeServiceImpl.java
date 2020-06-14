@@ -3,6 +3,7 @@ package group7.code.service.impl;
 import com.google.code.kaptcha.impl.DefaultKaptcha;
 import group7.code.service.ICodeService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -26,6 +27,9 @@ public class CodeServiceImpl implements ICodeService {
 
     @Resource
     private DefaultKaptcha defaultKaptcha;
+
+    @Resource
+    private RedisTemplate<String, String> redisTemplate;
 
     @Override
     public void getImgCode(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -57,12 +61,20 @@ public class CodeServiceImpl implements ICodeService {
     }
 
     @Override
-    public Boolean checkCode(String code, HttpServletRequest request) {
-        // code非空判断
-        if (StringUtils.isEmpty(code))
-            return false;
-        // 正确值判断
+    public Boolean checkImgCode(String code, HttpServletRequest request) {
         String rightCode = (String) request.getSession().getAttribute("rightCode");
         return code.equals(rightCode);
+    }
+
+    @Override
+    public String getStringCode(String k) {
+        String v = redisTemplate.opsForValue().get(k);
+        return v;
+    }
+
+    @Override
+    public Boolean checkStringCode(String k, String oldV) {
+        String v = redisTemplate.opsForValue().get(k);
+        return oldV.equals(v);
     }
 }

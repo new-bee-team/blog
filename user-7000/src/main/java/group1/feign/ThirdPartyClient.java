@@ -13,8 +13,9 @@ public interface ThirdPartyClient {
     @PostMapping("/email/send/{addr}")
     Integer sendMail(@PathVariable("addr") String addr);
 
-//    @PostMapping("/get")
-//    void getCode(HttpServletRequest request, HttpServletResponse response);
-    @PostMapping("eck/{code}")
-    Boolean checkCode(@PathVariable (value = "code")String code, HttpServletRequest request);
+    @PostMapping("/code/string/get/{k}")
+    String getStringCode(@PathVariable("k") String k);
+
+    @PostMapping("/code/string/check/{k}/{v}")
+    Boolean checkCode(@PathVariable("k") String k, @PathVariable("v") String v);
 }
