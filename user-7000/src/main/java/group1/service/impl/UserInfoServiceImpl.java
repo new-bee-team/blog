@@ -4,7 +4,7 @@ import group1.dao.UserAccountDao;
 import group1.dao.UserInfoDao;
 import group1.feign.ThirdPartyClient;
 import group1.service.IUserInfoService;
-import group1.util.UserConvert;
+import group1.util.UserConvertUtil;
 import group2.entity.dto.UserDTO;
 import group2.entity.pojo.UserAccountDO;
 import group2.entity.pojo.UserInfoDO;
@@ -56,7 +56,7 @@ public class UserInfoServiceImpl implements IUserInfoService {
                 // 记录历史 xxx
                 UserInfoDO userInfo = userInfoDao.getUserInfo(userAccountByAccount.getId());
                 if (null != userInfo) {
-                    userDTO = UserConvert.doToDto(userAccountByAccount, userInfo);
+                    userDTO = UserConvertUtil.doToDto(userAccountByAccount, userInfo);
                     return Result.success(userDTO);
                 }
             }
@@ -68,7 +68,7 @@ public class UserInfoServiceImpl implements IUserInfoService {
                 if (null != userAccountByEmail) {
                     // XXX
                     UserInfoDO userInfo = userInfoDao.getUserInfo(userAccountByEmail.getId());
-                    userDTO = UserConvert.doToDto(userAccountByEmail, userInfo);
+                    userDTO = UserConvertUtil.doToDto(userAccountByEmail, userInfo);
                     return Result.success(userDTO);
                 }
             }

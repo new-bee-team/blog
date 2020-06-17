@@ -4,12 +4,11 @@ import group1.dao.UserAccountDao;
 import group1.dao.UserInfoDao;
 import group1.feign.ThirdPartyClient;
 import group1.service.IUserAccountService;
-import group1.util.UserConvert;
+import group1.util.UserConvertUtil;
 import group2.entity.dto.UserAccountDTO;
 import group2.entity.dto.UserDTO;
 import group2.entity.pojo.UserAccountDO;
 import group2.entity.pojo.UserInfoDO;
-import group2.enums.BindPerfix;
 import group2.page.PageBean;
 import group2.redis.Cache;
 import group2.returnJson.Result;
@@ -22,7 +21,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,7 +59,7 @@ public class UserAccountServiceImpl implements IUserAccountService {
         UserAccountDO userAccount = userAccountDao.getUserAccountById(id);
         if (null == userAccount)
             return Result.fail(StatusEnum.NO_OPTION);
-        UserAccountDTO userAccountDTO = UserConvert.doToDto(userAccount);
+        UserAccountDTO userAccountDTO = UserConvertUtil.doToDto(userAccount);
         if (null == userAccountDTO)
             return Result.fail(StatusEnum.INTERNAL_SERVER_ERROR);
         log.info("查询用户,id=" + id);
@@ -74,7 +72,7 @@ public class UserAccountServiceImpl implements IUserAccountService {
         UserAccountDO userAccount = userAccountDao.getUserAccountByAccount(account);
         if (null == userAccount)
             return Result.fail(StatusEnum.NO_OPTION);
-        UserAccountDTO userAccountDTO = UserConvert.doToDto(userAccount);
+        UserAccountDTO userAccountDTO = UserConvertUtil.doToDto(userAccount);
         if (null == userAccountDTO)
             return Result.fail(StatusEnum.INTERNAL_SERVER_ERROR);
         log.info("查询用户,account=" + account);
@@ -92,7 +90,7 @@ public class UserAccountServiceImpl implements IUserAccountService {
 
         if (null == doList || doList.size() < 1)
             return Result.fail(StatusEnum.NO_OPTION);
-        doList.forEach(userAccountDO -> dtoList.add(UserConvert.doToDto(userAccountDO)));
+        doList.forEach(userAccountDO -> dtoList.add(UserConvertUtil.doToDto(userAccountDO)));
         Integer totalPages = userAccountDao.countUserAccountByName(name);
         return Result.success(new PageBean<>(startPage, pageSize, totalPages, dtoList));
     }
@@ -106,7 +104,7 @@ public class UserAccountServiceImpl implements IUserAccountService {
         List<UserAccountDTO> dtoList = new ArrayList<>();
         if (null == doList || doList.size() < 1)
             return Result.fail(StatusEnum.NO_OPTION);
-        doList.forEach(userAccountDO -> dtoList.add(UserConvert.doToDto(userAccountDO)));
+        doList.forEach(userAccountDO -> dtoList.add(UserConvertUtil.doToDto(userAccountDO)));
         Integer totalPages = userAccountDao.countUserAccountBySex(sex);
         return Result.success(new PageBean<>(startPage, pageSize, totalPages, dtoList));
     }
@@ -120,7 +118,7 @@ public class UserAccountServiceImpl implements IUserAccountService {
         List<UserAccountDTO> dtoList = new ArrayList<>();
         if (null == doList || doList.size() < 1)
             return Result.fail(StatusEnum.NO_OPTION);
-        doList.forEach(userAccountDO -> dtoList.add(UserConvert.doToDto(userAccountDO)));
+        doList.forEach(userAccountDO -> dtoList.add(UserConvertUtil.doToDto(userAccountDO)));
         Integer totalPages = userAccountDao.countUserAccountByTime(startTime, endTime);
         return Result.success(new PageBean<>(startPage, pageSize, totalPages, dtoList));
     }
@@ -134,7 +132,7 @@ public class UserAccountServiceImpl implements IUserAccountService {
         List<UserAccountDTO> dtoList = new ArrayList<>();
         if (null == doList || doList.size() < 1)
             return Result.fail(StatusEnum.NO_OPTION);
-        doList.forEach(useraccountDO -> dtoList.add(UserConvert.doToDto(useraccountDO)));
+        doList.forEach(useraccountDO -> dtoList.add(UserConvertUtil.doToDto(useraccountDO)));
         Integer totalPages = userAccountDao.countUserAccountByNameAndSex(name, sex);
         return Result.success(new PageBean<>(startPage, pageSize, totalPages, dtoList));
     }
@@ -148,7 +146,7 @@ public class UserAccountServiceImpl implements IUserAccountService {
         List<UserAccountDTO> dtoList = new ArrayList<>();
         if (null == doList || doList.size() < 0)
             return Result.fail(StatusEnum.NO_OPTION);
-        doList.forEach(userAccountDO -> dtoList.add(UserConvert.doToDto(userAccountDO)));
+        doList.forEach(userAccountDO -> dtoList.add(UserConvertUtil.doToDto(userAccountDO)));
         Integer totalPages = userAccountDao.countUserAccountByNameAndTime(name, startTime, endTime);
         return Result.success(new PageBean<>(startPage, pageSize, totalPages, dtoList));
     }
@@ -162,7 +160,7 @@ public class UserAccountServiceImpl implements IUserAccountService {
         List<UserAccountDTO> dtoList = new ArrayList<>();
         if (null != dolist && dolist.size() > 0)
             return Result.fail(StatusEnum.NO_OPTION);
-        dolist.forEach(userAccountDO -> dtoList.add(UserConvert.doToDto(userAccountDO)));
+        dolist.forEach(userAccountDO -> dtoList.add(UserConvertUtil.doToDto(userAccountDO)));
         Integer totalPages = userAccountDao.countUserAccountBySexAndTime(sex, startTime, endTime);
         return Result.success(new PageBean<>(startPage, pageSize, totalPages, dtoList));
     }
@@ -176,7 +174,7 @@ public class UserAccountServiceImpl implements IUserAccountService {
         List<UserAccountDTO> dtoList = new ArrayList<>();
         if (null == doList || doList.size() < 0)
             return Result.fail(StatusEnum.NO_OPTION);
-        doList.forEach(userAccountDO -> dtoList.add(UserConvert.doToDto(userAccountDO)));
+        doList.forEach(userAccountDO -> dtoList.add(UserConvertUtil.doToDto(userAccountDO)));
         Integer totalPages = userAccountDao.countUserAccountByNameAndSexAndTime(name, sex, startTime, endTime);
         return Result.success(new PageBean<>(startPage, pageSize, totalPages, dtoList));
     }
@@ -359,7 +357,7 @@ public class UserAccountServiceImpl implements IUserAccountService {
         if (StringUtils.isEmpty(passwordMD5))
             return Result.fail(StatusEnum.INTERNAL_SERVER_ERROR);
 
-        UserAccountDO userAccount = UserConvert.getDo(account, passwordMD5);
+        UserAccountDO userAccount = UserConvertUtil.getDo(account, passwordMD5);
         if (null == userAccount)
             return Result.fail(StatusEnum.INTERNAL_SERVER_ERROR);
 
@@ -403,7 +401,7 @@ public class UserAccountServiceImpl implements IUserAccountService {
         }
         // 查询用户信息
         UserInfoDO userInfoDO = userInfoDao.getUserInfo(userId);
-        UserDTO user = UserConvert.doToDto(userAccountDO, userInfoDO);
+        UserDTO user = UserConvertUtil.doToDto(userAccountDO, userInfoDO);
         if (null == user)
             return Result.fail();
         log.info(account + "登录成功");

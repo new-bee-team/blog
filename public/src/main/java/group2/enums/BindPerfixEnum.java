@@ -2,7 +2,7 @@ package group2.enums;
 
 import sun.security.util.Password;
 
-public enum BindPerfix {
+public enum BindPerfixEnum {
     PHONE,
     UNPHONE,
     WECHAT,

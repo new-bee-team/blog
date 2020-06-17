@@ -9,7 +9,7 @@ import group2.entity.pojo.UserInfoDO;
 import group2.entity.vo.UserAccountVO;
 import group2.entity.vo.UserExperienceVO;
 import group2.enums.SexEnum;
-import group2.util.AbstractConvert;
+import group2.util.AbstractConvertUtil;
 import group2.util.RandomUtil;
 import org.springframework.util.StringUtils;
 
@@ -19,7 +19,7 @@ import org.springframework.util.StringUtils;
  * @description: 实体类转换
  **/
 
-public class UserConvert extends AbstractConvert {
+public class UserConvertUtil extends AbstractConvertUtil {
 
     //------------------------VO————>DO------------------------
     public static UserAccountDO voToDo(UserAccountVO userAccountVO) {

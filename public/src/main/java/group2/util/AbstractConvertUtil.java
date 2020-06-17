@@ -6,5 +6,5 @@ package group2.util;
  * @description: 实体类转换工具抽象类
  **/
 
-public class AbstractConvert {
+public class AbstractConvertUtil {
 }
