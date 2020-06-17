@@ -79,7 +79,7 @@ public class UserInfoServiceImpl implements IUserInfoService {
         if (type == 4 && codeKey.equals("0000")) {
             return Result.fail(StatusEnum.BAD_METHOD, "开发中");
         }
-        return Result.fail(StatusEnum.INTERNAL_SERVER_ERROR);
+        return Result.fail(StatusEnum.INTERNAL_SERVER_ERROR,"登录失败");
     }
 
     @Override

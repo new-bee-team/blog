@@ -66,19 +66,19 @@ public class CodeController {
             @ApiImplicitParam(name = "k", value = "验证码的key", required = true, dataType = "String", paramType = "path"),
             @ApiImplicitParam(name = "v", value = "验证码的value", required = true, dataType = "String", paramType = "path")
     })
-    public Boolean checkStringCode(@PathVariable String k, @PathVariable String v) {
+    public Boolean checkStringCode(@PathVariable("k") String k, @PathVariable("v") String v) {
         return codeService.checkStringCode(k, v);
     }
 
     @Async
     @PostMapping({"/string/set","/string/set/{time}/{timeUnit}"})
-    @ApiOperation(value = "生成字符串验证码并返回对应的key")
+    @ApiOperation(value = "生成字符串验证码并返回对应的数组[k,v]")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "time", value = "验证码保存在缓存中的时间,类似是Long", required = false, dataType = "Long", paramType = "path"),
             @ApiImplicitParam(name = "timeUnit", value = "时间单位,类型是TimeUint", required = false, dataType = "TimeUnit", paramType = "path")
     })
-    public String setCode(@PathVariable(required = false) Long time,@PathVariable(required = false) TimeUnit timeUnit) {
-        String k = CodeUtil.setCode(time,timeUnit);
-        return k;
+    public String[] setCode(@PathVariable(required = false) Long time,@PathVariable(required = false) TimeUnit timeUnit) {
+        String[] res = CodeUtil.setCode(time,timeUnit);
+        return res;
     }
 }

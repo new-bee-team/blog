@@ -10,6 +10,7 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -51,8 +52,11 @@ public class UserAccountController {
     @PostMapping("/codeKey")
     @ApiOperation(value = "用户点击获取验证码调用的接口，返回该code的键k，无参")
     public Result setUpdateAccountCodeKey() {
-        String k = CodeUtil.setCode();
-        return Result.success(k);
+        String[] res = CodeUtil.setCode();
+        if (!StringUtils.isEmpty(res)){
+            return Result.success(res[0]);
+        }
+        return Result.fail();
     }
 
     @NotNull

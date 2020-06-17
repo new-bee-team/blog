@@ -7,10 +7,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.stream.Stream;
@@ -30,7 +27,7 @@ public class UserInfoController {
     private UserInfoServiceImpl userInfoService;
 
     @NotNull
-    @GetMapping("/login/{pass}/{command}/{type}/{codeKey}")
+    @PostMapping("/login/{pass}/{command}/{type}/{codeKey}")
     @ApiOperation(value = "用户登录,如果非验证码登录,codeKey为0000", notes = "当type=1时,pass,command对应账号密码,type=2时,对应邮箱;type=3对应手机,type=4对应微信")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "pass", value = "通行证", required = true, dataType = "String", paramType = "path"),

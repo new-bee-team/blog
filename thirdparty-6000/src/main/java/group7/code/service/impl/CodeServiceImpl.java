@@ -74,7 +74,9 @@ public class CodeServiceImpl implements ICodeService {
 
     @Override
     public Boolean checkStringCode(String k, String oldV) {
+        System.out.println(k+"\t"+oldV);
         String v = redisTemplate.opsForValue().get(k);
+        System.out.println(v);
         return oldV.equals(v);
     }
 }
