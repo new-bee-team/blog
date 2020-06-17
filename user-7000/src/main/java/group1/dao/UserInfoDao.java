@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 @Mapper
 public interface UserInfoDao {
     //-------------------查----------------------
-    UserInfoDO getUserInfo(Integer userId);
+    UserInfoDO getUserInfo(@Param("id") Integer userId);
 
     //-------------------增----------------------
     Integer saveUserInfo(UserInfoDO userInfoDO);

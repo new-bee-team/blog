@@ -2,14 +2,14 @@ package group1.controller;
 
 import group1.dao.UserRoleDao;
 import group1.feign.ThirdPartyClient;
-import group1.security.MyUserDetailService;
+//import group1.security.MyUserDetailService;
 import group2.annotation.NotNull;
 import group2.entity.pojo.UserRoleDO;
 import group2.entity.vo.UserAccountVO;
 import group2.util.JsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.security.core.userdetails.UserDetails;
+//import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -34,8 +34,8 @@ public class TestController {
     @Resource
     private UserRoleDao userRoleDao;
 
-    @Resource
-    private MyUserDetailService userDetailService;
+//    @Resource
+//    private MyUserDetailService userDetailService;
 
     @NotNull
     @GetMapping("/{key}/{value}")
@@ -72,10 +72,10 @@ public class TestController {
         return userRoleDao.getUserRole(id);
     }
 
-    @GetMapping("/role/account/{account}")
-    //{"password":"cc9fad4350e3673c965cfe06d668d368","username":"PigPigBoy","authorities":[{"authority":"ROLE_USER"}],"accountNonExpired":true,"accountNonLocked":true,"credentialsNonExpired":true,"enabled":true}
-    public Object role2(@PathVariable String account){
-        UserDetails userDetails = userDetailService.loadUserByUsername(account);
-        return userDetails;
-    }
+//    @GetMapping("/role/account/{account}")
+//    //{"password":"cc9fad4350e3673c965cfe06d668d368","username":"PigPigBoy","authorities":[{"authority":"ROLE_USER"}],"accountNonExpired":true,"accountNonLocked":true,"credentialsNonExpired":true,"enabled":true}
+//    public Object role2(@PathVariable String account){
+//        UserDetails userDetails = userDetailService.loadUserByUsername(account);
+//        return userDetails;
+//    }
 }

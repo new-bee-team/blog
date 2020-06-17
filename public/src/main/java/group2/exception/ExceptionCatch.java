@@ -6,7 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.mybatis.spring.MyBatisSystemException;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+//import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.annotation.*;
@@ -90,13 +90,13 @@ public class ExceptionCatch {
         return Result.fail(StatusEnum.INTERNAL_SERVER_ERROR);
     }
 
-    @ExceptionHandler(value = {UsernameNotFoundException.class})
-    @ResponseBody
-    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
-    public Result<Object> UsernameNotFoundException(UsernameNotFoundException e) {
-        log.error("用户认证异常: \t原因：" + e.getCause() + "\t详情:" + e.getCause().getMessage());
-        return Result.fail(StatusEnum.UNAUTHORIZED);
-    }
+//    @ExceptionHandler(value = {UsernameNotFoundException.class})
+//    @ResponseBody
+//    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+//    public Result<Object> UsernameNotFoundException(UsernameNotFoundException e) {
+//        log.error("用户认证异常: \t原因：" + e.getCause() + "\t详情:" + e.getCause().getMessage());
+//        return Result.fail(StatusEnum.UNAUTHORIZED);
+//    }
 
     @ExceptionHandler(value = {RuntimeException.class})
     @ResponseBody

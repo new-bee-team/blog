@@ -15,6 +15,9 @@ public interface IUserInfoService {
 
     Result getUserInfoByUserId(Integer userId);
 
+    //登录
+    Result userLogin(String pass, String command, Integer type, String codeKey);
+
     //-------------------增-------------------------
 
     //-------------------改-------------------------

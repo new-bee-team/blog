@@ -56,11 +56,16 @@
        select * from user_account
         where id = #{id}
     </select>
+
     <select id="getUserAccountByAccount" resultType="UserAccountDO">
-         select * from user_account
+        select * from user_account
         where account = #{account}
     </select>
 
+    <select id="getUserAccountByEmail" resultType="UserAccountDO">
+         select * from user_account
+        where email = #{email}
+    </select>
 
     <select id="ListUserAccountByName" resultType="list">
         select * from user_account where 1=1

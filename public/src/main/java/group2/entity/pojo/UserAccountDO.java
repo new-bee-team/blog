@@ -24,7 +24,7 @@ public class UserAccountDO implements Serializable {
     private String picture; // 大小限制？？M
     private String name;    // 最大10位
     private String password; //最大18位
-    private SexEnum sexEnum;
+    private SexEnum sex;
     private String phone;
     private String email;
     private String wxOpenid;

@@ -37,7 +37,6 @@ public class UserAccountController {
         return userAccountService.getUserAccountById(id);
     }
 
-
     @NotNull
     @ApiOperation(value = "用户注册，只需要账号密码", notes = "帐号最大10位，密码最大18位；帐号不可修改")
     @ApiImplicitParams({

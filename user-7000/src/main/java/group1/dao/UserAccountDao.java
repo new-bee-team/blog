@@ -18,6 +18,9 @@ public interface UserAccountDao {
     // 根据account精确查询用户
     UserAccountDO getUserAccountByAccount(@Param("account") String account);
 
+    // 根据email精确查询用户
+    UserAccountDO getUserAccountByEmail(@Param("email") String email);
+
     // 根据name模糊查询
     List<UserAccountDO> ListUserAccountByName(@Param("name") String name, @Param("start") Integer start, @Param("pageSize") Integer pageSize);
 

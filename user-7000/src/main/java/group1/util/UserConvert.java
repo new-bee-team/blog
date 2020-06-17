@@ -36,7 +36,7 @@ public class UserConvert extends AbstractConvert {
         SexEnum sexEnum =
                 "男".equals(sex) ? SexEnum.男 :
                         "女".equals(sex) ? SexEnum.女 : SexEnum.外星人;
-        userAccount.setSexEnum(sexEnum);
+        userAccount.setSex(sexEnum);
         return userAccount;
     }
 
@@ -57,7 +57,7 @@ public class UserConvert extends AbstractConvert {
                 .setAccount(userAccountDO.getAccount())
                 .setPicture(userAccountDO.getPicture())
                 .setName(userAccountDO.getName())
-                .setSex(StringUtils.isEmpty(userAccountDO.getSexEnum()) ? SexEnum.外星人.toString() : userAccountDO.getSexEnum().toString())
+                .setSex(StringUtils.isEmpty(userAccountDO.getSex()) ? SexEnum.外星人.toString() : userAccountDO.getSex().toString())
                 .setPhone(userAccountDO.getPhone())
                 .setEmail(userAccountDO.getEmail())
                 .setRegisterTime(userAccountDO.getRegisterTime());
@@ -70,7 +70,7 @@ public class UserConvert extends AbstractConvert {
         userAccountFriendDTO.setId(userAccountDO.getId())
                 .setName(userAccountDO.getName())
                 .setPicture(userAccountDO.getPicture())
-                .setSex(userAccountDO.getSexEnum().toString());
+                .setSex(userAccountDO.getSex().toString());
         return userAccountFriendDTO;
     }
 
@@ -80,7 +80,7 @@ public class UserConvert extends AbstractConvert {
                 .setAccount(userAccountDO.getAccount())
                 .setPicture(userAccountDO.getPicture())
                 .setName(userAccountDO.getName())
-                .setSex(userAccountDO.getSexEnum().toString())
+                .setSex(userAccountDO.getSex().toString())
                 .setPhone(userAccountDO.getPhone())
                 .setEmail(userAccountDO.getEmail())
                 .setVisitor(userInfoDO.getVisitor())
@@ -103,7 +103,7 @@ public class UserConvert extends AbstractConvert {
                 .setPicture("")
                 .setName("用户" + RandomUtil.randomString(6))
                 .setPassword(password)
-                .setSexEnum(SexEnum.外星人)
+                .setSex(SexEnum.外星人)
                 .setPhone("")
                 .setEmail("")
                 .setWxOpenid("")
