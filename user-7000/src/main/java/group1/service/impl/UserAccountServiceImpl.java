@@ -187,15 +187,7 @@ public class UserAccountServiceImpl implements IUserAccountService {
     // 暂时略过
     @Override
     public Result bindPhone(Integer userId, String phone, String codeKey, String code) {
-        Boolean isPass = thirdPartyClient.checkCode(codeKey, code);
-
-        if (!isPass) {
-            return Result.fail(StatusEnum.CODEERROR);
-        }
-        int i = userAccountDao.bindPhone(userId, phone);
-        if (i != 1)
-            return Result.fail(StatusEnum.DATABASE_ERROR);
-        return Result.success("绑定手机成功");
+        return Result.fail(StatusEnum.INTERNAL_SERVER_ERROR,"开发ing");
     }
 
     //  绑定Email
@@ -216,29 +208,14 @@ public class UserAccountServiceImpl implements IUserAccountService {
     //  绑定Wechat
     @Override
     public Result bindWeChat(Integer userId, String weChatOpenId, String codeKey, String code) {
-        Boolean isPass = thirdPartyClient.checkCode(codeKey, code);
-
-        if (!isPass) return Result.fail(StatusEnum.CODEERROR);
-        int i = userAccountDao.bindWeChat(userId, weChatOpenId);
-        if (i != 1) {
-            return Result.fail(StatusEnum.DATABASE_ERROR);
-        }
-        return Result.success("绑定微信成功");
+        return Result.fail(StatusEnum.INTERNAL_SERVER_ERROR,"开发ing");
     }
 
 
     //  解绑Phone
     @Override
     public Result unbindPhone(Integer userId, String codeKey, String code) {
-        Boolean isPass = thirdPartyClient.checkCode(codeKey, code);
-
-        if (!isPass) {
-            return Result.fail(StatusEnum.CODEERROR);
-        }
-        int i = userAccountDao.unbindPhone(userId);
-        if (i != 1)
-            return Result.fail(StatusEnum.DATABASE_ERROR);
-        return Result.success("解绑手机成功");
+        return Result.fail(StatusEnum.INTERNAL_SERVER_ERROR,"开发ing");
     }
 
     //  解绑Emall
@@ -258,15 +235,7 @@ public class UserAccountServiceImpl implements IUserAccountService {
     //  解绑微信
     @Override
     public Result unbindWeChat(Integer userId, String codeKey, String code) {
-        Boolean isPass = thirdPartyClient.checkCode(codeKey, code);
-
-        if (!isPass) {
-            return Result.fail(StatusEnum.CODEERROR);
-        }
-        int i = userAccountDao.unbindWeChat(userId);
-        if (i != 1)
-            return Result.fail(StatusEnum.DATABASE_ERROR);
-        return Result.success("解绑微信成功");
+        return Result.fail(StatusEnum.INTERNAL_SERVER_ERROR,"开发ing");
     }
 
     //更新头像
