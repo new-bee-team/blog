@@ -1,7 +1,6 @@
-package group7.email.service.impl;
+package group7.service.impl;
 
-import group2.util.CodeUtil;
-import group7.email.service.IEmailService;
+import group7.service.IEmailService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -59,8 +58,6 @@ public class EmailServiceImpl implements IEmailService {
     @Override
     @Async
     public Integer sendSimpleMail(String to) throws MailSendException {
-        long startTime = System.currentTimeMillis();
-        log.info("发送邮件...");
         String subject = "验证码";
         String code = UUID.randomUUID().toString().substring(0, 4);
         String content = "你好，您的验证码是:\t" + code;
@@ -76,10 +73,8 @@ public class EmailServiceImpl implements IEmailService {
         } catch (Exception e) {
             throw e;
         }
-        //将code保存在redis30分钟
-        CodeUtil.setCode(to,code);
-        long endTime = System.currentTimeMillis();
-        log.info("发送邮件并保存code耗时：" + (endTime - startTime));
+        //将code保存在redis 5分钟
+        redisTemplate.opsForValue().set(to,code,5L, TimeUnit.MINUTES);
         return 200;
     }
 }

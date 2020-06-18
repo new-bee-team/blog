@@ -77,5 +77,7 @@ public interface IUserAccountService {
     // 注册用户
     Result saveUserAccount(String account, String password);
 
+    Result sendEmailCode(Integer userId, String email);
+
     //----------------------删----------------------
 }

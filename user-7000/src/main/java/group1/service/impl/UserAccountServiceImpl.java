@@ -16,6 +16,7 @@ import group2.returnJson.StatusEnum;
 import group2.util.MD5Util;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -42,6 +43,9 @@ public class UserAccountServiceImpl implements IUserAccountService {
 
     @Resource
     private UserInfoDao userInfoDao;
+
+    @Resource
+    private RedisTemplate<String,Object> redisTemplate;
 
     @Resource
     private ThirdPartyClient thirdPartyClient;
@@ -381,6 +385,12 @@ public class UserAccountServiceImpl implements IUserAccountService {
 
         log.info("用户注册成功");
         return Result.success(userAccountId);
+    }
+
+    @Override
+    public Result sendEmailCode(Integer userId, String email) {
+        Integer status = thirdPartyClient.sendMail(email);
+        return Result.success("验证码已发送,请查收");
     }
 
     //用户登录

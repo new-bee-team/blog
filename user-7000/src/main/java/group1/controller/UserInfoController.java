@@ -27,15 +27,14 @@ public class UserInfoController {
     private UserInfoServiceImpl userInfoService;
 
     @NotNull
-    @PostMapping("/login/{pass}/{command}/{type}/{codeKey}")
-    @ApiOperation(value = "用户登录,如果非验证码登录,codeKey为0000", notes = "当type=1时,pass,command对应账号密码,type=2时,对应邮箱;type=3对应手机,type=4对应微信")
+    @PostMapping("/login/{pass}/{command}/{type}")
+    @ApiOperation(value = "用户登录", notes = "当type=1时,pass,command对应账号密码,type=2时,对应邮箱;type=3对应手机,type=4对应微信,34暂不支持")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "pass", value = "通行证", required = true, dataType = "String", paramType = "path"),
             @ApiImplicitParam(name = "command", value = "口令", required = true, dataType = "String", paramType = "path"),
-            @ApiImplicitParam(name = "type", value = "认证类型", required = true, dataType = "int", paramType = "path"),
-            @ApiImplicitParam(name = "codeKey", value = "验证码的键", required = true, dataType = "String", paramType = "path")
+            @ApiImplicitParam(name = "type", value = "认证类型", required = true, dataType = "int", paramType = "path")
     })
-    public Result userLogin(@PathVariable String pass, @PathVariable String command,@PathVariable Integer type,@PathVariable String codeKey){
-        return userInfoService.userLogin(pass,command,type,codeKey);
+    public Result userLogin(@PathVariable String pass, @PathVariable String command,@PathVariable Integer type){
+        return userInfoService.userLogin(pass,command,type);
     }
 }

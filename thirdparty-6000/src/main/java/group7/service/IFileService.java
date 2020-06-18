@@ -1,4 +1,4 @@
-package group7.file.service;
+package group7.service;
 
 import org.springframework.web.multipart.MultipartFile;
 

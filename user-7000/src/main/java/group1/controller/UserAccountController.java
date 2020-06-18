@@ -2,16 +2,15 @@ package group1.controller;
 
 import group1.service.impl.UserAccountServiceImpl;
 import group2.annotation.NotNull;
-import group2.entity.vo.UserAccountVO;
 import group2.returnJson.Result;
-import group2.util.CodeUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+
+import javax.annotation.Resource;
 
 /**
  * @author: KongKongBaby
@@ -25,7 +24,7 @@ import org.springframework.web.bind.annotation.*;
 public class UserAccountController {
 
 
-    @Autowired
+    @Resource
     private UserAccountServiceImpl userAccountService;
 
     @NotNull
@@ -49,16 +48,6 @@ public class UserAccountController {
         return userAccountService.saveUserAccount(account, password);
     }
 
-    @PostMapping("/codeKey")
-    @ApiOperation(value = "用户点击获取验证码调用的接口，返回该code的键k，无参")
-    public Result setUpdateAccountCodeKey() {
-        String[] res = CodeUtil.setCode();
-        if (!StringUtils.isEmpty(res)){
-            return Result.success(res[0]);
-        }
-        return Result.fail();
-    }
-
     @NotNull
     @ApiOperation(value = "绑定邮箱")
     @ApiImplicitParams({
@@ -69,5 +58,16 @@ public class UserAccountController {
     @PostMapping("/{userId}/{email}/{code}")
     public Result bindEmail(@PathVariable Integer userId, @PathVariable String email, @PathVariable String code) {
         return userAccountService.bindEmail(userId, email, code);
+    }
+
+    @NotNull
+    @ApiOperation(value = "发送邮箱验证码")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "userId", value = "用户id", required = true, dataType = "int", paramType = "path"),
+            @ApiImplicitParam(name = "email", value = "用户邮箱", required = true, dataType = "String", paramType = "path")
+    })
+    @GetMapping("/{userId}/{email}")
+    public Result sendEmailCode(@PathVariable Integer userId, @PathVariable String email) {
+        return userAccountService.sendEmailCode(userId, email);
     }
 }

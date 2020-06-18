@@ -1,4 +1,4 @@
-package group7.email.service;
+package group7.service;
 
 import org.springframework.mail.MailSendException;
 

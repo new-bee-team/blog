@@ -1,11 +1,10 @@
-package group7.code.service.impl;
+package group7.service.impl;
 
 import com.google.code.kaptcha.impl.DefaultKaptcha;
-import group7.code.service.ICodeService;
+import group7.service.ICodeService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 import javax.imageio.ImageIO;

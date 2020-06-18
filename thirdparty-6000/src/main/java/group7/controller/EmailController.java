@@ -1,6 +1,7 @@
-package group7.controler;
+package group7.controller;
 
-import group7.email.service.impl.EmailServiceImpl;
+import group7.service.IEmailService;
+import group7.service.impl.EmailServiceImpl;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
@@ -21,7 +22,7 @@ import javax.annotation.Resource;
 public class EmailController {
 
     @Resource
-    private EmailServiceImpl emailService;
+    private IEmailService emailService;
 
     @Value("${config.info}")
     private String text;

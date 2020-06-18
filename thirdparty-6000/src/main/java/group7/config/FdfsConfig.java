@@ -1,4 +1,4 @@
-package group7.file;
+package group7.config;
 
 import com.github.tobato.fastdfs.FdfsClientConfig;
 import org.springframework.context.annotation.Configuration;

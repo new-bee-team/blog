@@ -1,7 +1,7 @@
-package group7.file.service.impl;
+package group7.service.impl;
 
 import group7.file.FastDFSClient;
-import group7.file.service.IFileService;
+import group7.service.IFileService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Async;

@@ -1,4 +1,4 @@
-package group7.code;
+package group2.config;
 
 import com.google.code.kaptcha.impl.DefaultKaptcha;
 import com.google.code.kaptcha.util.Config;

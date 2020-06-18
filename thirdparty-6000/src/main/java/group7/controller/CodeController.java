@@ -1,13 +1,11 @@
-package group7.controler;
+package group7.controller;
 
 import group2.annotation.NotNull;
-import group2.util.CodeUtil;
-import group7.code.service.impl.CodeServiceImpl;
+import group7.service.ICodeService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @author: KongKongBaby
@@ -30,7 +27,7 @@ import java.util.concurrent.TimeUnit;
 public class CodeController {
 
     @Resource
-    private CodeServiceImpl codeService;
+    private ICodeService codeService;
 
     @NotNull
     @PostMapping("/img/get")
@@ -68,17 +65,5 @@ public class CodeController {
     })
     public Boolean checkStringCode(@PathVariable("k") String k, @PathVariable("v") String v) {
         return codeService.checkStringCode(k, v);
-    }
-
-    @Async
-    @PostMapping({"/string/set","/string/set/{time}/{timeUnit}"})
-    @ApiOperation(value = "生成字符串验证码并返回对应的数组[k,v]")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "time", value = "验证码保存在缓存中的时间,类似是Long", required = false, dataType = "Long", paramType = "path"),
-            @ApiImplicitParam(name = "timeUnit", value = "时间单位,类型是TimeUint", required = false, dataType = "TimeUnit", paramType = "path")
-    })
-    public String[] setCode(@PathVariable(required = false) Long time,@PathVariable(required = false) TimeUnit timeUnit) {
-        String[] res = CodeUtil.setCode(time,timeUnit);
-        return res;
     }
 }

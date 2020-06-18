@@ -1,4 +1,4 @@
-package group7.code.service;
+package group7.service;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,4 +15,5 @@ public interface ICodeService {
     String getStringCode(String k);
 
     Boolean checkStringCode(String k,String v);
+
 }
