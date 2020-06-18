@@ -3,6 +3,7 @@ package group1.controller;
 import group1.dao.UserRoleDao;
 import group1.feign.ThirdPartyClient;
 //import group1.security.MyUserDetailService;
+import group2.annotation.Log;
 import group2.annotation.NotNull;
 import group2.entity.pojo.UserRoleDO;
 import group2.entity.vo.UserAccountVO;
@@ -62,6 +63,7 @@ public class TestController {
         return session.getMaxInactiveInterval();
     }
 
+    @Log
     @GetMapping("/hello")
     public String hello(){
         return "hello!";
